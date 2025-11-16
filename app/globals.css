@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fontes padrão */
+:root {
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-mono: monospace;
+  --foreground: #171717;
+}
+
+html.dark {
+  --foreground: #ededed;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: transparent; /* deixa o gradiente do layout aparecer */
+  color: var(--foreground);
+  transition: background-color 0.3s, color 0.3s;
+}
