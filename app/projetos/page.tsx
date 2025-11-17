@@ -1,70 +1,59 @@
-import Link from "next/link";
+import Image from "next/image";
 
-export default function ServicosPage() {
+export default function ProjetosPage() {
   return (
     <div
       className="relative min-h-[60vh] bg-cover bg-center"
-      style={{ backgroundImage: "url('/serv1.jpg')" }}
+      style={{ backgroundImage: "url('/proj1.jpg')" }}
     >
       {/* Overlay escuro para dar contraste */}
       <div className="absolute inset-0 bg-black/70" />
 
       {/* Conteúdo principal */}
       <div className="relative max-w-5xl mx-auto p-8 text-white">
-        <h1 className="text-3xl font-bold mb-6">Serviços</h1>
+        <h1 className="text-3xl font-bold mb-6">Projetos</h1>
         <p className="text-lg mb-10">
-          Explore abaixo os principais serviços que ofereço, cada um pensado para
-          entregar soluções completas e personalizadas.
+          Alguns projetos desenvolvidos como exemplo ou para clientes, cada um
+          mostrando diferentes soluções e tecnologias aplicadas.
         </p>
 
         {/* Grid com 3 colunas */}
         <div className="grid gap-6 md:grid-cols-3">
-          {/* Desenvolvimento Web */}
-          <Link
-            href="/servicos/desenvolvimento-web"
-            className="p-6 rounded-lg bg-gradient-to-br from-blue-950 via-black to-black shadow-lg hover:scale-105 transition-transform block"
-          >
-            <h2 className="text-xl font-semibold mb-3">Desenvolvimento Web</h2>
+          {/* Projeto 1 */}
+          <div className="p-6 rounded-lg bg-gradient-to-br from-blue-950 via-black to-black shadow-lg hover:scale-105 transition-transform">
+            <h2 className="text-xl font-semibold mb-3">Projeto 1</h2>
             <p className="text-sm leading-relaxed">
-              Criação de sites modernos e responsivos, otimizados para SEO e
-              performance. Cada projeto é pensado para transmitir credibilidade
-              e oferecer uma experiência digital envolvente.
+              Aplicação web completa com React e Next.js, focada em performance,
+              SEO e experiência do usuário.
             </p>
             <p className="mt-2 text-sm opacity-90">
-              Inclui landing pages, sistemas corporativos e e-commerce.
+              Inclui autenticação, integração com APIs externas e design responsivo.
             </p>
-          </Link>
+          </div>
 
-          {/* Consultoria em Hardware */}
-          <Link
-            href="/servicos/consultoria-hardware"
-            className="p-6 rounded-lg bg-gradient-to-br from-blue-950 via-black to-black shadow-lg hover:scale-105 transition-transform block"
-          >
-            <h2 className="text-xl font-semibold mb-3">Consultoria em Hardware</h2>
+          {/* Projeto 2 */}
+          <div className="p-6 rounded-lg bg-gradient-to-br from-blue-950 via-black to-black shadow-lg hover:scale-105 transition-transform">
+            <h2 className="text-xl font-semibold mb-3">Projeto 2</h2>
             <p className="text-sm leading-relaxed">
-              Orientação especializada na escolha de componentes e soluções de
-              hardware, garantindo compatibilidade, desempenho e custo-benefício.
+              Sistema de gerenciamento de tarefas com Node.js e MongoDB,
+              oferecendo escalabilidade e segurança.
             </p>
             <p className="mt-2 text-sm opacity-90">
-              Ideal para upgrades, otimização de recursos e projetos de alta performance.
+              Painel administrativo, controle de usuários e relatórios dinâmicos.
             </p>
-          </Link>
+          </div>
 
-          {/* Montagem de PCs */}
-          <Link
-            href="/servicos/montagem-pc"
-            className="p-6 rounded-lg bg-gradient-to-br from-blue-950 via-black to-black shadow-lg hover:scale-105 transition-transform block"
-          >
-            <h2 className="text-xl font-semibold mb-3">Montagem de PCs</h2>
+          {/* Projeto 3 */}
+          <div className="p-6 rounded-lg bg-gradient-to-br from-blue-950 via-black to-black shadow-lg hover:scale-105 transition-transform">
+            <h2 className="text-xl font-semibold mb-3">Projeto 3</h2>
             <p className="text-sm leading-relaxed">
-              Montagem personalizada de computadores sob medida para gamers,
-              criadores de conteúdo e profissionais.
+              Site institucional corporativo responsivo, desenvolvido para
+              fortalecer a presença digital de empresas.
             </p>
             <p className="mt-2 text-sm opacity-90">
-              Acompanho todo o processo: da escolha dos componentes até a entrega
-              do PC pronto para uso.
+              Estrutura otimizada para SEO, design moderno e integração com redes sociais.
             </p>
-          </Link>
+          </div>
         </div>
       </div>
     </div>
