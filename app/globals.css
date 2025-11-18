@@ -7,15 +7,17 @@
   --font-sans: Arial, Helvetica, sans-serif;
   --font-mono: monospace;
   --foreground: #171717;
+  --background: #ffffff; /* fundo padrão claro */
 }
 
 html.dark {
   --foreground: #ededed;
+  --background: #000000; /* fundo preto sólido no modo escuro */
 }
 
 body {
   font-family: var(--font-sans);
-  background-color: transparent; /* deixa o gradiente do layout aparecer */
+  background-color: var(--background); /* aplica cor sólida */
   color: var(--foreground);
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

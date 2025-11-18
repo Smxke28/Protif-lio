@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 import Providers from '../components/Providers';
 
 export const metadata: Metadata = {
-  title: 'Portfólio Juan L.',
+  title: 'Portfólio Juan Lavecchia',
   description: 'Site pessoal e profissional',
 };
 
@@ -15,9 +15,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         suppressHydrationWarning
         className="min-h-screen flex 
-             bg-gradient-to-r from-gray-100 to-gray-300 
-             dark:from-gray-900 dark:to-gray-800 
-             text-gray-900 dark:text-gray-100"
+          bg-white text-gray-900 
+          dark:bg-black dark:text-gray-100 
+          transition-colors duration-500"
       >
         <Providers>
           {/* Sidebar fixa */}

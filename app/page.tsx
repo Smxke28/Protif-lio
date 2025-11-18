@@ -7,36 +7,40 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen font-sans">
-      {/* Imagem de fundo */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/linha.jpeg')" }}
-      />
-      {/* Overlay escuro para contraste */}
-      <div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
-
       {/* Conteúdo principal */}
       <div className="relative z-10 flex flex-col min-h-screen">
-        {/* Hero Section */}
-        <header className="flex flex-col items-center justify-center flex-grow text-center p-12">
-          <h1 className="text-5xl font-bold text-white mb-6">Bem-vindo</h1>
-          <p className="text-lg text-gray-200 max-w-2xl mb-10">
-            Sou Juan, desenvolvedor web e consultor em TI. Aqui você encontra meus
-            serviços, projetos e formas de contato.
-          </p>
-          <div className="flex gap-6">
-            <a
-              href="#servicos"
-              className="px-6 py-3 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
-            >
-              Ver Serviços
-            </a>
-            <a
-              href="#projetos"
-              className="px-6 py-3 rounded bg-gray-200 text-gray-900 hover:bg-gray-300 transition"
-            >
-              Meus Projetos
-            </a>
+        {/* Hero Section COM imagem de fundo apenas aqui */}
+        <header className="relative flex flex-col items-center justify-center flex-grow text-center p-12">
+          {/* Imagem de fundo somente no header */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/linha.jpeg')" }}
+          />
+          {/* Overlay escuro para contraste */}
+          <div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
+
+          {/* Conteúdo do hero */}
+          <div className="relative z-10">
+            <h1 className="text-5xl font-bold text-white mb-6">Bem-vindo</h1>
+            <p className="text-lg text-gray-200 max-w-2xl mb-10">
+              Sou Juan, desenvolvedor web e consultor em TI. Aqui você encontra meus
+              serviços, projetos e formas de contato.
+            </p>
+            {/* Botões centralizados */}
+            <div className="flex justify-center gap-6">
+              <a
+                href="#servicos"
+                className="px-6 py-3 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
+              >
+                Ver Serviços
+              </a>
+              <a
+                href="#projetos"
+                className="px-6 py-3 rounded bg-gray-200 text-gray-900 hover:bg-gray-300 transition"
+              >
+                Meus Projetos
+              </a>
+            </div>
           </div>
         </header>
 
@@ -49,17 +53,18 @@ export default function Home() {
             {/* Card 1 */}
             <div className="p-6 rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white">
               <h3 className="text-xl font-semibold mb-4">Desenvolvimento Web</h3>
-              <p>
-                Criação de sites modernos, responsivos e otimizados para SEO.
-              </p>
+              <p>Criação de sites modernos, responsivos e otimizados para SEO.</p>
             </div>
 
-            {/* Card 2 com botão Ler mais */}
-            <div className="p-6 rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white">
-              <h3 className="text-xl font-semibold mb-4">
+            {/* Card 2 com botão Ler mais e imagem de fundo */}
+            <div
+              className="relative p-6 rounded-lg shadow-lg text-white flex flex-col items-center justify-between bg-cover bg-center"
+              style={{ backgroundImage: "url('/central.jpg')" }}
+            >
+              <h3 className="text-xl font-semibold mb-4 text-center">
                 Consultoria em Hardware & Montagem de PCs
               </h3>
-              <p>
+              <p className="text-center">
                 Ofereço suporte completo na escolha e montagem de computadores
                 personalizados, seja para jogos, trabalho ou uso profissional.
                 {showMore && (
@@ -75,20 +80,21 @@ export default function Home() {
                   </>
                 )}
               </p>
-              <button
-                onClick={() => setShowMore(!showMore)}
-                className="mt-4 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
-              >
-                {showMore ? "Ler menos" : "Ler mais"}
-              </button>
+              {/* Botão centralizado */}
+              <div className="mt-6 flex justify-center w-full">
+                <button
+                  onClick={() => setShowMore(!showMore)}
+                  className="px-6 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
+                >
+                  {showMore ? "Ler menos" : "Ler mais"}
+                </button>
+              </div>
             </div>
 
             {/* Card 3 */}
             <div className="p-6 rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white">
               <h3 className="text-xl font-semibold mb-4">Manutenção & Suporte</h3>
-              <p>
-                Monitoramento e suporte técnico para manter sistemas sempre ativos.
-              </p>
+              <p>Monitoramento e suporte técnico para manter sistemas sempre ativos.</p>
             </div>
           </div>
         </section>
@@ -108,9 +114,7 @@ export default function Home() {
               />
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">Projeto 1</h3>
-                <p>
-                  Site institucional para empresa de tecnologia.
-                </p>
+                <p>Site institucional para empresa de tecnologia.</p>
               </div>
             </div>
 
@@ -123,9 +127,7 @@ export default function Home() {
               />
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">Projeto 2</h3>
-                <p>
-                  Plataforma de e-commerce personalizada.
-                </p>
+                <p>Plataforma de e-commerce personalizada.</p>
               </div>
             </div>
 
@@ -138,43 +140,52 @@ export default function Home() {
               />
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">Projeto 3</h3>
-                <p>
-                  Dashboard interativo para análise de dados.
-                </p>
+                <p>Dashboard interativo para análise de dados.</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* Seção de Contato */}
-        <section id="contato" className="py-16 bg-white/90 dark:bg-black/70">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
-            Contatos
-          </h2>
-          <p className="text-center text-gray-700 dark:text-gray-300 mb-6">
-            Entre em contato para discutir projetos ou consultoria.
-          </p>
-          <div className="flex justify-center gap-6">
-            <a
-              href="mailto:juanlavecchia23@gmail.com"
-              className="px-6 py-3 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
-            >
-              Email
-            </a>
-            <a
-              href="https://wa.me/5532988766969"
-              target="_blank"
-              className="px-6 py-3 rounded bg-green-600 text-white hover:bg-green-700 transition"
-            >
-              WhatsApp
-            </a>
-            <a
-              href="https://www.linkedin.com/in/juan-lavecchia-8b3b5131a/"
-              target="_blank"
-              className="px-6 py-3 rounded bg-blue-800 text-white hover:bg-blue-900 transition"
-            >
-              LinkedIn
-            </a>
+        <section id="contato" className="relative py-16">
+          {/* Imagem de fundo */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/cont1.jpg')" }}
+          />
+          {/* Overlay gradiente preto mais escuro */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black to-black opacity-90" />
+
+          {/* Conteúdo acima da imagem */}
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold text-center mb-8 text-white">
+              Contatos
+            </h2>
+            <p className="text-center text-gray-200 mb-6">
+              Entre em contato para discutir projetos ou consultoria.
+            </p>
+            <div className="flex justify-center gap-6">
+              <a
+                href="mailto:juanlavecchia23@gmail.com"
+                className="px-6 py-3 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
+              >
+                Email
+              </a>
+              <a
+                href="https://wa.me/5532988766969"
+                target="_blank"
+                className="px-6 py-3 rounded bg-green-600 text-white hover:bg-green-700 transition"
+              >
+                WhatsApp
+              </a>
+              <a
+                href="https://www.linkedin.com/in/juan-lavecchia-8b3b5131a/"
+                target="_blank"
+                className="px-6 py-3 rounded bg-blue-800 text-white hover:bg-blue-900 transition"
+              >
+                LinkedIn
+              </a>
+            </div>
           </div>
         </section>
 
