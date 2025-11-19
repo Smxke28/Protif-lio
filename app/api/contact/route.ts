@@ -17,8 +17,8 @@ export async function POST(req: Request): Promise<Response> {
     }
 
     const result = await resend.emails.send({
-      from: 'onboarding@resend.dev', // remetente padrão
-      to: process.env.CONTACT_EMAIL_USER!, // seu Gmail configurado no .env
+      from: 'onboarding@resend.dev',
+      to: process.env.CONTACT_EMAIL_USER!, 
       replyTo: email,
       subject: `Contato de ${name}`,
       text: `Nome: ${name}\nEmail: ${email}\n\nMensagem:\n${message}`,

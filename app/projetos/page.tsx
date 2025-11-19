@@ -6,7 +6,6 @@ export default function ProjetosPage() {
       className="relative min-h-[60vh] bg-cover bg-center"
       style={{ backgroundImage: "url('/proj1.jpg')" }}
     >
-      {/* Overlay escuro para dar contraste */}
       <div className="absolute inset-0 bg-black/70" />
 
       {/* Conteúdo principal */}

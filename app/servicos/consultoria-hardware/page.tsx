@@ -10,7 +10,7 @@ export default function ConsultoriaHardware() {
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/Mont2.png')" }}
       />
-      {/* Overlay escuro para contraste */}
+      {/* Overlay escuro*/}
       <div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
 
       {/* Conteúdo principal */}

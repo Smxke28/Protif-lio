@@ -18,7 +18,7 @@ const handler = NextAuth({
       return token;
     },
     async session({ session, token }) {
-      // Garante que email e name sejam repassados
+      // Garantir que email e name sejam repassados
       if (session.user) {
         session.user.email = token.email as string;
         session.user.name = token.name as string;
