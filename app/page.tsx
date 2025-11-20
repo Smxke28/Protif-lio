@@ -99,49 +99,83 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Seção de Projetos */}
-        <section id="projetos" className="py-16 bg-gray-100 dark:bg-gray-900">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
+        {/* Seção de Projetos (menor) */}
+        <section id="projetos" className="py-12 bg-gray-100 dark:bg-gray-900">
+          <h2 className="text-2xl font-bold text-center mb-6 text-gray-900 dark:text-white">
             Projetos
           </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto px-6">
-            {/* Projeto 1 */}
-            <div className="rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white">
-              <img
-                src="/projeto1.jpg"
-                alt="Projeto 1"
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">Projeto 1</h3>
-                <p>Site institucional para empresa de tecnologia.</p>
+
+          <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto px-6">
+            {/* Projeto 1 — Preview ao vivo (compacto) com legenda */}
+            <div className="group p-4 rounded-xl bg-gradient-to-br from-blue-900 via-black to-gray-900 shadow-lg hover:shadow-xl transition-all">
+              <h3 className="text-lg font-semibold mb-3 group-hover:text-blue-400 transition-colors">
+                Projeto 1
+              </h3>
+
+              <figure>
+                <div className="mb-3 rounded-lg overflow-hidden border border-gray-700 shadow-md group-hover:shadow-lg transition-shadow">
+                  <iframe
+                    src="https://sitecs2.vercel.app/"
+                    className="w-full h-44 bg-black"
+                    title="Preview Projeto 1"
+                  />
+                </div>
+
+                <figcaption className="text-sm leading-relaxed opacity-90 text-gray-100">
+                  Plataforma voltada para o Counter-Strike 2, criada para reunir utilidades,
+                  execuções, smokes, flashes e táticas de jogo. O projeto tem como propósito
+                  estudar e evoluir em desenvolvimento web, experiência do usuário e práticas
+                  modernas de frontend, funcionando também como repositório pessoal de estratégias.
+                  {showMore && (
+                    <>
+                      {" "}
+                      Construído com Next.js, React, TypeScript e Tailwind CSS, o site combina
+                      design moderno, animações e organização visual. Todos os vídeos utilizados
+                      são de autoria original no YouTube, e o projeto é continuamente expandido
+                      por Juan Lavecchia, unindo aprendizado em programação com a paixão pelo CS2.{" "}
+                      <a
+                        href="https://sitecs2.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-red-400 underline hover:text-red-500"
+                      >
+                        Acesse o site
+                      </a>
+                    </>
+                  )}
+                </figcaption>
+              </figure>
+
+              <div className="mt-3">
+                <button
+                  onClick={() => setShowMore((v) => !v)}
+                  className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
+                >
+                  {showMore ? "Ler menos" : "Ler mais"}
+                </button>
               </div>
             </div>
 
-            {/* Projeto 2 */}
-            <div className="rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white">
+            {/* Projeto 2 — sem link por enquanto */}
+            <div className="p-4 rounded-xl bg-gradient-to-br from-blue-950 via-black to-black text-white shadow-lg">
               <img
                 src="/projeto2.jpg"
                 alt="Projeto 2"
-                className="w-full h-48 object-cover"
+                className="w-full h-40 object-cover rounded-md mb-3"
               />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">Projeto 2</h3>
-                <p>Plataforma de e-commerce personalizada.</p>
-              </div>
+              <h3 className="text-lg font-semibold mb-1">Projeto 2</h3>
+              <p className="text-xs opacity-90">Plataforma de e-commerce personalizada.</p>
             </div>
 
-            {/* Projeto 3 */}
-            <div className="rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white">
+            {/* Projeto 3 — sem link por enquanto */}
+            <div className="p-4 rounded-xl bg-gradient-to-br from-blue-950 via-black to-black text-white shadow-lg">
               <img
                 src="/projeto3.jpg"
                 alt="Projeto 3"
-                className="w-full h-48 object-cover"
+                className="w-full h-40 object-cover rounded-md mb-3"
               />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">Projeto 3</h3>
-                <p>Dashboard interativo para análise de dados.</p>
-              </div>
+              <h3 className="text-lg font-semibold mb-1">Projeto 3</h3>
+              <p className="text-xs opacity-90">Dashboard interativo para análise de dados.</p>
             </div>
           </div>
         </section>
@@ -171,12 +205,14 @@ export default function Home() {
               >
                 Email
               </a>
+              {/* Substituído WhatsApp por GitHub */}
               <a
-                href="https://wa.me/5532988766969"
+                href="https://github.com/Smxke28"
                 target="_blank"
-                className="px-6 py-3 rounded bg-green-600 text-white hover:bg-green-700 transition"
+                rel="noopener noreferrer"
+                className="px-6 py-3 rounded bg-gray-800 text-white hover:bg-gray-700 transition"
               >
-                WhatsApp
+                GitHub
               </a>
               <a
                 href="https://www.linkedin.com/in/juan-lavecchia-8b3b5131a/"
