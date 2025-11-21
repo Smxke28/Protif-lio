@@ -20,137 +20,97 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-gradient-to-r from-gray-900 via-black to-gray-900 text-white shadow-lg z-50 backdrop-blur">
+    <header className="fixed top-0 left-0 w-full bg-gray-900 text-white shadow-lg z-50">
       <div className="flex items-center justify-between px-6 py-4">
-        {/* Hamburger (mobile) */}
+        {/* Botão hamburger (mobile) */}
         <button
           className="md:hidden text-2xl"
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Abrir menu"
         >
-          ☰
+          {mobileOpen ? "✕" : "☰"}
         </button>
 
-        {/* Logo + Links (desktop) */}
+        {/* Links desktop */}
         <div className="hidden md:flex flex-1 justify-center items-center gap-8">
           <h1 className="text-xl font-bold mr-6">Meu Portfólio</h1>
-
-          {["Home", "Projetos", "Contato", "Sobre"].map((item) => (
-            <Link
-              key={item}
-              href={`/${item.toLowerCase() === "home" ? "" : item.toLowerCase()}`}
-              className="relative px-2 py-1 text-gray-300 hover:text-white transition"
-            >
-              {item}
-            </Link>
-          ))}
-
-          {/* Serviços com submenu */}
-          <div className="relative group">
-            <Link
-              href="/servicos"
-              className="flex items-center gap-1 px-2 py-1 text-gray-300 hover:text-white transition"
-            >
-              <span>Serviços</span>
-              <span>▾</span>
-            </Link>
-            <div
-              className="absolute left-0 top-full mt-2 w-56 bg-gray-800 rounded-lg shadow-lg flex flex-col opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-50"
-            >
-              <Link href="/servicos/consultoria-hardware" className="px-4 py-2 hover:bg-gray-700">
-                Consultoria Hardware
-              </Link>
-              <Link href="/servicos/desenvolvimento-web" className="px-4 py-2 hover:bg-gray-700">
-                Desenvolvimento Web
-              </Link>
-              <Link href="/servicos/montagem-pc" className="px-4 py-2 hover:bg-gray-700">
-                Montagem de PC
-              </Link>
-            </div>
-          </div>
+          <Link href="/">Home</Link>
+          <Link href="/projetos">Projetos</Link>
+          <Link href="/servicos">Serviços</Link>
+          <Link href="/contato">Contato</Link>
+          <Link href="/sobre">Sobre</Link>
         </div>
 
-        {/* Login/Logout (desktop) */}
+        {/* Login/Logout desktop */}
         <div className="hidden md:flex items-center gap-3 ml-6">
           {session ? (
             <button
               onClick={() => signOut()}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition shadow-md"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition"
             >
               <img
                 src={session.user?.image || ""}
                 alt="avatar"
-                className="w-7 h-7 rounded-full border-2 border-white hover:scale-105 transition-transform"
+                className="w-7 h-7 rounded-full border-2 border-white"
               />
-              <span className="font-medium">Sair</span>
+              <span>Sair</span>
             </button>
           ) : (
             <button
               onClick={() => signIn("google")}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 transition shadow-md"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 transition"
             >
               <GoogleIcon />
-              <span className="font-medium">Login</span>
+              <span>Login</span>
             </button>
           )}
         </div>
       </div>
 
       {/* Overlay + Menu mobile */}
-      {mobileOpen && (
-        <>
-          {/* Overlay escuro atrás do menu */}
-          <div
-            className="fixed inset-0 bg-black/50 md:hidden"
-            onClick={() => setMobileOpen(false)}
-          />
+      <div
+        className={`md:hidden fixed inset-0 transition-opacity duration-200 ${
+          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        {/* Overlay */}
+        <div
+          className="absolute inset-0 bg-black/50"
+          onClick={() => setMobileOpen(false)}
+        />
 
-          {/* Menu mobile */}
-          <nav
-            className="md:hidden fixed top-14 left-0 w-full bg-gray-900 flex flex-col gap-2 px-6 py-4 border-t border-gray-800 transform transition-transform duration-300 ease-out translate-y-0 opacity-100 z-50"
-            aria-label="Menu mobile"
-          >
-            <Link href="/" className="py-2 hover:text-blue-400 transition">Home</Link>
-            <Link href="/projetos" className="py-2 hover:text-blue-400 transition">Projetos</Link>
+        {/* Menu mobile */}
+        <nav
+          className={`absolute top-14 left-0 w-full bg-gray-900 flex flex-col gap-2 px-6 py-4 border-t border-gray-800 transform transition-transform duration-200 ${
+            mobileOpen ? "translate-y-0" : "-translate-y-5"
+          }`}
+          aria-label="Menu mobile"
+        >
+          <Link href="/" className="py-2 hover:text-blue-400 transition">Home</Link>
+          <Link href="/projetos" className="py-2 hover:text-blue-400 transition">Projetos</Link>
+          <Link href="/servicos" className="py-2 hover:text-blue-400 transition">Serviços</Link>
+          <Link href="/contato" className="py-2 hover:text-blue-400 transition">Contato</Link>
+          <Link href="/sobre" className="py-2 hover:text-blue-400 transition">Sobre</Link>
 
-            <div className="mt-2">
-              <Link href="/servicos" className="font-semibold mb-1 block">Serviços</Link>
-              <div className="flex flex-col rounded-lg overflow-hidden border border-gray-700">
-                <Link href="/servicos/consultoria-hardware" className="px-4 py-2 hover:bg-gray-800">
-                  Consultoria Hardware
-                </Link>
-                <Link href="/servicos/desenvolvimento-web" className="px-4 py-2 hover:bg-gray-800">
-                  Desenvolvimento Web
-                </Link>
-                <Link href="/servicos/montagem-pc" className="px-4 py-2 hover:bg-gray-800">
-                  Montagem de PC
-                </Link>
-              </div>
-            </div>
-
-            <Link href="/contato" className="py-2 hover:text-blue-400 transition">Contato</Link>
-            <Link href="/sobre" className="py-2 hover:text-blue-400 transition">Sobre</Link>
-
-            <div className="mt-4">
-              {session ? (
-                <button
-                  onClick={() => signOut()}
-                  className="w-full px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition shadow-md"
-                >
-                  Sair
-                </button>
-              ) : (
-                <button
-                  onClick={() => signIn("google")}
-                  className="w-full px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 transition shadow-md"
-                >
-                  Login com Google
-                </button>
-              )}
-            </div>
-          </nav>
-        </>
-      )}
+          <div className="mt-4">
+            {session ? (
+              <button
+                onClick={() => signOut()}
+                className="w-full px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition"
+              >
+                Sair
+              </button>
+            ) : (
+              <button
+                onClick={() => signIn("google")}
+                className="w-full px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 transition"
+              >
+                Login com Google
+              </button>
+            )}
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }
