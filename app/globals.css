@@ -2,22 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fontes padrão */
+/* ----------------------------------------------------- */
+/* 🎨 Variáveis Globais (Light Mode)                     */
+/* ----------------------------------------------------- */
 :root {
   --font-sans: Arial, Helvetica, sans-serif;
   --font-mono: monospace;
+
+  /* Cores principais */
   --foreground: #171717;
-  --background: #ffffff; /* fundo padrão claro */
+  --background: #ffffff;
+
+  /* Tons auxiliares */
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --card-border: rgba(0, 0, 0, 0.1);
+
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-bg-hover: rgba(255, 255, 255, 0.25);
+
+  --transition: 0.25s ease;
 }
 
+/* ----------------------------------------------------- */
+/* 🌙 Variáveis para Dark Mode                           */
+/* ----------------------------------------------------- */
 html.dark {
-  --foreground: #ededed;
-  --background: #000000; /* fundo preto sólido no modo escuro */
+  --foreground: #ececec;
+  --background: #000000;
+
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.12);
+
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-bg-hover: rgba(255, 255, 255, 0.18);
 }
 
+/* ----------------------------------------------------- */
+/* 🧰 Base do Body                                       */
+/* ----------------------------------------------------- */
 body {
   font-family: var(--font-sans);
-  background-color: var(--background); /* aplica cor sólida */
+  background-color: var(--background);
   color: var(--foreground);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color var(--transition), color var(--transition);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100%; /* já garante altura mínima */
+}
+
+/* ----------------------------------------------------- */
+/* 🧊 Estilo Glass Moderno para Itens do Menu            */
+/* ----------------------------------------------------- */
+.menu-modern {
+  @apply flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium;
+
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  transition: background var(--transition), transform 0.2s ease;
+}
+
+.menu-modern:hover {
+  background: var(--glass-bg-hover);
+  transform: translateX(3px);
+}
+
+/* ----------------------------------------------------- */
+/* ✨ Scrollbar Moderna                                  */
+/* ----------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3b82f6, #1e3a8a);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ----------------------------------------------------- */
+/* 🔧 Correções comuns para Next.js (SSR + Tailwind)     */
+/* ----------------------------------------------------- */
+/* Remove flash entre temas */
+html {
+  min-height: 100%;
+}
+
+/* Evita “jump” no load antes do tema aplicar */
+html:not(.dark) body {
+  color-scheme: light;
+}
+
+html.dark body {
+  color-scheme: dark;
 }
