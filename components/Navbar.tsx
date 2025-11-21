@@ -20,7 +20,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-gray-900 text-white shadow-lg z-50">
+    <header className="fixed top-0 left-0 w-full bg-gray-900 text-white z-50">
       <div className="flex items-center justify-between px-6 py-4">
         {/* Botão hamburger (mobile) */}
         <button
@@ -67,50 +67,39 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Overlay + Menu mobile */}
-      <div
-        className={`md:hidden fixed inset-0 transition-opacity duration-200 ${
-          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        {/* Overlay */}
-        <div
-          className="absolute inset-0 bg-black/50"
-          onClick={() => setMobileOpen(false)}
-        />
+      {/* Menu lateral mobile */}
+      {mobileOpen && (
+        <div className="md:hidden fixed inset-0 bg-black/50" onClick={() => setMobileOpen(false)}>
+          <nav
+            className="absolute top-0 left-0 w-3/4 h-full bg-gray-900 flex flex-col gap-4 px-6 py-8"
+            aria-label="Menu mobile"
+          >
+            <Link href="/" onClick={() => setMobileOpen(false)}>Home</Link>
+            <Link href="/projetos" onClick={() => setMobileOpen(false)}>Projetos</Link>
+            <Link href="/servicos" onClick={() => setMobileOpen(false)}>Serviços</Link>
+            <Link href="/contato" onClick={() => setMobileOpen(false)}>Contato</Link>
+            <Link href="/sobre" onClick={() => setMobileOpen(false)}>Sobre</Link>
 
-        {/* Menu mobile */}
-        <nav
-          className={`absolute top-14 left-0 w-full bg-gray-900 flex flex-col gap-2 px-6 py-4 border-t border-gray-800 transform transition-transform duration-200 ${
-            mobileOpen ? "translate-y-0" : "-translate-y-5"
-          }`}
-          aria-label="Menu mobile"
-        >
-          <Link href="/" className="py-2 hover:text-blue-400 transition">Home</Link>
-          <Link href="/projetos" className="py-2 hover:text-blue-400 transition">Projetos</Link>
-          <Link href="/servicos" className="py-2 hover:text-blue-400 transition">Serviços</Link>
-          <Link href="/contato" className="py-2 hover:text-blue-400 transition">Contato</Link>
-          <Link href="/sobre" className="py-2 hover:text-blue-400 transition">Sobre</Link>
-
-          <div className="mt-4">
-            {session ? (
-              <button
-                onClick={() => signOut()}
-                className="w-full px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition"
-              >
-                Sair
-              </button>
-            ) : (
-              <button
-                onClick={() => signIn("google")}
-                className="w-full px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 transition"
-              >
-                Login com Google
-              </button>
-            )}
-          </div>
-        </nav>
-      </div>
+            <div className="mt-6">
+              {session ? (
+                <button
+                  onClick={() => { signOut(); setMobileOpen(false); }}
+                  className="w-full px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition"
+                >
+                  Sair
+                </button>
+              ) : (
+                <button
+                  onClick={() => { signIn("google"); setMobileOpen(false); }}
+                  className="w-full px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 transition"
+                >
+                  Login com Google
+                </button>
+              )}
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
