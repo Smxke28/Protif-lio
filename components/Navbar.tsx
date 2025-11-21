@@ -42,7 +42,6 @@ export default function Navbar() {
               className="relative px-2 py-1 text-gray-300 hover:text-white transition"
             >
               {item}
-              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
             </Link>
           ))}
 
@@ -56,7 +55,7 @@ export default function Navbar() {
               <span>▾</span>
             </Link>
             <div
-              className="absolute left-0 top-full mt-2 w-56 bg-gray-800 rounded-lg shadow-lg flex flex-col opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50"
+              className="absolute left-0 top-full mt-2 w-56 bg-gray-800 rounded-lg shadow-lg flex flex-col opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-50"
             >
               <Link href="/servicos/consultoria-hardware" className="px-4 py-2 hover:bg-gray-700">
                 Consultoria Hardware
@@ -97,51 +96,60 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Menu mobile */}
+      {/* Overlay + Menu mobile */}
       {mobileOpen && (
-        <nav
-          className="md:hidden bg-gray-900 flex flex-col gap-2 px-6 py-4 border-t border-gray-800 animate-slideDown"
-          aria-label="Menu mobile"
-        >
-          <Link href="/" className="py-2 hover:text-blue-400 transition">Home</Link>
-          <Link href="/projetos" className="py-2 hover:text-blue-400 transition">Projetos</Link>
+        <>
+          {/* Overlay escuro atrás do menu */}
+          <div
+            className="fixed inset-0 bg-black/50 md:hidden"
+            onClick={() => setMobileOpen(false)}
+          />
 
-          <div className="mt-2">
-            <Link href="/servicos" className="font-semibold mb-1 block">Serviços</Link>
-            <div className="flex flex-col rounded-lg overflow-hidden border border-gray-700">
-              <Link href="/servicos/consultoria-hardware" className="px-4 py-2 hover:bg-gray-800">
-                Consultoria Hardware
-              </Link>
-              <Link href="/servicos/desenvolvimento-web" className="px-4 py-2 hover:bg-gray-800">
-                Desenvolvimento Web
-              </Link>
-              <Link href="/servicos/montagem-pc" className="px-4 py-2 hover:bg-gray-800">
-                Montagem de PC
-              </Link>
+          {/* Menu mobile */}
+          <nav
+            className="md:hidden fixed top-14 left-0 w-full bg-gray-900 flex flex-col gap-2 px-6 py-4 border-t border-gray-800 transform transition-transform duration-300 ease-out translate-y-0 opacity-100 z-50"
+            aria-label="Menu mobile"
+          >
+            <Link href="/" className="py-2 hover:text-blue-400 transition">Home</Link>
+            <Link href="/projetos" className="py-2 hover:text-blue-400 transition">Projetos</Link>
+
+            <div className="mt-2">
+              <Link href="/servicos" className="font-semibold mb-1 block">Serviços</Link>
+              <div className="flex flex-col rounded-lg overflow-hidden border border-gray-700">
+                <Link href="/servicos/consultoria-hardware" className="px-4 py-2 hover:bg-gray-800">
+                  Consultoria Hardware
+                </Link>
+                <Link href="/servicos/desenvolvimento-web" className="px-4 py-2 hover:bg-gray-800">
+                  Desenvolvimento Web
+                </Link>
+                <Link href="/servicos/montagem-pc" className="px-4 py-2 hover:bg-gray-800">
+                  Montagem de PC
+                </Link>
+              </div>
             </div>
-          </div>
 
-          <Link href="/contato" className="py-2 hover:text-blue-400 transition">Contato</Link>
-          <Link href="/sobre" className="py-2 hover:text-blue-400 transition">Sobre</Link>
+            <Link href="/contato" className="py-2 hover:text-blue-400 transition">Contato</Link>
+            <Link href="/sobre" className="py-2 hover:text-blue-400 transition">Sobre</Link>
 
-          <div className="mt-4">
-            {session ? (
-              <button
-                onClick={() => signOut()}
-                className="w-full px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition shadow-md"
-              >
-                Sair
-              </button>
-            ) : (
-              <button
-                onClick={() => signIn("google")}
-                className="w-full px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 transition shadow-md"
-              >
-                Login com Google
-              </button>
-            )}
-          </div>
-        </nav>
+            <div className="mt-4">
+              {session ? (
+                <button
+                  onClick={() => signOut()}
+                  className="w-full px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition shadow-md"
+                >
+                  Sair
+                </button>
+              ) : (
+                <button
+                  onClick={() => signIn("google")}
+                  className="w-full px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 transition shadow-md"
+                >
+                  Login com Google
+                </button>
+              )}
+            </div>
+          </nav>
+        </>
       )}
     </header>
   );
