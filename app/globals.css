@@ -1,10 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* ----------------------------------------------------- */
-/* 🎨 Variáveis Globais (Light Mode)                     */
-/* ----------------------------------------------------- */
 :root {
   --font-sans: Arial, Helvetica, sans-serif;
   --font-mono: monospace;
@@ -23,9 +18,6 @@
   --transition: 0.25s ease;
 }
 
-/* ----------------------------------------------------- */
-/* 🌙 Variáveis para Dark Mode                           */
-/* ----------------------------------------------------- */
 html.dark {
   --foreground: #ececec;
   --background: #000000;
@@ -37,9 +29,7 @@ html.dark {
   --glass-bg-hover: rgba(255, 255, 255, 0.18);
 }
 
-/* ----------------------------------------------------- */
-/* 🧰 Base do Body                                       */
-/* ----------------------------------------------------- */
+
 body {
   font-family: var(--font-sans);
   background-color: var(--background);
@@ -49,9 +39,6 @@ body {
   min-height: 100%; /* já garante altura mínima */
 }
 
-/* ----------------------------------------------------- */
-/* 🧊 Estilo Glass Moderno para Itens do Menu            */
-/* ----------------------------------------------------- */
 .menu-modern {
   @apply flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium;
 
