@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   Menu as MenuIcon,
@@ -18,16 +18,18 @@ import {
 
 export default function SlideMenu() {
   const pathname = usePathname();
-  const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [openServices, setOpenServices] = useState(false); // SUBMENU CONTROLADO
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
+
   useEffect(() => {
     const saved = localStorage.getItem("theme") as "light" | "dark" | null;
     setTheme(saved || "light");
   }, []);
+
   useEffect(() => {
     if (!mounted) return;
     const root = document.documentElement;
@@ -40,25 +42,6 @@ export default function SlideMenu() {
 
   function closeMenu() {
     setOpen(false);
-  }
-
-  // Agora esse método só serve para âncoras na página inicial
-  function handleAnchorClick(e: React.MouseEvent, hash: string) {
-    // se estiver na home → scroll suave
-    if (pathname === "/") {
-      e.preventDefault();
-      const el = document.getElementById(hash);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-      closeMenu();
-      return;
-    }
-
-    // se estiver fora da home → manda para home e ancora
-    e.preventDefault();
-    closeMenu();
-    router.push("/#" + hash);
   }
 
   return (
@@ -112,7 +95,6 @@ export default function SlideMenu() {
         {/* MENU */}
         <nav className="flex flex-col gap-2">
 
-          {/* Página Inicial */}
           <MenuItem
             href="/"
             title="Página Inicial"
@@ -120,7 +102,6 @@ export default function SlideMenu() {
             onClick={closeMenu}
           />
 
-          {/* Projetos → agora página normal */}
           <MenuItem
             href="/projetos"
             title="Projetos"
@@ -128,15 +109,17 @@ export default function SlideMenu() {
             onClick={closeMenu}
           />
 
-          {/* Serviços → AGORA FUNCIONA CORRETAMENTE */}
-          <MenuItem
-            href="/servicos"
-            title="Serviços"
-            icon={<Briefcase className="w-4 h-4" />}
-            onClick={closeMenu}
-          />
+          {/* BOTÃO SERVIÇOS → AGORA EXPANDE */}
+          <button
+            onClick={() => setOpenServices(!openServices)}
+            className="menu-modern flex items-center gap-2"
+          >
+            <Briefcase className="w-4 h-4" />
+            Serviços
+          </button>
 
-          {pathname?.startsWith("/servicos") && (
+          {/* SUBMENU */}
+          {openServices && (
             <motion.div
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
@@ -160,7 +143,6 @@ export default function SlideMenu() {
             </motion.div>
           )}
 
-          {/* Contato */}
           <MenuItem
             href="/contato"
             title="Contato"
@@ -168,13 +150,13 @@ export default function SlideMenu() {
             onClick={closeMenu}
           />
 
-          {/* Sobre */}
           <MenuItem
             href="/sobre"
             title="Sobre"
             icon={<User className="w-4 h-4" />}
             onClick={closeMenu}
           />
+
         </nav>
 
         {/* BOTÃO TEMA */}
@@ -198,18 +180,8 @@ export default function SlideMenu() {
   );
 }
 
-/* COMPONENTE ITEM DO MENU */
-function MenuItem({
-  href,
-  title,
-  icon,
-  onClick,
-}: {
-  href: string;
-  title: string;
-  icon?: React.ReactNode;
-  onClick?: () => void;
-}) {
+/* COMPONENTE DE ITEM */
+function MenuItem({ href, title, icon, onClick }: any) {
   return (
     <Link href={href} onClick={onClick} className="menu-modern">
       {icon}
@@ -217,3 +189,4 @@ function MenuItem({
     </Link>
   );
 }
+

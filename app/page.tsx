@@ -1,5 +1,7 @@
 "use client";
+
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
@@ -21,19 +23,24 @@ export default function Home() {
           Sou Juan, desenvolvedor web e consultor em TI. Aqui você encontra meus
           serviços, projetos e formas de contato.
         </p>
+
+        {/* BOTÕES AJUSTADOS */}
         <div className="flex gap-6">
-          <a
-            href="#servicos"
+          {/* Correto → leva para /servicos */}
+          <Link
+            href="/servicos"
             className="px-6 py-3 rounded-lg bg-white text-black font-semibold shadow hover:bg-gray-200 transition"
           >
             Ver Serviços
-          </a>
-          <a
-            href="#projetos"
+          </Link>
+
+          {/* Correto → leva para /projetos */}
+          <Link
+            href="/projetos"
             className="px-6 py-3 rounded-lg bg-gray-800 text-white font-semibold shadow hover:bg-gray-700 transition"
           >
             Meus Projetos
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -42,6 +49,7 @@ export default function Home() {
         <section id="servicos" className="mb-20">
           <h2 className="text-3xl font-bold text-center mb-12">Serviços</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
             {/* Card 1 */}
             <article className="p-6 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 shadow-lg hover:shadow-xl hover:border-blue-500 transition">
               <h3 className="text-xl font-semibold mb-3 text-white">💻 Desenvolvimento Web</h3>
@@ -81,6 +89,7 @@ export default function Home() {
                 Monitoramento e suporte técnico para manter sistemas sempre ativos.
               </p>
             </article>
+
           </div>
         </section>
 
@@ -88,6 +97,7 @@ export default function Home() {
         <section id="projetos" className="mb-20">
           <h2 className="text-3xl font-bold text-center mb-12">Projetos</h2>
           <div className="grid gap-8 md:grid-cols-3">
+
             <article className="p-6 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 shadow-lg hover:shadow-xl hover:border-blue-500 transition">
               <h3 className="text-lg font-semibold mb-3 text-white">Projeto CS2</h3>
               <p className="text-sm mb-4 text-gray-400">
@@ -117,6 +127,7 @@ export default function Home() {
                 Dashboard interativo para análise de dados em tempo real.
               </p>
             </article>
+
           </div>
         </section>
 
@@ -126,6 +137,7 @@ export default function Home() {
           <p className="text-center mb-6 text-gray-400">
             Entre em contato para discutir projetos ou consultoria.
           </p>
+
           <div className="flex justify-center gap-6">
             <a
               href="mailto:juanlavecchia23@gmail.com"
