@@ -42,17 +42,20 @@ export default function SlideMenu() {
     setOpen(false);
   }
 
+  // Agora esse método só serve para âncoras na página inicial
   function handleAnchorClick(e: React.MouseEvent, hash: string) {
+    // se estiver na home → scroll suave
     if (pathname === "/") {
       e.preventDefault();
       const el = document.getElementById(hash);
       if (el) {
         el.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else router.push("/#" + hash);
+      }
       closeMenu();
       return;
     }
 
+    // se estiver fora da home → manda para home e ancora
     e.preventDefault();
     closeMenu();
     router.push("/#" + hash);
@@ -108,6 +111,8 @@ export default function SlideMenu() {
 
         {/* MENU */}
         <nav className="flex flex-col gap-2">
+
+          {/* Página Inicial */}
           <MenuItem
             href="/"
             title="Página Inicial"
@@ -115,16 +120,15 @@ export default function SlideMenu() {
             onClick={closeMenu}
           />
 
-          {/* Projetos (âNCORA) */}
-          <a
+          {/* Projetos → agora página normal */}
+          <MenuItem
             href="/projetos"
-            onClick={(e) => handleAnchorClick(e, "projetos")}
-            className="menu-modern"
-          >
-            <Folder className="w-4 h-4" />
-            Projetos
-          </a>
+            title="Projetos"
+            icon={<Folder className="w-4 h-4" />}
+            onClick={closeMenu}
+          />
 
+          {/* Serviços → AGORA FUNCIONA CORRETAMENTE */}
           <MenuItem
             href="/servicos"
             title="Serviços"
@@ -141,15 +145,22 @@ export default function SlideMenu() {
               <MenuItem
                 href="/servicos/desenvolvimento-web"
                 title="Desenvolvimento Web"
+                onClick={closeMenu}
               />
               <MenuItem
                 href="/servicos/consultoria-hardware"
                 title="Consultoria em Hardware"
+                onClick={closeMenu}
               />
-              <MenuItem href="/servicos/montagem-pc" title="Montagem de PCs" />
+              <MenuItem
+                href="/servicos/montagem-pc"
+                title="Montagem de PCs"
+                onClick={closeMenu}
+              />
             </motion.div>
           )}
 
+          {/* Contato */}
           <MenuItem
             href="/contato"
             title="Contato"
@@ -157,6 +168,7 @@ export default function SlideMenu() {
             onClick={closeMenu}
           />
 
+          {/* Sobre */}
           <MenuItem
             href="/sobre"
             title="Sobre"
