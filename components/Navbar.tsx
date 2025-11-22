@@ -19,10 +19,9 @@ export default function Navbar() {
   const { data: session } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // controla submenu "Serviços"
   const [submenuOpen, setSubmenuOpen] = useState(false);
 
-  // timer para evitar fechar instantaneamente (debounce)
+
   const closeTimerRef = useRef<number | null>(null);
 
   // limpa timer ao desmontar
