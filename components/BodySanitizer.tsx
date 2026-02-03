@@ -1,4 +1,3 @@
-// components/BodySanitizer.tsx
 'use client';
 
 import { useEffect } from 'react';
@@ -14,7 +13,6 @@ export default function BodySanitizer() {
         }
       }
     } catch (e) {
-      // silencioso em ambientes restritos
     }
   }, []);
 

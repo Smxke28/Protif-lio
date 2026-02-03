@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
+import Link from 'next/link';
 
 export default function DesenvolvimentoWeb() {
   return (
-    <div
+    <main
       className="flex flex-col min-h-screen bg-cover bg-center font-sans"
       style={{ backgroundImage: "url('/linha.jpeg')" }}
     >
@@ -27,14 +28,14 @@ export default function DesenvolvimentoWeb() {
               Páginas institucionais com foco em identidade visual, usabilidade e apresentação
               profissional da empresa ou projeto.
             </p>
-            <a
+            <Link
               href="/contato"
               className="inline-block w-full text-center px-4 py-2 rounded-md text-white font-medium
                 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition"
               aria-label="Solicitar site institucional"
             >
               Solicitar site institucional
-            </a>
+            </Link>
           </article>
 
           <article className="p-6 rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col">
@@ -43,14 +44,14 @@ export default function DesenvolvimentoWeb() {
               Lojas virtuais personalizadas, integração com gateways de pagamento, painel de
               administração e otimização para conversão.
             </p>
-            <a
+            <Link
               href="/contato"
               className="inline-block w-full text-center px-4 py-2 rounded-md text-white font-medium
                 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-700 hover:to-indigo-600 transition"
               aria-label="Solicitar e-commerce"
             >
               Solicitar e‑commerce
-            </a>
+            </Link>
           </article>
 
           <article className="p-6 rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col">
@@ -59,14 +60,14 @@ export default function DesenvolvimentoWeb() {
               Páginas otimizadas para campanhas, captação de leads e testes A/B com foco em
               performance e conversão.
             </p>
-            <a
+            <Link
               href="/contato"
               className="inline-block w-full text-center px-4 py-2 rounded-md text-white font-medium
                 bg-gradient-to-r from-pink-600 to-pink-500 hover:from-pink-700 hover:to-pink-600 transition"
               aria-label="Solicitar landing page"
             >
               Solicitar landing page
-            </a>
+            </Link>
           </article>
 
           <article className="p-6 rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col">
@@ -75,14 +76,14 @@ export default function DesenvolvimentoWeb() {
               Desenvolvimento de APIs REST/GraphQL, integrações com bancos de dados (MySQL/Postgres)
               e serviços externos (pagamentos, autenticação, etc.).
             </p>
-            <a
+            <Link
               href="/contato"
               className="inline-block w-full text-center px-4 py-2 rounded-md text-white font-medium
                 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 transition"
               aria-label="Solicitar APIs e integrações"
             >
               Solicitar APIs
-            </a>
+            </Link>
           </article>
 
           <article className="p-6 rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col">
@@ -91,14 +92,14 @@ export default function DesenvolvimentoWeb() {
               Otimização de performance, melhores práticas de SEO técnico e carregamento rápido
               para melhorar experiência do usuário e posicionamento.
             </p>
-            <a
+            <Link
               href="/contato"
               className="inline-block w-full text-center px-4 py-2 rounded-md text-white font-medium
                 bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-700 hover:to-yellow-600 transition"
               aria-label="Solicitar otimização de performance"
             >
               Otimização e SEO
-            </a>
+            </Link>
           </article>
 
           <article className="p-6 rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col">
@@ -107,14 +108,14 @@ export default function DesenvolvimentoWeb() {
               Suporte a deploys (Vercel, Netlify, servidores), monitoramento e manutenção contínua
               para manter aplicações estáveis e atualizadas.
             </p>
-            <a
+            <Link
               href="/contato"
               className="inline-block w-full text-center px-4 py-2 rounded-md text-white font-medium
                 bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-700 hover:to-rose-600 transition"
               aria-label="Solicitar manutenção e deploy"
             >
               Manutenção e deploy
-            </a>
+            </Link>
           </article>
         </div>
       </section>
@@ -157,14 +158,14 @@ export default function DesenvolvimentoWeb() {
           <p className="text-gray-700 dark:text-gray-300 mb-6">
             Se você tem um projeto ou precisa de uma solução web, entre em contato para conversarmos sobre requisitos e orçamento.
           </p>
-          <a
+          <Link
             href="/contato"
             className="inline-block px-6 py-3 rounded-md text-white font-medium
               bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition"
             aria-label="Ir para página de contato"
           >
             Entrar em contato
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -172,6 +173,6 @@ export default function DesenvolvimentoWeb() {
       <footer className="w-full py-6 text-center text-sm text-white mt-auto bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700">
         © {new Date().getFullYear()} Juan • Desenvolvimento Web
       </footer>
-    </div>
+    </main>
   );
 }

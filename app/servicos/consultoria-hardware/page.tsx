@@ -1,23 +1,27 @@
-"use client";
+'use client';
 
-import Image from "next/image";
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 
-export default function ConsultoriaHardware() {
+export default function ConsultoriaMontagemPage() {
   return (
-    <div className="relative min-h-[60vh] font-sans">
-      {/* Imagem de fundo mont2.png */}
+    <main className="relative min-h-[60vh] font-sans">
+      {/* Imagem de fundo Mont2.png */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/Mont2.png')" }}
+        aria-hidden="true"
       />
-      {/* Overlay escuro*/}
+
+      {/* Overlay escuro */}
       <div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
 
       {/* Conteúdo principal */}
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Hero Section */}
         <header className="flex flex-col items-center justify-center text-center p-12">
-          <h1 className="text-4xl font-bold text-white mb-6">Consultoria de Hardware</h1>
+          <h1 className="text-4xl font-bold text-white mb-6">Consultoria & Montagem</h1>
           <p className="text-lg text-gray-200 max-w-2xl">
             Orientação especializada na escolha de componentes e soluções de hardware para cada necessidade.
           </p>
@@ -34,7 +38,7 @@ export default function ConsultoriaHardware() {
               </p>
             </div>
 
-            {/* Upgrade de Hardware com imagem mont1.png */}
+            {/* Upgrade de Hardware com imagem Mont1.png */}
             <div className="rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white overflow-hidden hover:scale-105 transition-transform">
               <div className="relative h-40 w-full">
                 <Image
@@ -42,6 +46,7 @@ export default function ConsultoriaHardware() {
                   alt="Upgrade de Hardware"
                   fill
                   className="object-cover"
+                  priority
                 />
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                   <h3 className="text-xl font-semibold text-white">Upgrade de Hardware</h3>
@@ -67,11 +72,38 @@ export default function ConsultoriaHardware() {
           </div>
         </section>
 
+        {/* CTA e links úteis */}
+        <section className="py-8">
+          <div className="max-w-5xl mx-auto px-6 text-center">
+            <p className="text-gray-200 mb-6">
+              Quer um orçamento ou uma análise personalizada? Solicite uma avaliação.
+            </p>
+
+            <div className="flex justify-center gap-4">
+              <Link
+                href="/contato"
+                className="inline-block px-6 py-3 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-500 transition"
+                aria-label="Ir para contato"
+              >
+                Solicitar orçamento
+              </Link>
+
+              <Link
+                href="/servicos"
+                className="inline-block px-6 py-3 rounded-md bg-gray-800 text-white font-medium hover:bg-gray-700 transition"
+                aria-label="Voltar para serviços"
+              >
+                Ver outros serviços
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* Rodapé */}
         <footer className="w-full py-6 text-center text-sm text-white mt-auto bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700">
-          © {new Date().getFullYear()} Juan • Consultoria de Hardware
+          © {new Date().getFullYear()} Juan • Consultoria & Montagem
         </footer>
       </div>
-    </div>
+    </main>
   );
 }

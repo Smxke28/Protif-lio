@@ -2,11 +2,10 @@ import Link from "next/link";
 
 export default function ServicosPage() {
   return (
-    <div
+    <main
       className="relative min-h-[60vh] bg-cover bg-center"
       style={{ backgroundImage: "url('/serv1.jpg')" }}
     >
-      {/* Overlay escuro para dar contraste */}
       <div className="absolute inset-0 bg-black/70" />
 
       {/* Conteúdo principal */}
@@ -21,8 +20,9 @@ export default function ServicosPage() {
         <div className="grid gap-6 md:grid-cols-3">
           {/* Desenvolvimento Web */}
           <Link
-            href="/servicos/desenvolvimento-web"
+            href="/desenvolvimento-web"
             className="p-6 rounded-lg bg-gradient-to-br from-blue-950 via-black to-black shadow-lg hover:scale-105 transition-transform block"
+            aria-label="Ir para Desenvolvimento Web"
           >
             <h2 className="text-xl font-semibold mb-3">Desenvolvimento Web</h2>
             <p className="text-sm leading-relaxed">
@@ -35,12 +35,13 @@ export default function ServicosPage() {
             </p>
           </Link>
 
-          {/* Consultoria em Hardware */}
+          {/* Consultoria e Montagem */}
           <Link
-            href="/servicos/consultoria-hardware"
+            href="/consultoria-montagem"
             className="p-6 rounded-lg bg-gradient-to-br from-blue-950 via-black to-black shadow-lg hover:scale-105 transition-transform block"
+            aria-label="Ir para Consultoria e Montagem"
           >
-            <h2 className="text-xl font-semibold mb-3">Consultoria em Hardware</h2>
+            <h2 className="text-xl font-semibold mb-3">Consultoria & Montagem</h2>
             <p className="text-sm leading-relaxed">
               Orientação especializada na escolha de componentes e soluções de
               hardware, garantindo compatibilidade, desempenho e custo-benefício.
@@ -50,23 +51,23 @@ export default function ServicosPage() {
             </p>
           </Link>
 
-          {/* Montagem de PCs */}
+          {/* Manutenção e Suporte */}
           <Link
-            href="/servicos/montagem-pc"
+            href="/manutencao-suporte"
             className="p-6 rounded-lg bg-gradient-to-br from-blue-950 via-black to-black shadow-lg hover:scale-105 transition-transform block"
+            aria-label="Ir para Manutenção e Suporte"
           >
-            <h2 className="text-xl font-semibold mb-3">Montagem de PCs</h2>
+            <h2 className="text-xl font-semibold mb-3">Manutenção & Suporte</h2>
             <p className="text-sm leading-relaxed">
-              Montagem personalizada de computadores sob medida para gamers,
-              criadores de conteúdo e profissionais.
+              Serviços de manutenção preventiva e corretiva, suporte remoto e
+              presencial para manter sistemas e equipamentos funcionando.
             </p>
             <p className="mt-2 text-sm opacity-90">
-              Acompanho todo o processo: da escolha dos componentes até a entrega
-              do PC pronto para uso.
+              Planos de atendimento, recuperação de dados e otimização de desempenho.
             </p>
           </Link>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

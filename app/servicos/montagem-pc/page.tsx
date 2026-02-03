@@ -1,13 +1,15 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Image from "next/image";
+import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 
-export default function MontagemPC() {
+export default function MontagemPCPage() {
   const [showConfig, setShowConfig] = useState(false);
 
   return (
-    <div className="flex flex-col min-h-screen font-sans bg-black">
+    <main className="flex flex-col min-h-screen font-sans bg-black">
       {/* Hero Section */}
       <header className="flex flex-col items-center justify-center text-center bg-black/50 p-12">
         <h1 className="text-4xl font-bold text-white mb-6">Montagem de PCs</h1>
@@ -21,21 +23,31 @@ export default function MontagemPC() {
       <section className="py-16">
         <div className="max-w-5xl mx-auto px-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* PC Profissional */}
-          <div className="p-6 rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white hover:scale-105 transition-transform">
+          <article className="p-6 rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white hover:scale-105 transition-transform">
             <h3 className="text-xl font-semibold mb-4">PC Profissional</h3>
             <p className="text-sm leading-relaxed">
               Máquinas otimizadas para edição de vídeo, design gráfico e programação.
             </p>
-          </div>
+            <div className="mt-4">
+              <Link
+                href="/contato"
+                className="inline-block px-4 py-2 rounded bg-blue-600 text-white text-sm"
+                aria-label="Solicitar PC profissional"
+              >
+                Solicitar orçamento
+              </Link>
+            </div>
+          </article>
 
           {/* PC Gamer com imagem */}
-          <div className="rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white overflow-hidden hover:scale-105 transition-transform">
+          <article className="rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white overflow-hidden hover:scale-105 transition-transform">
             <div className="relative h-40 w-full">
               <Image
                 src="/central.jpg"
                 alt="PC Gamer"
                 fill
                 className="object-cover"
+                priority
               />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                 <h3 className="text-xl font-semibold text-white">PC Gamer</h3>
@@ -45,24 +57,43 @@ export default function MontagemPC() {
               <p className="text-sm leading-relaxed">
                 Montagem de computadores voltados para jogos, com foco em performance gráfica e velocidade.
               </p>
+              <div className="mt-4">
+                <Link
+                  href="/contato"
+                  className="inline-block px-4 py-2 rounded bg-purple-600 text-white text-sm"
+                  aria-label="Solicitar PC gamer"
+                >
+                  Solicitar orçamento
+                </Link>
+              </div>
             </div>
-          </div>
+          </article>
 
           {/* PC para Escritório */}
-          <div className="p-6 rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white hover:scale-105 transition-transform">
+          <article className="p-6 rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white hover:scale-105 transition-transform">
             <h3 className="text-xl font-semibold mb-4">PC para Escritório</h3>
             <p className="text-sm leading-relaxed">
               Computadores econômicos e eficientes para tarefas administrativas e uso corporativo.
             </p>
-          </div>
+            <div className="mt-4">
+              <Link
+                href="/contato"
+                className="inline-block px-4 py-2 rounded bg-emerald-600 text-white text-sm"
+                aria-label="Solicitar PC para escritório"
+              >
+                Solicitar orçamento
+              </Link>
+            </div>
+          </article>
         </div>
       </section>
 
       {/* Botão de configuração no final da página */}
-      <section className="mt-auto py-12 px-6 max-w-3xl mx-auto text-center">
+      <section className="py-12 px-6 max-w-3xl mx-auto text-center">
         <button
           onClick={() => setShowConfig(!showConfig)}
           className="w-full py-4 rounded-lg font-semibold text-white bg-gradient-to-r from-blue-950 via-blue-900 to-blue-800 hover:scale-105 transition-transform"
+          aria-expanded={showConfig}
         >
           Quer saber minha configuração?
         </button>
@@ -83,6 +114,15 @@ export default function MontagemPC() {
               <li>Headset: Havit HV-H2002D</li>
               <li>Microfone: Fifine A6T</li>
             </ul>
+            <div className="mt-4">
+              <Link
+                href="/servicos"
+                className="inline-block px-4 py-2 rounded bg-gray-800 text-white text-sm"
+                aria-label="Voltar para serviços"
+              >
+                Voltar para serviços
+              </Link>
+            </div>
           </div>
         )}
       </section>
@@ -91,6 +131,6 @@ export default function MontagemPC() {
       <footer className="w-full py-6 text-center text-sm text-white bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700">
         © {new Date().getFullYear()} Juan • Montagem de PCs
       </footer>
-    </div>
+    </main>
   );
 }

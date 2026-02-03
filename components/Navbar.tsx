@@ -78,7 +78,7 @@ export default function Navbar() {
             Projetos
           </Link>
 
-          {/* Serviços com submenu — Lidar com hover (mouse enter/leave) */}
+          {/* Serviços com submenu */}
           <div
             className="relative"
             onMouseEnter={openSubmenu}
@@ -93,7 +93,7 @@ export default function Navbar() {
               <span className="text-xs text-gray-400">▾</span>
             </Link>
 
-            {/* Submenu: fica visível enquanto submenuOpen === true */}
+            {/* Submenu:*/}
             <div
               onMouseEnter={openSubmenu}
               onMouseLeave={() => closeSubmenuWithDelay(180)}

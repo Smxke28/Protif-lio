@@ -109,7 +109,7 @@ export default function SlideMenu() {
             onClick={closeMenu}
           />
 
-          {/* BOTÃO SERVIÇOS → AGORA EXPANDE */}
+          {/* BOTÃO SERVIÇOS → EXPANDE */}
           <button
             onClick={() => setOpenServices(!openServices)}
             className="menu-modern flex items-center gap-2"
