@@ -37,7 +37,7 @@ export default function Home() {
 
             <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
               Desenvolvedor web e consultor em TI. Eu transformo ideias em produtos digitais
-              funcionais e entrego soluções de hardware sob medida.
+              funcionais.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-4 justify-center">

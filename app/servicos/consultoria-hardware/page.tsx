@@ -2,108 +2,196 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import { motion } from 'framer-motion';
 
 export default function ConsultoriaMontagemPage() {
   return (
-    <main className="relative min-h-[60vh] font-sans">
-      {/* Imagem de fundo Mont2.png */}
+    <main className="relative min-h-screen text-gray-100 overflow-hidden">
+      {/* BACKGROUND */}
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center scale-105"
         style={{ backgroundImage: "url('/Mont2.png')" }}
-        aria-hidden="true"
+        aria-hidden
       />
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
 
-      {/* Overlay escuro */}
-      <div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
-
-      {/* Conteúdo principal */}
+      {/* CONTENT */}
       <div className="relative z-10 flex flex-col min-h-screen">
-        {/* Hero Section */}
-        <header className="flex flex-col items-center justify-center text-center p-12">
-          <h1 className="text-4xl font-bold text-white mb-6">Consultoria & Montagem</h1>
-          <p className="text-lg text-gray-200 max-w-2xl">
-            Orientação especializada na escolha de componentes e soluções de hardware para cada necessidade.
+        {/* HERO */}
+        <motion.header
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="pt-32 pb-24 px-6 text-center max-w-4xl mx-auto"
+        >
+          <span className="inline-block mb-5 px-4 py-1 text-sm rounded-full
+            bg-white/5 border border-white/10 text-gray-300">
+            Serviços
+          </span>
+
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-6
+            bg-gradient-to-r from-white to-gray-400
+            bg-clip-text text-transparent">
+            Consultoria & Montagem
+          </h1>
+
+          <p className="text-lg text-gray-300 leading-relaxed">
+            Orientação especializada para escolha, montagem e upgrade de hardware,
+            garantindo compatibilidade, desempenho e eficiência.
           </p>
-        </header>
+        </motion.header>
 
-        {/* Seção de tópicos */}
-        <section className="py-16">
-          <div className="max-w-5xl mx-auto px-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Análise de Compatibilidade */}
-            <div className="p-6 rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white hover:scale-105 transition-transform">
-              <h3 className="text-xl font-semibold mb-4">Análise de Compatibilidade</h3>
-              <p className="text-sm leading-relaxed">
-                Verificação de compatibilidade entre processadores, placas-mãe, memórias e outros componentes.
-              </p>
-            </div>
+        {/* SERVIÇOS */}
+        <section className="pb-28 px-6">
+          <div className="max-w-7xl mx-auto grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            {/* CARD 1 */}
+            <ServicoCard
+              titulo="Análise de Compatibilidade"
+              descricao="Avaliação completa entre processadores, placas-mãe, memórias, fontes e periféricos."
+              tags={['Compatibilidade', 'Estabilidade', 'Planejamento']}
+            />
 
-            {/* Upgrade de Hardware com imagem Mont1.png */}
-            <div className="rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white overflow-hidden hover:scale-105 transition-transform">
-              <div className="relative h-40 w-full">
-                <Image
-                  src="/Mont1.png"
-                  alt="Upgrade de Hardware"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <h3 className="text-xl font-semibold text-white">Upgrade de Hardware</h3>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-sm leading-relaxed">
-                  Consultoria para atualização de máquinas existentes, aumentando desempenho sem desperdício.
-                </p>
-                <p className="mt-2 text-xs opacity-80">
-                  Inclui análise de compatibilidade, escolha de peças ideais e suporte na instalação.
-                </p>
-              </div>
-            </div>
+            {/* CARD 2 COM IMAGEM */}
+            <ServicoImagemCard />
 
-            {/* Eficiência Energética */}
-            <div className="p-6 rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white hover:scale-105 transition-transform">
-              <h3 className="text-xl font-semibold mb-4">Eficiência Energética</h3>
-              <p className="text-sm leading-relaxed">
-                Escolha de componentes que equilibram performance e consumo energético.
-              </p>
-            </div>
+            {/* CARD 3 */}
+            <ServicoCard
+              titulo="Eficiência Energética"
+              descricao="Escolha inteligente de componentes que equilibram consumo, performance e durabilidade."
+              tags={['Consumo', 'Fonte', 'Sustentabilidade']}
+            />
           </div>
         </section>
 
-        {/* CTA e links úteis */}
-        <section className="py-8">
-          <div className="max-w-5xl mx-auto px-6 text-center">
-            <p className="text-gray-200 mb-6">
-              Quer um orçamento ou uma análise personalizada? Solicite uma avaliação.
-            </p>
+        {/* CTA */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="pb-24 px-6 text-center"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            Precisa de uma análise personalizada?
+          </h2>
 
-            <div className="flex justify-center gap-4">
-              <Link
-                href="/contato"
-                className="inline-block px-6 py-3 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-500 transition"
-                aria-label="Ir para contato"
-              >
-                Solicitar orçamento
-              </Link>
+          <p className="text-gray-400 mb-10 max-w-xl mx-auto">
+            Me diga seu objetivo e eu te ajudo a montar ou evoluir seu setup da forma certa.
+          </p>
 
-              <Link
-                href="/servicos"
-                className="inline-block px-6 py-3 rounded-md bg-gray-800 text-white font-medium hover:bg-gray-700 transition"
-                aria-label="Voltar para serviços"
-              >
-                Ver outros serviços
-              </Link>
-            </div>
+          <div className="flex justify-center gap-4 flex-wrap">
+            <Link
+              href="/contato"
+              className="px-8 py-4 rounded-xl font-semibold
+              bg-white text-black hover:bg-gray-200 transition shadow-lg"
+            >
+              Solicitar orçamento →
+            </Link>
+
+            <Link
+              href="/servicos"
+              className="px-8 py-4 rounded-xl font-semibold
+              bg-white/5 border border-white/10
+              text-white hover:bg-white/10 transition"
+            >
+              Ver outros serviços
+            </Link>
           </div>
-        </section>
+        </motion.section>
 
-        {/* Rodapé */}
-        <footer className="w-full py-6 text-center text-sm text-white mt-auto bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700">
+        {/* FOOTER */}
+        <footer className="mt-auto py-6 text-center text-sm text-gray-400
+          border-t border-white/10 bg-black/40">
           © {new Date().getFullYear()} Juan • Consultoria & Montagem
         </footer>
       </div>
     </main>
+  );
+}
+
+/* ================= COMPONENTES ================= */
+
+function ServicoCard({
+  titulo,
+  descricao,
+  tags,
+}: {
+  titulo: string;
+  descricao: string;
+  tags: string[];
+}) {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4 }}
+      className="relative p-7 rounded-2xl
+      bg-gradient-to-br from-gray-900 to-gray-800
+      border border-gray-800 shadow-lg
+      hover:-translate-y-1 transition-all"
+    >
+      <h3 className="text-2xl font-semibold mb-4">
+        {titulo}
+      </h3>
+
+      <p className="text-sm text-gray-400 leading-relaxed mb-6">
+        {descricao}
+      </p>
+
+      <div className="flex flex-wrap gap-2">
+        {tags.map(tag => (
+          <span
+            key={tag}
+            className="px-3 py-1 text-xs rounded-full
+            bg-white/5 border border-white/10 text-gray-300"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </motion.article>
+  );
+}
+
+function ServicoImagemCard() {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4 }}
+      className="rounded-2xl overflow-hidden
+      bg-gradient-to-br from-gray-900 to-gray-800
+      border border-gray-800 shadow-lg
+      hover:-translate-y-1 transition-all"
+    >
+      <div className="relative h-44 w-full">
+        <Image
+          src="/Mont1.png"
+          alt="Upgrade de Hardware"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+          <h3 className="text-2xl font-semibold">
+            Upgrade de Hardware
+          </h3>
+        </div>
+      </div>
+
+      <div className="p-7">
+        <p className="text-sm text-gray-400 leading-relaxed mb-3">
+          Atualização inteligente de máquinas existentes para extrair
+          o máximo desempenho sem gastos desnecessários.
+        </p>
+
+        <p className="text-xs text-gray-500">
+          Inclui análise de compatibilidade, recomendação de peças
+          e suporte na instalação.
+        </p>
+      </div>
+    </motion.article>
   );
 }

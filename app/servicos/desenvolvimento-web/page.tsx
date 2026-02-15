@@ -1,178 +1,183 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
+import { motion } from 'framer-motion';
 
-export default function DesenvolvimentoWeb() {
+export default function DesenvolvimentoWebPage() {
   return (
-    <main
-      className="flex flex-col min-h-screen bg-cover bg-center font-sans"
-      style={{ backgroundImage: "url('/linha.jpeg')" }}
+    <section
+      className="min-h-screen pt-32 pb-24 px-6
+      bg-gradient-to-b from-black via-gray-950 to-black
+      text-gray-100"
     >
-      {/* Hero */}
-      <header className="flex flex-col items-center justify-center text-center bg-black/60 p-12">
-        <h1 className="text-4xl font-bold text-white mb-4">Desenvolvimento Web</h1>
-        <p className="text-lg text-gray-200 max-w-2xl">
-          Desenvolvimento de aplicações web modernas, responsivas e performáticas. Trabalho com
-          front-end, back-end e integrações para transformar ideias em produtos digitais
-          funcionais e escaláveis.
+      {/* HEADER */}
+      <motion.header
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-4xl mx-auto text-center mb-24"
+      >
+        <span className="inline-block mb-4 px-4 py-1 rounded-full text-sm
+          bg-white/5 border border-white/10 text-gray-300">
+          Serviços
+        </span>
+
+        <h1
+          className="text-5xl md:text-6xl font-extrabold mb-6
+          bg-gradient-to-r from-white to-gray-400
+          bg-clip-text text-transparent"
+        >
+          Desenvolvimento Web
+        </h1>
+
+        <p className="text-lg text-gray-400 leading-relaxed">
+          Criação de soluções web modernas, rápidas e escaláveis,
+          com foco em experiência do usuário, performance e resultados.
         </p>
-      </header>
+      </motion.header>
 
-      {/* Serviços principais */}
-      <section className="py-16 bg-white/90 dark:bg-black/70">
-        <div className="max-w-5xl mx-auto px-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          <article className="p-6 rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col">
-            <h3 className="text-xl font-semibold mb-3">Sites Institucionais</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">
-              Páginas institucionais com foco em identidade visual, usabilidade e apresentação
-              profissional da empresa ou projeto.
-            </p>
-            <Link
-              href="/contato"
-              className="inline-block w-full text-center px-4 py-2 rounded-md text-white font-medium
-                bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition"
-              aria-label="Solicitar site institucional"
-            >
-              Solicitar site institucional
-            </Link>
-          </article>
+      {/* GRID */}
+      <div className="max-w-7xl mx-auto grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        {servicos.map((servico, index) => (
+          <Servico key={index} {...servico} index={index} />
+        ))}
+      </div>
 
-          <article className="p-6 rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col">
-            <h3 className="text-xl font-semibold mb-3">E‑commerce</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">
-              Lojas virtuais personalizadas, integração com gateways de pagamento, painel de
-              administração e otimização para conversão.
-            </p>
-            <Link
-              href="/contato"
-              className="inline-block w-full text-center px-4 py-2 rounded-md text-white font-medium
-                bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-700 hover:to-indigo-600 transition"
-              aria-label="Solicitar e-commerce"
-            >
-              Solicitar e‑commerce
-            </Link>
-          </article>
+      {/* CTA FINAL */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4 }}
+        className="mt-28 text-center"
+      >
+        <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          Vamos começar seu projeto?
+        </h2>
 
-          <article className="p-6 rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col">
-            <h3 className="text-xl font-semibold mb-3">Landing Pages</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">
-              Páginas otimizadas para campanhas, captação de leads e testes A/B com foco em
-              performance e conversão.
-            </p>
-            <Link
-              href="/contato"
-              className="inline-block w-full text-center px-4 py-2 rounded-md text-white font-medium
-                bg-gradient-to-r from-pink-600 to-pink-500 hover:from-pink-700 hover:to-pink-600 transition"
-              aria-label="Solicitar landing page"
-            >
-              Solicitar landing page
-            </Link>
-          </article>
+        <p className="text-gray-400 mb-10 max-w-xl mx-auto">
+          Me conte sua ideia e eu retorno com a melhor solução possível.
+        </p>
 
-          <article className="p-6 rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col">
-            <h3 className="text-xl font-semibold mb-3">APIs e Integrações</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">
-              Desenvolvimento de APIs REST/GraphQL, integrações com bancos de dados (MySQL/Postgres)
-              e serviços externos (pagamentos, autenticação, etc.).
-            </p>
-            <Link
-              href="/contato"
-              className="inline-block w-full text-center px-4 py-2 rounded-md text-white font-medium
-                bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 transition"
-              aria-label="Solicitar APIs e integrações"
-            >
-              Solicitar APIs
-            </Link>
-          </article>
-
-          <article className="p-6 rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col">
-            <h3 className="text-xl font-semibold mb-3">Performance e SEO</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">
-              Otimização de performance, melhores práticas de SEO técnico e carregamento rápido
-              para melhorar experiência do usuário e posicionamento.
-            </p>
-            <Link
-              href="/contato"
-              className="inline-block w-full text-center px-4 py-2 rounded-md text-white font-medium
-                bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-700 hover:to-yellow-600 transition"
-              aria-label="Solicitar otimização de performance"
-            >
-              Otimização e SEO
-            </Link>
-          </article>
-
-          <article className="p-6 rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col">
-            <h3 className="text-xl font-semibold mb-3">Manutenção e Deploy</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">
-              Suporte a deploys (Vercel, Netlify, servidores), monitoramento e manutenção contínua
-              para manter aplicações estáveis e atualizadas.
-            </p>
-            <Link
-              href="/contato"
-              className="inline-block w-full text-center px-4 py-2 rounded-md text-white font-medium
-                bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-700 hover:to-rose-600 transition"
-              aria-label="Solicitar manutenção e deploy"
-            >
-              Manutenção e deploy
-            </Link>
-          </article>
-        </div>
-      </section>
-
-      {/* Tecnologias e fluxo de trabalho */}
-      <section className="py-12 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Tecnologias e fluxo</h2>
-          <p className="text-gray-700 dark:text-gray-300 mb-6">
-            Trabalho com Next.js, React, TypeScript, Tailwind CSS, Node.js e bancos relacionais (MySQL/Postgres).
-            Meu processo inclui levantamento de requisitos, prototipação, desenvolvimento iterativo, testes e deploy.
-          </p>
-
-          <div className="flex flex-wrap gap-3">
-            {[
-              "Next.js",
-              "React",
-              "TypeScript",
-              "Tailwind CSS",
-              "Node.js",
-              "MySQL",
-              "PostgreSQL",
-              "Vercel",
-            ].map((tech) => (
-              <span
-                key={tech}
-                className="px-3 py-1 rounded-full bg-gradient-to-r from-gray-200 to-gray-100 dark:from-gray-800 dark:to-gray-700 text-sm text-gray-800 dark:text-gray-100"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Chamada final para contato */}
-      <section className="py-12 bg-white/90 dark:bg-black/70">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h3 className="text-xl font-semibold mb-3">Pronto para começar?</h3>
-          <p className="text-gray-700 dark:text-gray-300 mb-6">
-            Se você tem um projeto ou precisa de uma solução web, entre em contato para conversarmos sobre requisitos e orçamento.
-          </p>
-          <Link
-            href="/contato"
-            className="inline-block px-6 py-3 rounded-md text-white font-medium
-              bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition"
-            aria-label="Ir para página de contato"
-          >
-            Entrar em contato
-          </Link>
-        </div>
-      </section>
-
-      {/* Rodapé */}
-      <footer className="w-full py-6 text-center text-sm text-white mt-auto bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700">
-        © {new Date().getFullYear()} Juan • Desenvolvimento Web
-      </footer>
-    </main>
+        <a
+          href="/contato"
+          className="inline-flex items-center gap-2
+          px-10 py-4 rounded-xl font-semibold text-lg
+          bg-white text-black hover:bg-gray-200
+          transition shadow-lg"
+        >
+          Entrar em contato →
+        </a>
+      </motion.div>
+    </section>
   );
 }
+
+/* ================= CARD ================= */
+
+function Servico({
+  titulo,
+  descricao,
+  tecnologias,
+  botao,
+  index,
+}: any) {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.08 }}
+      className="group relative rounded-2xl p-7
+      bg-gradient-to-br from-gray-900 to-gray-800
+      border border-gray-800
+      shadow-lg hover:shadow-xl
+      transition-all duration-300
+      hover:-translate-y-1"
+    >
+      <h3 className="text-2xl font-semibold mb-3 text-white">
+        {titulo}
+      </h3>
+
+      <p className="text-sm text-gray-400 leading-relaxed mb-6">
+        {descricao}
+      </p>
+
+      {/* TAGS */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        {tecnologias.map((tech: string) => (
+          <span
+            key={tech}
+            className="px-3 py-1 text-xs rounded-full
+            bg-white/5 text-gray-300 border border-white/10"
+          >
+            {tech}
+          </span>
+        ))}
+      </div>
+
+      {/* BOTÃO */}
+      <a
+        href="/contato"
+        className="inline-flex items-center gap-2
+        px-5 py-2.5 rounded-lg font-semibold
+        bg-white text-black
+        hover:bg-gray-200 transition"
+      >
+        {botao} →
+      </a>
+
+      {/* GLOW */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100
+        bg-white/5 blur-2xl transition pointer-events-none"
+      />
+    </motion.article>
+  );
+}
+
+/* ================= DADOS ================= */
+
+const servicos = [
+  {
+    titulo: 'Sites Institucionais',
+    descricao:
+      'Sites profissionais, rápidos e responsivos, pensados para fortalecer sua presença digital.',
+    tecnologias: ['Next.js', 'SEO', 'Responsivo'],
+    botao: 'Solicitar site',
+  },
+  {
+    titulo: 'Sistemas Web',
+    descricao:
+      'Sistemas sob medida com autenticação, dashboards e regras de negócio.',
+    tecnologias: ['React', 'APIs', 'Autenticação'],
+    botao: 'Solicitar sistema',
+  },
+  {
+    titulo: 'Landing Pages',
+    descricao:
+      'Páginas focadas em conversão para campanhas e geração de leads.',
+    tecnologias: ['UX', 'Performance', 'Conversão'],
+    botao: 'Criar landing page',
+  },
+  {
+    titulo: 'E-commerce',
+    descricao:
+      'Lojas virtuais completas com checkout e integrações de pagamento.',
+    tecnologias: ['Stripe', 'Checkout', 'Admin'],
+    botao: 'Criar e-commerce',
+  },
+  {
+    titulo: 'Performance & SEO',
+    descricao:
+      'Otimização de velocidade, SEO técnico e melhoria de experiência.',
+    tecnologias: ['SEO', 'Performance', 'Core Web Vitals'],
+    botao: 'Otimizar site',
+  },
+  {
+    titulo: 'Manutenção & Evolução',
+    descricao:
+      'Manutenção contínua, melhorias e evolução do seu sistema.',
+    tecnologias: ['Suporte', 'Escalabilidade', 'Código limpo'],
+    botao: 'Contratar suporte',
+  },
+];

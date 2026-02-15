@@ -3,134 +3,202 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function MontagemPCPage() {
   const [showConfig, setShowConfig] = useState(false);
 
   return (
-    <main className="flex flex-col min-h-screen font-sans bg-black">
-      {/* Hero Section */}
-      <header className="flex flex-col items-center justify-center text-center bg-black/50 p-12">
-        <h1 className="text-4xl font-bold text-white mb-6">Montagem de PCs</h1>
-        <p className="text-lg text-gray-200 max-w-2xl">
-          Serviço especializado na montagem de computadores personalizados,
-          garantindo desempenho, estabilidade e custo-benefício.
+    <main
+      className="min-h-screen bg-gradient-to-b from-black via-gray-950 to-black
+      text-gray-100 font-sans"
+    >
+      {/* HERO */}
+      <motion.header
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="pt-32 pb-20 px-6 text-center"
+      >
+        <h1
+          className="text-5xl md:text-6xl font-extrabold mb-6
+          bg-gradient-to-r from-white to-gray-400
+          bg-clip-text text-transparent"
+        >
+          Montagem de PCs
+        </h1>
+
+        <p className="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          Montagem personalizada de computadores focada em desempenho,
+          estabilidade e custo-benefício — do escritório ao setup gamer.
         </p>
-      </header>
+      </motion.header>
 
-      {/* Conteúdo principal */}
-      <section className="py-16">
-        <div className="max-w-5xl mx-auto px-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* CARDS */}
+      <section className="pb-24 px-6">
+        <div className="max-w-7xl mx-auto grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {/* PC Profissional */}
-          <article className="p-6 rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white hover:scale-105 transition-transform">
-            <h3 className="text-xl font-semibold mb-4">PC Profissional</h3>
-            <p className="text-sm leading-relaxed">
-              Máquinas otimizadas para edição de vídeo, design gráfico e programação.
-            </p>
-            <div className="mt-4">
-              <Link
-                href="/contato"
-                className="inline-block px-4 py-2 rounded bg-blue-600 text-white text-sm"
-                aria-label="Solicitar PC profissional"
-              >
-                Solicitar orçamento
-              </Link>
-            </div>
-          </article>
+          <Card
+            titulo="PC Profissional"
+            descricao="Máquinas otimizadas para edição de vídeo, design, programação e uso profissional intenso."
+            botaoCor="bg-blue-600 hover:bg-blue-500"
+          />
 
-          {/* PC Gamer com imagem */}
-          <article className="rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white overflow-hidden hover:scale-105 transition-transform">
-            <div className="relative h-40 w-full">
+          {/* PC Gamer */}
+          <motion.article
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="group relative rounded-2xl overflow-hidden
+            bg-gradient-to-br from-gray-900 to-gray-800
+            border border-gray-800
+            shadow-lg hover:shadow-2xl
+            transition-all hover:-translate-y-2"
+          >
+            <div className="relative h-44">
               <Image
                 src="/central.jpg"
                 alt="PC Gamer"
                 fill
-                className="object-cover"
+                className="object-cover opacity-80 group-hover:opacity-100
+                group-hover:scale-105 transition duration-500"
                 priority
               />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                <h3 className="text-xl font-semibold text-white">PC Gamer</h3>
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                <h3 className="text-2xl font-semibold text-white">PC Gamer</h3>
               </div>
             </div>
-            <div className="p-6">
-              <p className="text-sm leading-relaxed">
-                Montagem de computadores voltados para jogos, com foco em performance gráfica e velocidade.
-              </p>
-              <div className="mt-4">
-                <Link
-                  href="/contato"
-                  className="inline-block px-4 py-2 rounded bg-purple-600 text-white text-sm"
-                  aria-label="Solicitar PC gamer"
-                >
-                  Solicitar orçamento
-                </Link>
-              </div>
-            </div>
-          </article>
 
-          {/* PC para Escritório */}
-          <article className="p-6 rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white hover:scale-105 transition-transform">
-            <h3 className="text-xl font-semibold mb-4">PC para Escritório</h3>
-            <p className="text-sm leading-relaxed">
-              Computadores econômicos e eficientes para tarefas administrativas e uso corporativo.
-            </p>
-            <div className="mt-4">
+            <div className="p-6">
+              <p className="text-sm text-gray-400 leading-relaxed mb-6">
+                Computadores voltados para jogos, com foco em performance gráfica,
+                estabilidade e alto FPS.
+              </p>
+
               <Link
                 href="/contato"
-                className="inline-block px-4 py-2 rounded bg-emerald-600 text-white text-sm"
-                aria-label="Solicitar PC para escritório"
+                className="inline-flex items-center gap-2 px-5 py-2.5
+                rounded-lg font-semibold bg-purple-600 text-white
+                hover:bg-purple-500 transition"
               >
-                Solicitar orçamento
+                Solicitar orçamento →
               </Link>
             </div>
-          </article>
+          </motion.article>
+
+          {/* PC Escritório */}
+          <Card
+            titulo="PC para Escritório"
+            descricao="Computadores eficientes e econômicos para tarefas administrativas e ambientes corporativos."
+            botaoCor="bg-emerald-600 hover:bg-emerald-500"
+            delay={0.2}
+          />
         </div>
       </section>
 
-      {/* Botão de configuração no final da página */}
-      <section className="py-12 px-6 max-w-3xl mx-auto text-center">
+      {/* CONFIGURAÇÃO */}
+      <section className="pb-24 px-6 max-w-3xl mx-auto text-center">
         <button
           onClick={() => setShowConfig(!showConfig)}
-          className="w-full py-4 rounded-lg font-semibold text-white bg-gradient-to-r from-blue-950 via-blue-900 to-blue-800 hover:scale-105 transition-transform"
-          aria-expanded={showConfig}
+          className="w-full py-4 rounded-xl font-semibold
+          bg-gradient-to-r from-gray-800 to-gray-700
+          hover:from-gray-700 hover:to-gray-600 transition"
         >
           Quer saber minha configuração?
         </button>
 
-        {showConfig && (
-          <div className="mt-6 p-6 rounded-lg shadow-lg bg-gradient-to-br from-blue-950 via-black to-black text-white text-left">
-            <h3 className="text-2xl font-bold mb-4">Minha Configuração 🖥️</h3>
-            <ul className="list-disc list-inside space-y-2 text-sm">
-              <li>B550M Tuf Plus</li>
-              <li>Ryzen 7 5700x</li>
-              <li>RX 7600 8gb</li>
-              <li>32Gb Ram 3600hz XPG 45g</li>
-              <li>1° Monitor: 1920x1080 Superframe 180hz</li>
-              <li>2° Monitor: 1600x900 60hz Samsung</li>
-              <li>Controle: 8 bitdoo Ultimate Wireless</li>
-              <li>Teclado: Redragon Magic Wand Mini Pro</li>
-              <li>Mouse: Redragon King Cobra FPS</li>
-              <li>Headset: Havit HV-H2002D</li>
-              <li>Microfone: Fifine A6T</li>
-            </ul>
-            <div className="mt-4">
-              <Link
-                href="/servicos"
-                className="inline-block px-4 py-2 rounded bg-gray-800 text-white text-sm"
-                aria-label="Voltar para serviços"
-              >
-                Voltar para serviços
-              </Link>
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {showConfig && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              className="mt-8 p-8 rounded-2xl
+              bg-gradient-to-br from-gray-900 to-gray-800
+              border border-gray-800 text-left"
+            >
+              <h3 className="text-2xl font-bold mb-6">
+                Minha Configuração 🖥️
+              </h3>
+
+              <ul className="grid sm:grid-cols-2 gap-3 text-sm text-gray-300">
+                <li>B550M TUF Plus</li>
+                <li>Ryzen 7 5700X</li>
+                <li>RX 7600 8GB</li>
+                <li>32GB RAM 3600MHz</li>
+                <li>Monitor 180Hz Full HD</li>
+                <li>Monitor secundário Samsung</li>
+                <li>Controle 8BitDo Ultimate</li>
+                <li>Teclado Redragon Magic Wand</li>
+                <li>Mouse Redragon King Cobra</li>
+                <li>Headset Havit HV-H2002D</li>
+                <li>Microfone Fifine A6T</li>
+              </ul>
+
+              <div className="mt-6">
+                <Link
+                  href="/servicos"
+                  className="inline-flex items-center gap-2
+                  px-4 py-2 rounded-lg bg-gray-700 text-white
+                  hover:bg-gray-600 transition text-sm"
+                >
+                  ← Voltar para serviços
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
-      {/* Rodapé */}
-      <footer className="w-full py-6 text-center text-sm text-white bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700">
+      {/* FOOTER */}
+      <footer className="py-6 text-center text-sm text-gray-400">
         © {new Date().getFullYear()} Juan • Montagem de PCs
       </footer>
     </main>
+  );
+}
+
+/* ================= CARD BASE ================= */
+
+function Card({
+  titulo,
+  descricao,
+  botaoCor,
+  delay = 0,
+}: {
+  titulo: string;
+  descricao: string;
+  botaoCor: string;
+  delay?: number;
+}) {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay }}
+      className="p-6 rounded-2xl
+      bg-gradient-to-br from-gray-900 to-gray-800
+      border border-gray-800
+      shadow-lg hover:shadow-2xl
+      transition-all hover:-translate-y-2"
+    >
+      <h3 className="text-2xl font-semibold mb-4 text-white">
+        {titulo}
+      </h3>
+
+      <p className="text-sm text-gray-400 leading-relaxed mb-6">
+        {descricao}
+      </p>
+
+      <Link
+        href="/contato"
+        className={`inline-flex items-center gap-2 px-5 py-2.5
+        rounded-lg font-semibold text-white transition ${botaoCor}`}
+      >
+        Solicitar orçamento →
+      </Link>
+    </motion.article>
   );
 }

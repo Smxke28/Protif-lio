@@ -5,19 +5,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Menu as MenuIcon,
-  X as XIcon,
+  Menu,
+  X,
   Sun,
   Moon,
   Home,
   Briefcase,
   Folder,
   Mail,
-  User
+  User,
 } from "lucide-react";
 
 export default function SlideMenu() {
   const pathname = usePathname();
+
   const [open, setOpen] = useState(false);
   const [openServices, setOpenServices] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -55,28 +56,37 @@ export default function SlideMenu() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  /* block scroll */
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+  }, [open]);
+
   if (!mounted) return null;
 
   return (
     <>
       {/* HAMBURGER */}
-      <button
-        onClick={() => setOpen(true)}
-        className="fixed top-4 left-4 z-50 p-3 rounded-xl bg-blue-950/90 hover:bg-blue-900 text-white shadow-lg backdrop-blur-xl transition"
-        aria-label="Abrir menu"
-      >
-        <MenuIcon className="w-6 h-6" />
-      </button>
+      {!open && (
+        <button
+          onClick={() => setOpen(true)}
+          className="fixed top-4 left-4 z-[70] p-3 rounded-xl
+            bg-blue-950/90 hover:bg-blue-900 text-white
+            shadow-lg backdrop-blur-xl transition"
+          aria-label="Abrir menu"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
+      )}
 
       {/* BACKDROP */}
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.5 }}
+            animate={{ opacity: 0.6 }}
             exit={{ opacity: 0 }}
             onClick={() => setOpen(false)}
-            className="fixed inset-0 bg-black/60 z-40"
+            className="fixed inset-0 bg-black z-[60]"
           />
         )}
       </AnimatePresence>
@@ -89,14 +99,19 @@ export default function SlideMenu() {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "spring", stiffness: 90, damping: 18 }}
-            className="fixed top-0 left-0 z-50 h-full w-64 p-6
-              bg-gradient-to-b from-blue-950/80 via-black/70 to-black/80
-              backdrop-blur-xl border-r border-white/10 shadow-2xl"
+            className="fixed top-0 left-0 z-[70]
+              h-full w-64 p-6
+              bg-gradient-to-b from-blue-950/90 via-black/80 to-black/90
+              backdrop-blur-xl border-r border-white/10 shadow-2xl
+              flex flex-col"
           >
             <header className="flex items-center justify-between mb-8">
               <h1 className="text-xl font-bold">Juan L.</h1>
-              <button onClick={() => setOpen(false)}>
-                <XIcon className="w-5 h-5" />
+              <button
+                onClick={() => setOpen(false)}
+                aria-label="Fechar menu"
+              >
+                <X className="w-5 h-5" />
               </button>
             </header>
 
@@ -110,7 +125,9 @@ export default function SlideMenu() {
               >
                 <Briefcase className="w-4 h-4" />
                 Serviços
-                <span className="ml-auto text-xs">{openServices ? "▴" : "▾"}</span>
+                <span className="ml-auto text-xs">
+                  {openServices ? "▴" : "▾"}
+                </span>
               </button>
 
               <AnimatePresence>
@@ -134,8 +151,11 @@ export default function SlideMenu() {
 
             <footer className="mt-auto pt-6 border-t border-white/10">
               <button
-                onClick={() => setTheme(t => (t === "light" ? "dark" : "light"))}
-                className="w-full flex items-center justify-center gap-2 p-3 rounded-xl bg-white/10 hover:bg-white/20 transition"
+                onClick={() =>
+                  setTheme(t => (t === "light" ? "dark" : "light"))
+                }
+                className="w-full flex items-center justify-center gap-2
+                  p-3 rounded-xl bg-white/10 hover:bg-white/20 transition"
               >
                 {theme === "light" ? <Moon /> : <Sun className="text-yellow-400" />}
                 {theme === "light" ? "Modo Escuro" : "Modo Claro"}
@@ -151,7 +171,10 @@ export default function SlideMenu() {
 /* ITEM */
 function MenuItem({ href, title, icon, active }: any) {
   return (
-    <Link href={href} className={`menu-modern ${active ? "bg-white/10" : ""}`}>
+    <Link
+      href={href}
+      className={`menu-modern ${active ? "bg-white/10" : ""}`}
+    >
       {icon && <span className="w-4 h-4">{icon}</span>}
       <span>{title}</span>
     </Link>

@@ -1,100 +1,187 @@
-"use client";
+'use client';
 
-export default function ProjetosPage() {
+import { motion } from 'framer-motion';
+
+export default function DesenvolvimentoWebPage() {
   return (
-    <div className="min-h-screen pt-28 px-6 bg-black text-gray-100 font-sans">
+    <section
+      className="min-h-screen pt-32 pb-24 px-6
+      bg-gradient-to-b from-black via-gray-950 to-black
+      text-gray-100"
+    >
+      {/* HERO */}
+      <motion.header
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-4xl mx-auto text-center mb-24"
+      >
+        <span className="inline-block mb-4 px-4 py-1 rounded-full text-sm
+          bg-white/5 border border-white/10 text-gray-300">
+          Serviços
+        </span>
 
-      {/* TÍTULO */}
-      <header className="text-center mb-16">
-        <h1 className="text-5xl font-extrabold mb-4">Meus Projetos</h1>
-        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-          Aqui estão alguns dos projetos que desenvolvi utilizando tecnologias
-          modernas como Next.js, React, TypeScript, Tailwind CSS e mais.
+        <h1
+          className="text-5xl md:text-6xl font-extrabold mb-6
+          bg-gradient-to-r from-white via-gray-300 to-gray-400
+          bg-clip-text text-transparent"
+        >
+          Desenvolvimento Web
+        </h1>
+
+        <p className="text-lg text-gray-400 leading-relaxed">
+          Aplicações web modernas, rápidas e escaláveis, criadas para
+          gerar resultados reais, melhorar a experiência do usuário
+          e sustentar o crescimento do seu negócio.
         </p>
-      </header>
+      </motion.header>
 
-      {/* GRID DE PROJETOS */}
-      <main className="max-w-6xl mx-auto grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+      {/* SERVIÇOS */}
+      <div className="max-w-7xl mx-auto grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+        {servicos.map((servico, index) => (
+          <Servico key={index} {...servico} index={index} />
+        ))}
+      </div>
 
-        {/* PROJETO 1 */}
-        <article className="p-6 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 
-                           border border-gray-700 shadow-lg hover:shadow-xl hover:border-blue-500 
-                           transition">
-          <h3 className="text-2xl font-semibold mb-3 text-white">Projeto CS2</h3>
-          <p className="text-sm mb-4 text-gray-400">
-            Plataforma completa dedicada ao Counter-Strike 2, contendo táticas, utilidades,
-            guias e recursos úteis. Construído com Next.js, React, Tailwind, animações e APIs.
-          </p>
-          <a
-            href="https://sitecs2.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block mt-3 px-4 py-2 bg-white text-black font-semibold rounded-lg 
-                       hover:bg-gray-300 transition"
-          >
-            Acessar projeto
-          </a>
-        </article>
+      {/* CTA FINAL */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4 }}
+        className="mt-32 text-center"
+      >
+        <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          Pronto para tirar sua ideia do papel?
+        </h2>
 
-        {/* PROJETO 2 */}
-        <article className="p-6 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 
-                           border border-gray-700 shadow-lg hover:shadow-xl hover:border-purple-500 
-                           transition">
-          <h3 className="text-2xl font-semibold mb-3 text-white">E-commerce Customizado</h3>
-          <p className="text-sm mb-4 text-gray-400">
-            Loja virtual com carrinho, checkout otimizado e painel administrativo.
-            Design moderno e backend conectado a APIs reais.
-          </p>
-        </article>
+        <p className="text-gray-400 mb-10 max-w-xl mx-auto">
+          Vamos conversar sobre seu projeto e encontrar a melhor solução
+          para o seu objetivo.
+        </p>
 
-        {/* PROJETO 3 */}
-        <article className="p-6 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 
-                           border border-gray-700 shadow-lg hover:shadow-xl hover:border-green-500 
-                           transition">
-          <h3 className="text-2xl font-semibold mb-3 text-white">Dashboard em Tempo Real</h3>
-          <p className="text-sm mb-4 text-gray-400">
-            Dashboard com gráficos dinâmicos, consumo de API contínuo e layout altamente
-            responsivo. Feito para monitoramento de métricas em tempo real.
-          </p>
-        </article>
-
-        {/* PROJETO 4 EXTRA */}
-        <article className="p-6 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 
-                           border border-gray-700 shadow-lg hover:shadow-xl hover:border-yellow-500 
-                           transition">
-          <h3 className="text-2xl font-semibold mb-3 text-white">Sistema de Login + OAuth</h3>
-          <p className="text-sm mb-4 text-gray-400">
-            Sistema seguro com login via Google OAuth2, sessões criptografadas e dashboard
-            privado protegido.
-          </p>
-        </article>
-
-        {/* PROJETO 5 EXTRA */}
-        <article className="p-6 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 
-                           border border-gray-700 shadow-lg hover:shadow-xl hover:border-pink-500 
-                           transition">
-          <h3 className="text-2xl font-semibold mb-3 text-white">Portfólio Moderno</h3>
-          <p className="text-sm mb-4 text-gray-400">
-            Seu site! Totalmente responsivo, com animações, tema dark/light,
-            autenticação Google e navegação dinâmica.
-          </p>
-        </article>
-
-        {/* PROJETO 6 EXTRA */}
-        <article className="p-6 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 
-                           border border-gray-700 shadow-lg hover:shadow-xl hover:border-red-500 
-                           transition">
-          <h3 className="text-2xl font-semibold mb-3 text-white">API de Utilidades</h3>
-          <p className="text-sm mb-4 text-gray-400">
-            API REST com rotas para conversores, análises e integração com serviços externos.
-          </p>
-        </article>
-      </main>
-
-      {/* FOOTER */}
-      <footer className="text-center mt-20 py-6 text-sm text-gray-500">
-        © {new Date().getFullYear()} Juan • Meus Projetos
-      </footer>
-    </div>
+        <a
+          href="/contato"
+          className="inline-flex items-center gap-2
+          px-10 py-4 rounded-xl font-semibold text-lg
+          bg-white text-black hover:bg-gray-200
+          transition shadow-lg"
+        >
+          Entrar em contato →
+        </a>
+      </motion.div>
+    </section>
   );
 }
+
+/* ================= CARD ================= */
+
+function Servico({
+  titulo,
+  descricao,
+  tecnologias,
+  icone,
+  destaque,
+  index,
+}: any) {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.08 }}
+      className="group relative rounded-2xl p-8
+      bg-gradient-to-br from-gray-900 to-gray-800
+      border border-gray-800
+      shadow-lg hover:shadow-2xl
+      transition-all duration-300
+      hover:-translate-y-2"
+    >
+      {/* DESTAQUE */}
+      {destaque && (
+        <span className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold
+          bg-blue-500/10 text-blue-400 border border-blue-500/20">
+          {destaque}
+        </span>
+      )}
+
+      {/* ÍCONE */}
+      <div className="text-4xl mb-6">{icone}</div>
+
+      <h3 className="text-2xl font-semibold mb-4 text-white">
+        {titulo}
+      </h3>
+
+      <p className="text-sm text-gray-400 leading-relaxed mb-8">
+        {descricao}
+      </p>
+
+      {/* TAGS */}
+      <div className="flex flex-wrap gap-2">
+        {tecnologias.map((tech: string) => (
+          <span
+            key={tech}
+            className="px-3 py-1 text-xs rounded-full
+            bg-white/5 text-gray-300 border border-white/10"
+          >
+            {tech}
+          </span>
+        ))}
+      </div>
+
+      {/* GLOW */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100
+        bg-white/5 blur-2xl transition pointer-events-none"
+      />
+    </motion.article>
+  );
+}
+
+/* ================= DADOS ================= */
+
+const servicos = [
+  {
+    icone: '💻',
+    titulo: 'Sites Institucionais',
+    descricao:
+      'Sites profissionais, rápidos e responsivos, pensados para fortalecer sua marca e gerar credibilidade.',
+    tecnologias: ['Next.js', 'SEO', 'Responsivo'],
+    destaque: 'Mais procurado',
+  },
+  {
+    icone: '⚙️',
+    titulo: 'Sistemas Web',
+    descricao:
+      'Sistemas sob medida com autenticação, dashboards, permissões e regras de negócio.',
+    tecnologias: ['React', 'APIs', 'Autenticação'],
+  },
+  {
+    icone: '🚀',
+    titulo: 'Landing Pages',
+    descricao:
+      'Páginas focadas em conversão para campanhas, lançamentos e geração de leads.',
+    tecnologias: ['UX', 'Performance', 'Conversão'],
+  },
+  {
+    icone: '🛒',
+    titulo: 'E-commerce',
+    descricao:
+      'Lojas virtuais completas com checkout, integrações de pagamento e painel administrativo.',
+    tecnologias: ['Stripe', 'Checkout', 'Admin'],
+  },
+  {
+    icone: '⚡',
+    titulo: 'Performance & SEO',
+    descricao:
+      'Otimização de velocidade, SEO técnico e melhoria de Core Web Vitals.',
+    tecnologias: ['Lighthouse', 'SEO', 'Performance'],
+  },
+  {
+    icone: '🔧',
+    titulo: 'Manutenção & Evolução',
+    descricao:
+      'Suporte contínuo, melhorias, correções e evolução do seu sistema.',
+    tecnologias: ['Suporte', 'Escalabilidade', 'Código limpo'],
+  },
+];
