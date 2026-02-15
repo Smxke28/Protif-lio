@@ -1,154 +1,192 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import Link from 'next/link';
 
 export default function DesenvolvimentoWebPage() {
-  const servicos = [
-    {
-      titulo: 'Projeto CS2',
-      descricao:
-        'Plataforma dedicada ao Counter-Strike 2, reunindo ferramentas, conteúdo e recursos para a comunidade. Projeto real, público e em evolução.',
-      tecnologias: ['Next.js', 'Vercel', 'SEO', 'UI Moderna'],
-      botao: 'Acessar projeto',
-      link: 'https://sitecs2.vercel.app/',
-    },
-    {
-      titulo: 'Sites Institucionais',
-      descricao:
-        'Sites profissionais, rápidos e responsivos, pensados para fortalecer sua presença digital.',
-      tecnologias: ['Next.js', 'SEO', 'Responsivo'],
-      botao: 'Solicitar site',
-      link: '/contato',
-    },
-    {
-      titulo: 'Sistemas Web',
-      descricao:
-        'Sistemas sob medida com autenticação, dashboards e regras de negócio.',
-      tecnologias: ['React', 'APIs', 'Autenticação'],
-      botao: 'Solicitar sistema',
-      link: '/contato',
-    },
-    {
-      titulo: 'Landing Pages',
-      descricao:
-        'Páginas focadas em conversão para campanhas e geração de leads.',
-      tecnologias: ['UX', 'Performance', 'Conversão'],
-      botao: 'Criar landing page',
-      link: '/contato',
-    },
-    {
-      titulo: 'E-commerce',
-      descricao:
-        'Lojas virtuais completas com checkout e integrações de pagamento.',
-      tecnologias: ['Stripe', 'Checkout', 'Admin'],
-      botao: 'Criar e-commerce',
-      link: '/contato',
-    },
-    {
-      titulo: 'Performance & SEO',
-      descricao:
-        'Otimização de velocidade, SEO técnico e melhoria de experiência.',
-      tecnologias: ['SEO', 'Performance', 'Core Web Vitals'],
-      botao: 'Otimizar site',
-      link: '/contato',
-    },
-    {
-      titulo: 'Manutenção & Evolução',
-      descricao:
-        'Manutenção contínua, melhorias e evolução do seu sistema.',
-      tecnologias: ['Suporte', 'Escalabilidade', 'Código limpo'],
-      botao: 'Contratar suporte',
-      link: '/contato',
-    },
-  ];
+  const [expanded, setExpanded] = useState(false);
+
+  const cardBase =
+    'p-6 rounded-2xl border border-gray-800 bg-gradient-to-br from-gray-900 to-black shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl';
 
   return (
-    <section
-      className="min-h-screen pt-32 pb-24 px-6
-      bg-gradient-to-b from-black via-gray-950 to-black
-      text-gray-100"
-    >
-      {/* HEADER */}
-      <motion.header
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-4xl mx-auto text-center mb-24"
-      >
-        <span className="inline-block mb-4 px-4 py-1 rounded-full text-sm
-          bg-white/5 border border-white/10 text-gray-300">
-          Serviços
-        </span>
-
-        <h1
-          className="text-5xl md:text-6xl font-extrabold mb-6
-          bg-gradient-to-r from-white to-gray-400
-          bg-clip-text text-transparent"
-        >
-          Desenvolvimento Web
+    <div className="min-h-screen bg-black text-gray-100">
+      {/* ================= HERO ================= */}
+      <header className="pt-28 pb-24 px-6 text-center">
+        <h1 className="text-5xl md:text-6xl font-extrabold mb-6">
+          Olá, eu sou{' '}
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+            Juan
+          </span>
         </h1>
 
-        <p className="text-lg text-gray-400 leading-relaxed">
-          Criação de soluções web modernas, rápidas e escaláveis,
-          com foco em experiência do usuário, performance e resultados.
+        <p className="text-gray-400 max-w-2xl mx-auto mb-10 text-lg">
+          Desenvolvedor Web e Consultor em TI. Transformo ideias em produtos digitais
+          funcionais, rápidos e bem estruturados.
         </p>
-      </motion.header>
 
-      {/* GRID */}
-      <div className="max-w-7xl mx-auto grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-        {servicos.map((servico, index) => (
-          <motion.a
-            key={index}
-            href={servico.link}
-            target={servico.link.startsWith('http') ? '_blank' : undefined}
-            rel={servico.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.08 }}
-            className="group relative rounded-2xl p-7
-            bg-gradient-to-br from-gray-900 to-gray-800
-            border border-gray-800
-            shadow-lg hover:shadow-xl
-            transition-all duration-300
-            hover:-translate-y-1"
+        <div className="flex flex-wrap justify-center gap-4">
+          <Link
+            href="/servicos"
+            className="px-8 py-4 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition"
           >
-            <h3 className="text-2xl font-semibold mb-3 text-white">
-              {servico.titulo}
-            </h3>
+            Ver serviços
+          </Link>
 
-            <p className="text-sm text-gray-400 leading-relaxed mb-6">
-              {servico.descricao}
-            </p>
+          <Link
+            href="#projetos"
+            className="px-8 py-4 rounded-xl bg-gray-800 text-white font-semibold hover:bg-gray-700 transition"
+          >
+            Ver projetos
+          </Link>
+        </div>
+      </header>
 
-            <div className="flex flex-wrap gap-2 mb-6">
-              {servico.tecnologias.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3 py-1 text-xs rounded-full
-                  bg-white/5 text-gray-300 border border-white/10"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
+      <main className="max-w-6xl mx-auto px-6">
+        {/* ================= PROJETOS ================= */}
+        <section id="projetos" className="mb-28">
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Projetos em destaque
+          </h2>
 
-            <span
-              className="inline-flex items-center gap-2
-              px-5 py-2.5 rounded-lg font-semibold
-              bg-white text-black
-              hover:bg-gray-200 transition"
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* 🔥 PROJETO PRINCIPAL - CS2 */}
+            <a
+              href="https://sitecs2.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${cardBase} md:col-span-2`}
             >
-              {servico.botao} →
-            </span>
+              <h3 className="text-2xl font-semibold mb-3">
+                Projeto CS2
+              </h3>
 
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100
-              bg-white/5 blur-2xl transition pointer-events-none"
-            />
-          </motion.a>
-        ))}
-      </div>
-    </section>
+              <p className="text-gray-400 text-sm mb-6 max-w-xl">
+                Plataforma dedicada ao Counter-Strike 2, reunindo ferramentas,
+                conteúdo e recursos para a comunidade. Projeto real, público e em evolução.
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-6">
+                <span className="tag">Next.js</span>
+                <span className="tag">Vercel</span>
+                <span className="tag">SEO</span>
+                <span className="tag">UI Moderna</span>
+              </div>
+
+              <span className="inline-block px-6 py-3 rounded-lg bg-white text-black font-semibold">
+                Acessar projeto →
+              </span>
+            </a>
+
+            {/* Projeto secundário */}
+            <article className={cardBase}>
+              <h3 className="text-lg font-semibold mb-3">
+                Dashboard Web
+              </h3>
+
+              <p className="text-gray-400 text-sm">
+                Dashboard interativo para visualização e análise de dados em tempo real.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        {/* ================= SERVIÇOS ================= */}
+        <section className="mb-28">
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Serviços
+          </h2>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Desenvolvimento Web */}
+            <Link
+              href="/servicos/desenvolvimento-web"
+              className={`${cardBase} block`}
+            >
+              <h3 className="text-xl font-semibold mb-3">
+                💻 Desenvolvimento Web
+              </h3>
+
+              <p className="text-gray-400 text-sm mb-4">
+                Sites, sistemas e landing pages rápidas, escaláveis e bem posicionadas no Google.
+              </p>
+
+              <div className="flex gap-2 flex-wrap">
+                <span className="tag">Next.js</span>
+                <span className="tag">SEO</span>
+                <span className="tag">Performance</span>
+              </div>
+            </Link>
+
+            {/* Consultoria */}
+            <article className={cardBase}>
+              <h3 className="text-xl font-semibold mb-3">
+                🖥️ Consultoria & Montagem
+              </h3>
+
+              <p className="text-gray-400 text-sm">
+                Escolha, montagem e otimização de computadores.
+                {expanded && (
+                  <span className="block mt-2 text-xs text-gray-500">
+                    Compatibilidade, custo-benefício e setups sob medida.
+                  </span>
+                )}
+              </p>
+
+              <div className="mt-6 flex gap-3">
+                <button
+                  onClick={() => setExpanded(!expanded)}
+                  className="px-4 py-2 rounded bg-white text-black font-semibold hover:bg-gray-200 transition"
+                >
+                  {expanded ? 'Ler menos' : 'Ler mais'}
+                </button>
+
+                <Link
+                  href="/servicos/consultoria-hardware"
+                  className="px-4 py-2 rounded bg-purple-600 text-white font-semibold hover:bg-purple-500 transition"
+                >
+                  Ver serviço
+                </Link>
+              </div>
+            </article>
+
+            {/* Suporte */}
+            <Link
+              href="/servicos/montagem-pc"
+              className={`${cardBase} block`}
+            >
+              <h3 className="text-xl font-semibold mb-3">
+                🔧 Manutenção & Suporte
+              </h3>
+
+              <p className="text-gray-400 text-sm mb-4">
+                Suporte técnico contínuo, manutenção preventiva e estabilidade.
+              </p>
+
+              <div className="flex gap-2">
+                <span className="tag">SLA</span>
+                <span className="tag">Backup</span>
+              </div>
+            </Link>
+          </div>
+        </section>
+      </main>
+
+      {/* ================= FOOTER ================= */}
+      <footer className="py-6 text-center text-sm bg-gray-900 text-gray-400">
+        © {new Date().getFullYear()} Juan • Desenvolvedor Web & Consultor em TI
+      </footer>
+
+      {/* TAG STYLE */}
+      <style jsx>{`
+        .tag {
+          padding: 0.25rem 0.75rem;
+          font-size: 0.75rem;
+          border-radius: 999px;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+        }
+      `}</style>
+    </div>
   );
 }
