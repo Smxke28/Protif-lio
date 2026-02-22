@@ -43,7 +43,7 @@ export default function RootLayout({
             className="pt-16 min-h-screen flex justify-center"
           >
             <div className="w-full max-w-6xl px-4">
-              <div className="mb-6">
+              <div className="mb-6 mt-8">
                 <VoltarHome className="bg-gray-800/95 hover:bg-gray-700 dark:bg-gray-200 dark:text-black dark:hover:bg-gray-300" />
               </div>
 
