@@ -1,8 +1,14 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ===========================
+# Node / Package managers
+# ===========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# dependencies
-/node_modules
-/.pnp
+# Yarn Plug'n'Play
+.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -10,32 +16,66 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
+# ===========================
+# Next.js
+# ===========================
+.next/
+out/
+build/
+dist/
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
+# ===========================
+# Vercel
+# ===========================
 .vercel
 
-# typescript
+# ===========================
+# Environment variables
+# NUNCA versionar segredos
+# ===========================
+.env
+.env.*
+!.env.example
+
+# ===========================
+# Tests / Coverage
+# ===========================
+coverage/
+
+# ===========================
+# ESLint / Cache
+# ===========================
+.eslintcache
+
+# ===========================
+# TypeScript
+# ===========================
 *.tsbuildinfo
 next-env.d.ts
+
+# ===========================
+# Logs
+# ===========================
+logs/
+*.log
+
+# ===========================
+# OS / Editor
+# ===========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ===========================
+# Security / Certs
+# ===========================
+*.pem
+*.key
+
+# ===========================
+# Temporary / Generated
+# ===========================
+tmp/
+temp/
+.cache/
