@@ -78,17 +78,6 @@ export default function ProjetosPage() {
               </span>
             </a>
 
-            {/* Projeto genérico 1 */}
-            <article className={cardBase}>
-              <h3 className="text-lg font-semibold mb-3">
-                Projeto 2
-              </h3>
-
-              <p className="text-gray-400 text-sm">
-                Descrição do projeto 2. Em breve mais detalhes aqui.
-              </p>
-            </article>
-
             {/* Projeto genérico 2 */}
             <article className={cardBase}>
               <h3 className="text-lg font-semibold mb-3">

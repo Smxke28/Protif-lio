@@ -129,8 +129,9 @@ export default function Home() {
           />
 
           <ProjectCard
-            titulo="E-commerce Customizado"
-            descricao="Loja virtual com checkout otimizado e painel administrativo."
+            titulo="Calculadora Math em Java"
+            descricao="Projeto demonstrando funções e conceitos de programação em Java."
+            link="https://funcoes-java-pg5ixris4-smxke28s-projects.vercel.app/"
           />
 
           <ProjectCard
