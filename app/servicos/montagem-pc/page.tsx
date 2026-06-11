@@ -128,12 +128,12 @@ export default function MontagemPCPage() {
                 <li>RX 7600 8GB</li>
                 <li>32GB RAM 3600MHz</li>
                 <li>Monitor 180Hz Full HD</li>
-                <li>Monitor secundário Samsung</li>
                 <li>Controle 8BitDo Ultimate</li>
                 <li>Teclado Redragon Magic Wand</li>
                 <li>Mouse Redragon King Cobra</li>
                 <li>Headset Havit HV-H2002D</li>
                 <li>Microfone Fifine A6T</li>
+                <li>Notebook Lenovo Ideapad Slim 3 Ryzen 7 7735HS </li>
               </ul>
 
               <div className="mt-6">
