@@ -59,8 +59,7 @@ export default function ProjetosPage() {
               className={`${cardBase} md:col-span-1`}
             >
               <h3 className="text-2xl font-semibold mb-3">
-                Funções em Java
-              </h3>
+                Calculadora Math em Java              </h3>
 
               <p className="text-gray-400 text-sm mb-6">
                 Projeto demonstrando funções e conceitos de programação em Java,
