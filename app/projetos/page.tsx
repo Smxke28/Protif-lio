@@ -15,7 +15,7 @@ export default function ProjetosPage() {
         </h1>
 
         <p className="text-gray-400 max-w-2xl mx-auto mb-10 text-lg">
-          Aqui estão alguns projetos em que trabalhei. Clique no card do CS2 para ver o projeto real.
+          Aqui estão alguns projetos em que trabalhei. Clique nos cards para ver os projetos reais.
         </p>
       </header>
 
@@ -44,6 +44,34 @@ export default function ProjetosPage() {
                 <span className="tag">Vercel</span>
                 <span className="tag">SEO</span>
                 <span className="tag">UI Moderna</span>
+              </div>
+
+              <span className="inline-block px-6 py-3 rounded-lg bg-white text-black font-semibold">
+                Acessar projeto →
+              </span>
+            </a>
+
+            {/* 🔥 PROJETO REAL - Funções Java */}
+            <a
+              href="https://funcoes-java-pg5ixris4-smxke28s-projects.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${cardBase} md:col-span-1`}
+            >
+              <h3 className="text-2xl font-semibold mb-3">
+                Funções em Java
+              </h3>
+
+              <p className="text-gray-400 text-sm mb-6">
+                Projeto demonstrando funções e conceitos de programação em Java,
+                hospedado na Vercel.
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-6">
+                <span className="tag">Java</span>
+                <span className="tag">Vercel</span>
+                <span className="tag">Didático</span>
+                <span className="tag">Programação</span>
               </div>
 
               <span className="inline-block px-6 py-3 rounded-lg bg-white text-black font-semibold">
