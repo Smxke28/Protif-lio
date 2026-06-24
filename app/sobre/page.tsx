@@ -1,13 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: (i = 0) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.5, delay: i * 0.08, ease: [0.25, 0.1, 0.25, 1] },
+import { motion, Variants } from 'framer-motion';
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { 
+      duration: 0.5, 
+      delay: i * 0.1, 
+      ease: [0.25, 0.1, 0.25, 1] as const // <── O segredo está aqui!
+    },
   }),
 };
 
