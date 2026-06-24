@@ -3,158 +3,198 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
+const services = [
+  {
+    number: '01',
+    title: 'Desenvolvimento Web',
+    shortDesc: 'Sites modernos, rápidos e responsivos.',
+    fullDesc:
+      'Criação de sites e aplicações web com foco em performance, SEO e experiência do usuário. De landing pages a sistemas completos.',
+    tags: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'SEO'],
+    href: '/servicos/desenvolvimento-web',
+    accent: '#00D4FF',
+  },
+  {
+    number: '02',
+    title: 'Consultoria & Montagem de Hardware',
+    shortDesc: 'Seleção e montagem de computadores.',
+    fullDesc:
+      'Orientação especializada para escolha de componentes com foco em compatibilidade, desempenho e custo-benefício. PCs para gamers, criadores e empresas.',
+    tags: ['Componentes', 'Compatibilidade', 'Upgrades', 'Workstations'],
+    href: '/servicos/consultoria-hardware',
+    accent: '#7C3AED',
+  },
+  {
+    number: '03',
+    title: 'Manutenção & Suporte Técnico',
+    shortDesc: 'Otimização e suporte de sistemas.',
+    fullDesc:
+      'Manutenção preventiva e corretiva, suporte técnico e otimização de sistemas. Atendimento remoto ou presencial com foco em SLA.',
+    tags: ['Backup', 'Recovery', 'Performance', 'SLA', 'Remoto'],
+    href: '/servicos/montagem-pc',
+    accent: '#00D4FF',
+  },
+];
+
 export default function ServicosPage() {
   return (
-    <main
-      className="relative min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: "url('/serv1.jpg')" }}
-    >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
-
-      {/* Conteúdo */}
-      <div
-        className="relative z-10 max-w-6xl mx-auto
-        pt-32 pb-24 px-6 text-gray-100"
-      >
-        {/* HEADER */}
-        <motion.header
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+    <div style={{ background: 'linear-gradient(180deg, #0A0A0F 0%, #0D0D1A 100%)', minHeight: '100vh' }}>
+      {/* Header */}
+      <section style={{ padding: '80px 24px 64px', maxWidth: '1100px', margin: '0 auto' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          style={{ marginBottom: '16px' }}
         >
-          <h1
-            className="text-5xl md:text-6xl font-extrabold mb-6
-            bg-gradient-to-r from-white to-gray-400
-            bg-clip-text text-transparent"
-          >
-            Serviços
-          </h1>
+          <span className="section-label">O que ofereço</span>
+        </motion.div>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          style={{
+            fontSize: 'clamp(2.2rem, 5vw, 3.5rem)',
+            fontWeight: 800,
+            letterSpacing: '-0.03em',
+            lineHeight: 1.1,
+            color: '#F0F0FF',
+            marginBottom: '20px',
+          }}
+        >
+          Serviços
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          style={{ fontSize: '1rem', color: '#8888AA', maxWidth: '500px', lineHeight: 1.7 }}
+        >
+          Soluções pensadas para entregar performance, confiabilidade e
+          experiência — do código ao hardware.
+        </motion.p>
+      </section>
 
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Soluções pensadas para entregar performance, confiabilidade e
-            experiência — do código ao hardware.
-          </p>
-        </motion.header>
+      <hr className="divider" />
 
-        {/* GRID */}
-        <div className="grid gap-10 md:grid-cols-3">
-          {/* Desenvolvimento Web */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0 }}
-          >
-            <Link
-              href="/servicos/desenvolvimento-web"
-              className="group block h-full p-8 rounded-2xl
-              bg-gradient-to-br from-gray-900 to-gray-800
-              border border-gray-800
-              shadow-lg hover:shadow-2xl
-              transition-all duration-300
-              hover:-translate-y-2"
+      {/* Services */}
+      <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '64px 24px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {services.map((svc, i) => (
+            <motion.div
+              key={svc.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
             >
-              <h2 className="text-2xl font-semibold mb-4 text-white">
-                Desenvolvimento Web
-              </h2>
-
-              <p className="text-sm text-gray-400 leading-relaxed mb-4">
-                Criação de sites modernos, rápidos e responsivos, com foco em SEO,
-                performance e experiência do usuário.
-              </p>
-
-              <p className="text-sm text-gray-300">
-                Landing pages, sistemas corporativos, dashboards e e-commerce.
-              </p>
-
-              <span
-                className="inline-block mt-6 text-sm font-semibold
-                text-white group-hover:translate-x-1 transition"
+              <Link
+                href={svc.href}
+                className="card-glass"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'auto 1fr auto',
+                  alignItems: 'center',
+                  gap: '32px',
+                  padding: '32px 36px',
+                  textDecoration: 'none',
+                }}
               >
-                Ver serviço →
-              </span>
-            </Link>
-          </motion.div>
+                {/* Number */}
+                <span
+                  style={{
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.7rem',
+                    color: '#555577',
+                    minWidth: '28px',
+                    letterSpacing: '0.05em',
+                  }}
+                >
+                  {svc.number}
+                </span>
 
-          {/* Consultoria & Montagem */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-          >
-            <Link
-              href="/servicos/consultoria-hardware"
-              className="group block h-full p-8 rounded-2xl
-              bg-gradient-to-br from-gray-900 to-gray-800
-              border border-gray-800
-              shadow-lg hover:shadow-2xl
-              transition-all duration-300
-              hover:-translate-y-2"
-            >
-              <h2 className="text-2xl font-semibold mb-4 text-white">
-                Consultoria & Montagem
-              </h2>
+                {/* Content */}
+                <div>
+                  <h2
+                    style={{
+                      fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+                      fontWeight: 600,
+                      color: '#F0F0FF',
+                      marginBottom: '8px',
+                      letterSpacing: '-0.01em',
+                    }}
+                  >
+                    {svc.title}
+                  </h2>
+                  <p
+                    style={{
+                      fontSize: '0.875rem',
+                      color: '#8888AA',
+                      lineHeight: 1.6,
+                      marginBottom: '16px',
+                      maxWidth: '520px',
+                    }}
+                  >
+                    {svc.fullDesc}
+                  </p>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                    {svc.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className={`tag ${svc.accent === '#7C3AED' ? 'tag-violet' : ''}`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
 
-              <p className="text-sm text-gray-400 leading-relaxed mb-4">
-                Orientação especializada para escolha de componentes,
-                garantindo compatibilidade, desempenho e custo-benefício.
-              </p>
-
-              <p className="text-sm text-gray-300">
-                Ideal para upgrades, PCs de alta performance e setups profissionais.
-              </p>
-
-              <span
-                className="inline-block mt-6 text-sm font-semibold
-                text-white group-hover:translate-x-1 transition"
-              >
-                Ver serviço →
-              </span>
-            </Link>
-          </motion.div>
-
-          {/* Manutenção & Suporte */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            <Link
-              href="/servicos/montagem-pc"
-              className="group block h-full p-8 rounded-2xl
-              bg-gradient-to-br from-gray-900 to-gray-800
-              border border-gray-800
-              shadow-lg hover:shadow-2xl
-              transition-all duration-300
-              hover:-translate-y-2"
-            >
-              <h2 className="text-2xl font-semibold mb-4 text-white">
-                Manutenção & Suporte
-              </h2>
-
-              <p className="text-sm text-gray-400 leading-relaxed mb-4">
-                Manutenção preventiva e corretiva, suporte técnico e
-                otimização de sistemas.
-              </p>
-
-              <p className="text-sm text-gray-300">
-                Atendimento remoto ou presencial, recuperação de dados e performance.
-              </p>
-
-              <span
-                className="inline-block mt-6 text-sm font-semibold
-                text-white group-hover:translate-x-1 transition"
-              >
-                Ver serviço →
-              </span>
-            </Link>
-          </motion.div>
+                {/* Arrow */}
+                <span
+                  style={{
+                    fontSize: '1.2rem',
+                    color: svc.accent,
+                    opacity: 0.6,
+                    transition: 'all 0.2s',
+                    flexShrink: 0,
+                  }}
+                >
+                  →
+                </span>
+              </Link>
+            </motion.div>
+          ))}
         </div>
-      </div>
-    </main>
+      </section>
+
+      <hr className="divider" />
+
+      {/* CTA */}
+      <section style={{ maxWidth: '640px', margin: '0 auto', padding: '80px 24px', textAlign: 'center' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.5 }}
+        >
+          <div className="section-label" style={{ justifyContent: 'center', marginBottom: '20px' }}>
+            Tem interesse?
+          </div>
+          <h2
+            style={{
+              fontSize: '1.8rem',
+              fontWeight: 700,
+              letterSpacing: '-0.025em',
+              color: '#F0F0FF',
+              marginBottom: '16px',
+            }}
+          >
+            Vamos conversar sobre seu projeto
+          </h2>
+          <p style={{ fontSize: '0.9rem', color: '#8888AA', lineHeight: 1.7, marginBottom: '36px' }}>
+            Entre em contato para um orçamento sem compromisso.
+            Respondo dentro de 24h.
+          </p>
+          <Link href="/contato" className="btn-primary">
+            Solicitar orçamento
+          </Link>
+        </motion.div>
+      </section>
+    </div>
   );
 }

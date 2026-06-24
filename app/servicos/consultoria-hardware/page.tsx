@@ -1,197 +1,71 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-export default function ConsultoriaMontagemPage() {
-  return (
-    <main className="relative min-h-screen text-gray-100 overflow-hidden">
-      {/* BACKGROUND */}
-      <div
-        className="absolute inset-0 bg-cover bg-center scale-105"
-        style={{ backgroundImage: "url('/Mont2.png')" }}
-        aria-hidden
-      />
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
+const features = [
+  { title: 'Compatibilidade garantida', desc: 'Análise completa de compatibilidade entre CPU, GPU, RAM, placa-mãe e fonte.' },
+  { title: 'Custo-benefício', desc: 'Melhor performance pelo menor preço, com comparação entre componentes do mercado atual.' },
+  { title: 'Gamers & Criadores', desc: 'Builds otimizadas para jogos em alta performance ou renderização e edição profissional.' },
+  { title: 'Workstations', desc: 'Configurações para ambientes corporativos e desenvolvimento de software.' },
+  { title: 'Upgrades inteligentes', desc: 'Avaliação do hardware atual e recomendação dos upgrades com maior impacto.' },
+  { title: 'Montagem assistida', desc: 'Acompanhamento passo a passo na montagem e configuração inicial do sistema.' },
+];
 
-      {/* CONTENT */}
-      <div className="relative z-10 flex flex-col min-h-screen">
-        {/* HERO */}
-        <motion.header
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="pt-32 pb-24 px-6 text-center max-w-4xl mx-auto"
+export default function ConsultoriaHardwarePage() {
+  return (
+    <div style={{ background: 'linear-gradient(180deg, #0A0A0F 0%, #0D0D1A 100%)', minHeight: '100vh' }}>
+      <section style={{ padding: '80px 24px 64px', maxWidth: '1100px', margin: '0 auto' }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} style={{ marginBottom: '12px' }}>
+          <Link href="/servicos" style={{ fontSize: '0.8rem', color: '#555577', fontFamily: "'JetBrains Mono', monospace", textDecoration: 'none' }}>
+            ← Serviços
+          </Link>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.5 }} style={{ marginBottom: '16px' }}>
+          <span className="section-label">Serviço 02</span>
+        </motion.div>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }}
+          style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 800, letterSpacing: '-0.03em', color: '#F0F0FF', marginBottom: '20px' }}
         >
-          <span className="inline-block mb-5 px-4 py-1 text-sm rounded-full
-            bg-white/5 border border-white/10 text-gray-300">
-            Serviços
-          </span>
-
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-6
-            bg-gradient-to-r from-white to-gray-400
-            bg-clip-text text-transparent">
-            Consultoria & Montagem
-          </h1>
-
-          <p className="text-lg text-gray-300 leading-relaxed">
-            Orientação especializada para escolha, montagem e upgrade de hardware,
-            garantindo compatibilidade, desempenho e eficiência.
-          </p>
-        </motion.header>
-
-        {/* SERVIÇOS */}
-        <section className="pb-28 px-6">
-          <div className="max-w-7xl mx-auto grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-            {/* CARD 1 */}
-            <ServicoCard
-              titulo="Análise de Compatibilidade"
-              descricao="Avaliação completa entre processadores, placas-mãe, memórias, fontes e periféricos."
-              tags={['Compatibilidade', 'Estabilidade', 'Planejamento']}
-            />
-
-            {/* CARD 2 COM IMAGEM */}
-            <ServicoImagemCard />
-
-            {/* CARD 3 */}
-            <ServicoCard
-              titulo="Eficiência Energética"
-              descricao="Escolha inteligente de componentes que equilibram consumo, performance e durabilidade."
-              tags={['Consumo', 'Fonte', 'Sustentabilidade']}
-            />
-          </div>
-        </section>
-
-        {/* CTA */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="pb-24 px-6 text-center"
+          Consultoria & Montagem de Hardware
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.5 }}
+          style={{ fontSize: '1rem', color: '#8888AA', maxWidth: '520px', lineHeight: 1.7, marginBottom: '40px' }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Precisa de uma análise personalizada?
-          </h2>
+          Orientação especializada para escolher os componentes certos
+          com foco em compatibilidade, desempenho e melhor custo-benefício.
+        </motion.p>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
+          <Link href="/contato" className="btn-primary" style={{ background: '#7C3AED' }}>Solicitar orçamento →</Link>
+        </motion.div>
+      </section>
 
-          <p className="text-gray-400 mb-10 max-w-xl mx-auto">
-            Me diga seu objetivo e eu te ajudo a montar ou evoluir seu setup da forma certa.
-          </p>
+      <hr className="divider" />
 
-          <div className="flex justify-center gap-4 flex-wrap">
-            <Link
-              href="/contato"
-              className="px-8 py-4 rounded-xl font-semibold
-              bg-white text-black hover:bg-gray-200 transition shadow-lg"
-            >
-              Solicitar orçamento →
-            </Link>
-
-            <Link
-              href="/servicos"
-              className="px-8 py-4 rounded-xl font-semibold
-              bg-white/5 border border-white/10
-              text-white hover:bg-white/10 transition"
-            >
-              Ver outros serviços
-            </Link>
-          </div>
-        </motion.section>
-
-        {/* FOOTER */}
-        <footer className="mt-auto py-6 text-center text-sm text-gray-400
-          border-t border-white/10 bg-black/40">
-          © {new Date().getFullYear()} Juan • Consultoria & Montagem
-        </footer>
-      </div>
-    </main>
-  );
-}
-
-/* ================= COMPONENTES ================= */
-
-function ServicoCard({
-  titulo,
-  descricao,
-  tags,
-}: {
-  titulo: string;
-  descricao: string;
-  tags: string[];
-}) {
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-      className="relative p-7 rounded-2xl
-      bg-gradient-to-br from-gray-900 to-gray-800
-      border border-gray-800 shadow-lg
-      hover:-translate-y-1 transition-all"
-    >
-      <h3 className="text-2xl font-semibold mb-4">
-        {titulo}
-      </h3>
-
-      <p className="text-sm text-gray-400 leading-relaxed mb-6">
-        {descricao}
-      </p>
-
-      <div className="flex flex-wrap gap-2">
-        {tags.map(tag => (
-          <span
-            key={tag}
-            className="px-3 py-1 text-xs rounded-full
-            bg-white/5 border border-white/10 text-gray-300"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-    </motion.article>
-  );
-}
-
-function ServicoImagemCard() {
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-      className="rounded-2xl overflow-hidden
-      bg-gradient-to-br from-gray-900 to-gray-800
-      border border-gray-800 shadow-lg
-      hover:-translate-y-1 transition-all"
-    >
-      <div className="relative h-44 w-full">
-        <Image
-          src="/Mont1.png"
-          alt="Upgrade de Hardware"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-          <h3 className="text-2xl font-semibold">
-            Upgrade de Hardware
-          </h3>
+      <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '64px 24px 96px' }}>
+        <div style={{ marginBottom: '48px' }}>
+          <div className="section-label" style={{ marginBottom: '12px' }}>O que está incluído</div>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 700, letterSpacing: '-0.02em', color: '#F0F0FF' }}>Diferenciais</h2>
         </div>
-      </div>
-
-      <div className="p-7">
-        <p className="text-sm text-gray-400 leading-relaxed mb-3">
-          Atualização inteligente de máquinas existentes para extrair
-          o máximo desempenho sem gastos desnecessários.
-        </p>
-
-        <p className="text-xs text-gray-500">
-          Inclui análise de compatibilidade, recomendação de peças
-          e suporte na instalação.
-        </p>
-      </div>
-    </motion.article>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
+          {features.map((f, i) => (
+            <motion.div
+              key={f.title}
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.4 }}
+              className="card-glass" style={{ padding: '24px' }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#A855F7', flexShrink: 0 }} />
+                <h3 style={{ fontSize: '0.95rem', fontWeight: 600, color: '#F0F0FF' }}>{f.title}</h3>
+              </div>
+              <p style={{ fontSize: '0.85rem', color: '#8888AA', lineHeight: 1.6 }}>{f.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

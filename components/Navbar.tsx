@@ -1,205 +1,352 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" width={18} height={18} {...props} aria-hidden>
-      <path
-        fill="#EA4335"
-        d="M12 11h11c.1.6.2 1.1.2 1.8 0 6-4 10.2-11.2 10.2A11.9 11.9 0 0 1 0 12 11.9 11.9 0 0 1 12 .2c3.2 0 5.9 1.2 8 3.1l-3.3 3.2A7.6 7.6 0 0 0 12 4.8c-4 0-7.3 3.3-7.3 7.2s3.3 7.2 7.3 7.2c3.7 0 6.3-2.1 6.9-5.1H12z"
-      />
-    </svg>
-  );
-}
+const navLinks = [
+  { href: "/", label: "Início" },
+  { href: "/projetos", label: "Projetos" },
+  { href: "/servicos", label: "Serviços" },
+  { href: "/sobre", label: "Sobre" },
+  { href: "/contato", label: "Contato" },
+];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const { data: session } = useSession();
-  const [mobileOpen, setMobileOpen] = useState(false); // painel do Navbar (local)
-  const [submenuOpen, setSubmenuOpen] = useState(false);
-  const closeTimerRef = useRef<number | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    return () => {
-      if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
-    };
-  }, []);
-
-  const openSubmenu = () => {
-    if (closeTimerRef.current) {
-      window.clearTimeout(closeTimerRef.current);
-      closeTimerRef.current = null;
-    }
-    setSubmenuOpen(true);
-  };
-
-  const closeSubmenuWithDelay = (delay = 180) => {
-    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
-    closeTimerRef.current = window.setTimeout(() => {
-      setSubmenuOpen(false);
-      closeTimerRef.current = null;
-    }, delay);
-  };
-
-  // abre/fecha SlideMenu via evento global
-  const toggleSlideMenu = () => {
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(new CustomEvent("toggle-slide-menu"));
-    }
-    setMobileOpen(v => !v);
-  };
-
-  // garante que o Navbar escute pedidos de fechamento global
-  const handleCloseGlobal = useCallback(() => {
-    setMobileOpen(false);
-    setSubmenuOpen(false);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    window.addEventListener("close-slide-menu", handleCloseGlobal as EventListener);
-    window.addEventListener("open-slide-menu", () => setMobileOpen(true) as unknown as EventListener);
-    return () => {
-      window.removeEventListener("close-slide-menu", handleCloseGlobal as EventListener);
-      window.removeEventListener("open-slide-menu", () => setMobileOpen(true) as unknown as EventListener);
-    };
-  }, [handleCloseGlobal]);
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
 
-  // fecha com ESC (aplica ao painel do Navbar também)
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setMobileOpen(false);
-        setSubmenuOpen(false);
-      }
-    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMobileOpen(false); };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Close sidebar on route change
+  useEffect(() => { setMobileOpen(false); }, [pathname]);
+
   return (
-    <header className="bg-black/65 backdrop-blur-sm border-b border-gray-800">
-      <div className="max-w-6xl mx-auto px-4 md:px-6">
-        <div className="flex items-center h-16 gap-4">
-          {/* Hamburger icon (mobile only) */}
+    <>
+      {/* ── NAVBAR BAR ── */}
+      <header
+        style={{
+          background: scrolled ? "rgba(10,10,15,0.95)" : "rgba(10,10,15,0.75)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
+          transition: "all 0.3s ease",
+          position: "relative",
+          zIndex: 50,
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "0 24px",
+            height: "64px",
+            display: "flex",
+            alignItems: "center",
+            gap: "16px",
+          }}
+        >
+          {/* Hamburger — mobile only */}
           <button
-            className="md:hidden p-2 rounded-md hover:bg-white/6 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30"
-            onClick={toggleSlideMenu}
-            aria-label="Abrir menu lateral"
+            className="md:hidden"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={mobileOpen}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              gap: "5px",
+              padding: "8px",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              flexShrink: 0,
+              zIndex: 60,
+            }}
           >
-            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" aria-hidden>
-              <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <span style={{
+              display: "block", width: "22px", height: "2px",
+              background: mobileOpen ? "#00D4FF" : "#8888AA",
+              borderRadius: "2px", transition: "all 0.3s",
+              transform: mobileOpen ? "translateY(7px) rotate(45deg)" : "none",
+            }} />
+            <span style={{
+              display: "block", width: "22px", height: "2px",
+              background: mobileOpen ? "#00D4FF" : "#8888AA",
+              borderRadius: "2px", transition: "all 0.3s",
+              opacity: mobileOpen ? 0 : 1,
+              transform: mobileOpen ? "scaleX(0)" : "none",
+            }} />
+            <span style={{
+              display: "block", width: "22px", height: "2px",
+              background: mobileOpen ? "#00D4FF" : "#8888AA",
+              borderRadius: "2px", transition: "all 0.3s",
+              transform: mobileOpen ? "translateY(-7px) rotate(-45deg)" : "none",
+            }} />
           </button>
 
-          {/* Brand */}
-          <Link href="/" className="flex items-center gap-3 no-underline min-w-0">
-            <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white font-extrabold text-lg">
-              J
+          {/* Logo */}
+          <Link
+            href="/"
+            style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", flexShrink: 0 }}
+          >
+            <div style={{
+              width: "34px", height: "34px", borderRadius: "8px",
+              background: "linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontFamily: "'JetBrains Mono', monospace", fontWeight: 700,
+              fontSize: "0.85rem", color: "#0A0A0F", flexShrink: 0,
+            }}>
+              JL
             </div>
-
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="font-semibold text-white text-sm md:text-base leading-none whitespace-nowrap truncate max-w-[10rem] md:max-w-[14rem]">
-                  Juan Lavecchia
-                </span>
-              </div>
-              <div className="hidden md:block text-xs text-gray-300 whitespace-nowrap truncate max-w-[16rem]">
-                Desenvolvedor Web • Consultor em TI
-              </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+              <span style={{ fontWeight: 700, fontSize: "0.9rem", color: "#F0F0FF", lineHeight: 1, letterSpacing: "-0.01em" }}>
+                Juan Lavecchia
+              </span>
+              <span className="hidden md:block" style={{ fontSize: "0.65rem", color: "#555577", fontFamily: "'JetBrains Mono', monospace" }}>
+                dev & consultor TI
+              </span>
             </div>
           </Link>
 
-          {/* Center nav */}
-          <div className="flex-1 flex justify-center min-w-0">
-            <nav className="hidden md:flex items-center gap-6" aria-label="Navegação principal">
-              <Link href="/" className="px-3 py-2 text-gray-300 hover:text-white transition">Home</Link>
-              <Link href="/projetos" className="px-3 py-2 text-gray-300 hover:text-white transition">Projetos</Link>
+          {/* Spacer */}
+          <div style={{ flex: 1 }} />
 
-              <div
-                className="relative"
-                onMouseEnter={openSubmenu}
-                onMouseLeave={() => closeSubmenuWithDelay(180)}
-              >
-                <button className="flex items-center gap-2 px-3 py-2 text-gray-300 hover:text-white transition rounded" aria-haspopup="menu" aria-expanded={submenuOpen}>
-                  Serviços
-                  <span className="text-xs text-gray-400">▾</span>
-                </button>
-
-                <div
-                  role="menu"
-                  aria-hidden={!submenuOpen}
-                  className={`absolute left-0 mt-2 w-56 bg-gray-900 rounded-lg shadow-lg ring-1 ring-black/30 overflow-hidden transition-all duration-150 ${
-                    submenuOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-1"
-                  }`}
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex" style={{ alignItems: "center", gap: "4px" }} aria-label="Navegação principal">
+            {navLinks.map((link) => {
+              const active = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  style={{
+                    fontSize: "0.85rem",
+                    fontWeight: active ? 600 : 400,
+                    color: active ? "#00D4FF" : "#8888AA",
+                    padding: "6px 12px",
+                    borderRadius: "8px",
+                    textDecoration: "none",
+                    background: active ? "rgba(0,212,255,0.08)" : "transparent",
+                    border: active ? "1px solid rgba(0,212,255,0.15)" : "1px solid transparent",
+                    transition: "all 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!active) {
+                      (e.currentTarget as HTMLElement).style.color = "#F0F0FF";
+                      (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!active) {
+                      (e.currentTarget as HTMLElement).style.color = "#8888AA";
+                      (e.currentTarget as HTMLElement).style.background = "transparent";
+                    }
+                  }}
                 >
-                  <Link href="/servicos/desenvolvimento-web" className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-800">Desenvolvimento Web</Link>
-                  <Link href="/servicos/consultoria-hardware" className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-800">Consultoria Hardware</Link>
-                  <Link href="/servicos/montagem-pc" className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-800">Montagem de PC</Link>
-                </div>
-              </div>
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
 
-              <Link href="/contato" className="px-3 py-2 text-gray-300 hover:text-white transition">Contato</Link>
-              <Link href="/sobre" className="px-3 py-2 text-gray-300 hover:text-white transition">Sobre</Link>
-            </nav>
-          </div>
-
-          {/* Right: auth */}
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <div className="hidden md:flex items-center">
-              {session ? (
-                <button onClick={() => signOut()} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition">
-                  <img src={session.user?.image || ""} alt="avatar" className="w-7 h-7 rounded-full border-2 border-white" />
-                  <span className="text-sm">Sair</span>
-                </button>
-              ) : (
-                <button onClick={() => signIn("google")} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white text-black font-medium">
-                  <GoogleIcon />
-                  <span className="text-sm">Entrar</span>
-                </button>
-              )}
-            </div>
+          {/* Auth — desktop */}
+          <div className="hidden md:flex" style={{ alignItems: "center", marginLeft: "8px" }}>
+            {session ? (
+              <button
+                onClick={() => signOut()}
+                style={{
+                  display: "flex", alignItems: "center", gap: "8px",
+                  padding: "6px 14px", borderRadius: "8px",
+                  background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)",
+                  color: "#F87171", fontSize: "0.8rem", fontWeight: 500, cursor: "pointer",
+                }}
+              >
+                <img src={session.user?.image ?? ""} alt="avatar"
+                  style={{ width: "20px", height: "20px", borderRadius: "50%" }} />
+                Sair
+              </button>
+            ) : (
+              <button
+                onClick={() => signIn("google")}
+                style={{
+                  display: "flex", alignItems: "center", gap: "8px",
+                  padding: "6px 14px", borderRadius: "8px",
+                  background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
+                  color: "#F0F0FF", fontSize: "0.8rem", fontWeight: 500, cursor: "pointer",
+                }}
+              >
+                Entrar
+              </button>
+            )}
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile panel local ao Navbar (opcional) */}
-      {mobileOpen && (
-        <>
-          <div className="fixed inset-0 bg-black/50 md:hidden" onClick={() => { setMobileOpen(false); if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('close-slide-menu')); }} aria-hidden />
-          <nav className="md:hidden fixed top-16 left-0 right-0 h-[calc(100vh-4rem)] bg-gray-900 text-white p-6 z-60 overflow-auto">
-            <div className="flex flex-col gap-2">
-              <Link href="/" onClick={() => setMobileOpen(false)} className="px-3 py-2 rounded-lg hover:bg-white/6 transition">Home</Link>
-              <Link href="/projetos" onClick={() => setMobileOpen(false)} className="px-3 py-2 rounded-lg hover:bg-white/6 transition">Projetos</Link>
+      {/* ── MOBILE SIDEBAR OVERLAY ── */}
+      {/* Backdrop */}
+      <div
+        onClick={() => setMobileOpen(false)}
+        aria-hidden
+        style={{
+          position: "fixed",
+          inset: 0,
+          background: "rgba(0,0,0,0.6)",
+          backdropFilter: "blur(4px)",
+          WebkitBackdropFilter: "blur(4px)",
+          zIndex: 55,
+          opacity: mobileOpen ? 1 : 0,
+          pointerEvents: mobileOpen ? "auto" : "none",
+          transition: "opacity 0.3s ease",
+        }}
+      />
 
-              <div>
-                <button onClick={() => setSubmenuOpen((v) => !v)} className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-white/6 transition">
-                  <span>Serviços</span>
-                  <span className="text-sm">{submenuOpen ? "▴" : "▾"}</span>
-                </button>
+      {/* Sidebar panel */}
+      <nav
+        aria-label="Menu mobile"
+        aria-hidden={!mobileOpen}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          bottom: 0,
+          width: "280px",
+          background: "rgba(13,13,20,0.98)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          borderRight: "1px solid rgba(255,255,255,0.07)",
+          zIndex: 60,
+          display: "flex",
+          flexDirection: "column",
+          padding: "0",
+          transform: mobileOpen ? "translateX(0)" : "translateX(-100%)",
+          transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          boxShadow: mobileOpen ? "4px 0 40px rgba(0,0,0,0.5)" : "none",
+        }}
+      >
+        {/* Sidebar header */}
+        <div style={{
+          height: "64px",
+          display: "flex",
+          alignItems: "center",
+          padding: "0 24px",
+          borderBottom: "1px solid rgba(255,255,255,0.05)",
+          flexShrink: 0,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{
+              width: "30px", height: "30px", borderRadius: "7px",
+              background: "linear-gradient(135deg, #00D4FF, #7C3AED)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontFamily: "'JetBrains Mono', monospace", fontWeight: 700,
+              fontSize: "0.75rem", color: "#0A0A0F",
+            }}>JL</div>
+            <span style={{ fontWeight: 600, fontSize: "0.9rem", color: "#F0F0FF" }}>Juan Lavecchia</span>
+          </div>
+        </div>
 
-                {submenuOpen && (
-                  <div className="mt-2 flex flex-col pl-3 gap-1">
-                    <Link href="/servicos/desenvolvimento-web" onClick={() => setMobileOpen(false)} className="px-3 py-2 rounded-lg hover:bg-white/6 transition">Desenvolvimento Web</Link>
-                    <Link href="/servicos/consultoria-hardware" onClick={() => setMobileOpen(false)} className="px-3 py-2 rounded-lg hover:bg-white/6 transition">Consultoria Hardware</Link>
-                    <Link href="/servicos/montagem-pc" onClick={() => setMobileOpen(false)} className="px-3 py-2 rounded-lg hover:bg-white/6 transition">Montagem de PC</Link>
-                  </div>
+        {/* Nav links */}
+        <div style={{ flex: 1, padding: "24px 16px", display: "flex", flexDirection: "column", gap: "4px", overflowY: "auto" }}>
+          <p style={{
+            fontSize: "0.65rem", fontFamily: "'JetBrains Mono', monospace",
+            textTransform: "uppercase", letterSpacing: "0.12em",
+            color: "#555577", padding: "0 8px", marginBottom: "8px",
+          }}>
+            Navegação
+          </p>
+
+          {navLinks.map((link) => {
+            const active = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "12px 16px",
+                  borderRadius: "10px",
+                  textDecoration: "none",
+                  fontWeight: active ? 600 : 400,
+                  fontSize: "0.95rem",
+                  color: active ? "#00D4FF" : "#AAAACC",
+                  background: active ? "rgba(0,212,255,0.08)" : "transparent",
+                  border: "1px solid",
+                  borderColor: active ? "rgba(0,212,255,0.15)" : "transparent",
+                  transition: "all 0.15s",
+                }}
+              >
+                <span>{link.label}</span>
+                {active && (
+                  <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#00D4FF", flexShrink: 0 }} />
                 )}
-              </div>
+              </Link>
+            );
+          })}
+        </div>
 
-              <Link href="/contato" onClick={() => setMobileOpen(false)} className="px-3 py-2 rounded-lg hover:bg-white/6 transition">Contato</Link>
-              <Link href="/sobre" onClick={() => setMobileOpen(false)} className="px-3 py-2 rounded-lg hover:bg-white/6 transition">Sobre</Link>
-
-              <div className="mt-6">
-                <button onClick={() => setMobileOpen(false)} className="w-full px-4 py-2 rounded-lg bg-white text-black">Fechar</button>
+        {/* Sidebar footer */}
+        <div style={{
+          padding: "16px",
+          borderTop: "1px solid rgba(255,255,255,0.05)",
+          flexShrink: 0,
+        }}>
+          {session ? (
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 12px",
+                background: "rgba(255,255,255,0.03)", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
+                <img src={session.user?.image ?? ""} alt="avatar"
+                  style={{ width: "28px", height: "28px", borderRadius: "50%", border: "2px solid rgba(0,212,255,0.3)" }} />
+                <div>
+                  <div style={{ fontSize: "0.8rem", fontWeight: 500, color: "#F0F0FF" }}>{session.user?.name}</div>
+                  <div style={{ fontSize: "0.68rem", color: "#555577", fontFamily: "'JetBrains Mono', monospace" }}>{session.user?.email}</div>
+                </div>
               </div>
+              <button
+                onClick={() => signOut()}
+                style={{
+                  width: "100%", padding: "10px", borderRadius: "8px",
+                  background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.15)",
+                  color: "#F87171", fontSize: "0.85rem", cursor: "pointer", fontWeight: 500,
+                }}
+              >
+                Sair da conta
+              </button>
             </div>
-          </nav>
-        </>
-      )}
-    </header>
+          ) : (
+            <button
+              onClick={() => signIn("google")}
+              style={{
+                width: "100%", padding: "11px", borderRadius: "8px",
+                background: "rgba(0,212,255,0.08)", border: "1px solid rgba(0,212,255,0.2)",
+                color: "#00D4FF", fontSize: "0.9rem", fontWeight: 600, cursor: "pointer",
+              }}
+            >
+              Entrar com Google
+            </button>
+          )}
+        </div>
+      </nav>
+    </>
   );
 }

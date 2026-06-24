@@ -1,107 +1,73 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+
+const features = [
+  { title: 'Performance', desc: 'Lighthouse 95+, otimização de imagens, lazy loading e cache inteligente.' },
+  { title: 'SEO On-page', desc: 'Meta tags, Open Graph, sitemap, robots.txt e estrutura semântica.' },
+  { title: 'Responsividade', desc: 'Design mobile-first que funciona em qualquer dispositivo ou tela.' },
+  { title: 'Acessibilidade', desc: 'WCAG, ARIA e navegação por teclado inclusos desde o início.' },
+  { title: 'Deploy & CI/CD', desc: 'Entrega automática via Vercel com preview por branch.' },
+  { title: 'TypeScript', desc: 'Código tipado, manutenível e escalável desde o primeiro commit.' },
+];
 
 export default function DesenvolvimentoWebPage() {
-  const [expanded, setExpanded] = useState(false);
-
-  // Definição da constante cardBase
-  const cardBase =
-    "p-6 rounded-2xl border border-gray-800 bg-gradient-to-br from-gray-900 to-black shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-purple-600";
-
   return (
-    <section id="projetos" className="py-20">
-      <h2 className="text-3xl font-bold text-center mb-12 text-white tracking-wide">
-        Projetos em destaque
-      </h2>
-
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {/* 🔥 PROJETO PRINCIPAL - CS2 */}
-        <a
-          href="https://sitecs2.vercel.app/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`${cardBase} md:col-span-2`}
+    <div style={{ background: 'linear-gradient(180deg, #0A0A0F 0%, #0D0D1A 100%)', minHeight: '100vh' }}>
+      <section style={{ padding: '80px 24px 64px', maxWidth: '1100px', margin: '0 auto' }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} style={{ marginBottom: '12px' }}>
+          <Link href="/servicos" style={{ fontSize: '0.8rem', color: '#555577', fontFamily: "'JetBrains Mono', monospace", textDecoration: 'none' }}>
+            ← Serviços
+          </Link>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.5 }} style={{ marginBottom: '16px' }}>
+          <span className="section-label">Serviço 01</span>
+        </motion.div>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }}
+          style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 800, letterSpacing: '-0.03em', color: '#F0F0FF', marginBottom: '20px' }}
         >
-          <h3 className="text-2xl font-semibold mb-3 text-white">
-            Projeto CS2
-          </h3>
-          <p className="text-gray-400 text-sm mb-6 max-w-2xl leading-relaxed">
-            Plataforma dedicada ao Counter-Strike 2, reunindo ferramentas,
-            conteúdo e recursos para a comunidade. Projeto real, público e em evolução.
-          </p>
-          <div className="flex flex-wrap gap-2 mb-6">
-            <span className="tag">Next.js</span>
-            <span className="tag">Vercel</span>
-            <span className="tag">SEO</span>
-            <span className="tag">UI Moderna</span>
-          </div>
-          <span className="inline-block px-6 py-3 rounded-lg bg-white text-black font-semibold hover:bg-gray-200 transition">
-            Acessar projeto →
-          </span>
-        </a>
+          Desenvolvimento Web
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.5 }}
+          style={{ fontSize: '1rem', color: '#8888AA', maxWidth: '520px', lineHeight: 1.7, marginBottom: '40px' }}
+        >
+          Sites e aplicações modernas construídas com Next.js e TypeScript.
+          Foco em performance, SEO e uma experiência de usuário impecável.
+        </motion.p>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
+          <Link href="/contato" className="btn-primary">Solicitar orçamento →</Link>
+        </motion.div>
+      </section>
 
-        {/* Projeto secundário */}
-        <article className={cardBase}>
-          <h3 className="text-lg font-semibold mb-3 text-white">
-            Dashboard Web
-          </h3>
-          <p className="text-gray-400 text-sm leading-relaxed">
-            Dashboard interativo para visualização e análise de dados em tempo real.
-          </p>
-          <div className="flex flex-wrap gap-2 mt-4">
-            <span className="tag">React</span>
-            <span className="tag">Tailwind</span>
-            <span className="tag">Charts.js</span>
-          </div>
-        </article>
+      <hr className="divider" />
 
-        {/* Novo Projeto - Loja Virtual */}
-        <article className={cardBase}>
-          <h3 className="text-lg font-semibold mb-3 text-white">
-            Loja Virtual
-          </h3>
-          <p className="text-gray-400 text-sm leading-relaxed">
-            Plataforma de e-commerce com carrinho inteligente, integração de pagamentos e painel administrativo.
-          </p>
-          <div className="flex flex-wrap gap-2 mt-4">
-            <span className="tag">Next.js</span>
-            <span className="tag">Stripe</span>
-            <span className="tag">CMS</span>
-          </div>
-        </article>
-
-        {/* Novo Projeto - Blog Tech */}
-        <article className={cardBase}>
-          <h3 className="text-lg font-semibold mb-3 text-white">
-            Blog Tech
-          </h3>
-          <p className="text-gray-400 text-sm leading-relaxed">
-            Blog moderno com foco em tecnologia, otimizado para SEO e com suporte a múltiplos autores.
-          </p>
-          <div className="flex flex-wrap gap-2 mt-4">
-            <span className="tag">Next.js</span>
-            <span className="tag">Markdown</span>
-            <span className="tag">SEO</span>
-          </div>
-        </article>
-
-        {/* Novo Projeto - Sistema de Reservas */}
-        <article className={cardBase}>
-          <h3 className="text-lg font-semibold mb-3 text-white">
-            Sistema de Reservas
-          </h3>
-          <p className="text-gray-400 text-sm leading-relaxed">
-            Aplicação para agendamento de serviços com calendário integrado e notificações automáticas.
-          </p>
-          <div className="flex flex-wrap gap-2 mt-4">
-            <span className="tag">React</span>
-            <span className="tag">Firebase</span>
-            <span className="tag">UX Design</span>
-          </div>
-        </article>
-      </div>
-    </section>
+      <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '64px 24px 96px' }}>
+        <div style={{ marginBottom: '48px' }}>
+          <div className="section-label" style={{ marginBottom: '12px' }}>O que está incluído</div>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 700, letterSpacing: '-0.02em', color: '#F0F0FF' }}>
+            Diferenciais
+          </h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
+          {features.map((f, i) => (
+            <motion.div
+              key={f.title}
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.4 }}
+              className="card-glass" style={{ padding: '24px' }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00D4FF', flexShrink: 0 }} />
+                <h3 style={{ fontSize: '0.95rem', fontWeight: 600, color: '#F0F0FF' }}>{f.title}</h3>
+              </div>
+              <p style={{ fontSize: '0.85rem', color: '#8888AA', lineHeight: 1.6 }}>{f.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

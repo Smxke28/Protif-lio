@@ -1,257 +1,582 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] },
+  }),
+};
+
+const ROLES = [
+  'Desenvolvedor Web',
+  'Consultor em TI',
+  'Estudante de CC',
+  'Entusiasta de Hardware',
+];
+
+function TypingRole() {
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [displayed, setDisplayed] = useState('');
+  const [phase, setPhase] = useState<'typing' | 'pause' | 'erasing'>('typing');
+
+  useEffect(() => {
+    const current = ROLES[roleIndex];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (phase === 'typing') {
+      if (displayed.length < current.length) {
+        timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 60);
+      } else {
+        timeout = setTimeout(() => setPhase('pause'), 1800);
+      }
+    } else if (phase === 'pause') {
+      timeout = setTimeout(() => setPhase('erasing'), 200);
+    } else {
+      if (displayed.length > 0) {
+        timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 35);
+      } else {
+        setRoleIndex((i) => (i + 1) % ROLES.length);
+        setPhase('typing');
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayed, phase, roleIndex]);
+
+  return (
+    <span style={{ color: '#00D4FF', position: 'relative' }}>
+      {displayed}
+      <span className="cursor-blink" />
+    </span>
+  );
+}
+
+const services = [
+  {
+    icon: '⬡',
+    title: 'Desenvolvimento Web',
+    desc: 'Sites modernos, rápidos e responsivos com foco em SEO e experiência do usuário. De landing pages a dashboards completos.',
+    tags: ['Next.js', 'TypeScript', 'Tailwind', 'SEO'],
+    href: '/servicos/desenvolvimento-web',
+    accent: '#00D4FF',
+  },
+  {
+    icon: '⬡',
+    title: 'Consultoria de Hardware',
+    desc: 'Orientação especializada na escolha de componentes com foco em compatibilidade, performance e custo-benefício.',
+    tags: ['Montagem', 'Upgrades', 'Gamers', 'Workstations'],
+    href: '/servicos/consultoria-hardware',
+    accent: '#7C3AED',
+  },
+  {
+    icon: '⬡',
+    title: 'Manutenção & Suporte',
+    desc: 'Suporte técnico, manutenção preventiva e otimização de sistemas. Atendimento remoto ou presencial.',
+    tags: ['Backup', 'Performance', 'Recovery', 'SLA'],
+    href: '/servicos/montagem-pc',
+    accent: '#00D4FF',
+  },
+];
+
+const projects = [
+  {
+    title: 'Projeto CS2',
+    desc: 'Plataforma para a comunidade Counter-Strike 2 com ferramentas, utilidades e conteúdo tático.',
+    tags: ['Next.js', 'Vercel', 'UI'],
+    link: 'https://sitecs2.vercel.app/',
+    status: 'live',
+  },
+  {
+    title: 'Calculadora Math — Java',
+    desc: 'Demonstração de funções matemáticas e conceitos de programação orientada a objetos em Java.',
+    tags: ['Java', 'Vercel', 'Educacional'],
+    link: 'https://funcoes-java-pg5ixris4-smxke28s-projects.vercel.app/',
+    status: 'live',
+  },
+  {
+    title: 'Dashboard em Tempo Real',
+    desc: 'Visualização de dados com consumo contínuo de APIs. Gráficos interativos e atualizações ao vivo.',
+    tags: ['React', 'API', 'Charts'],
+    link: undefined,
+    status: 'wip',
+  },
+];
+
 export default function Home() {
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({
-    hardware: false,
-  });
-
-  const toggle = (id: string) => {
-    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
   return (
-    <main className="min-h-screen bg-gradient-to-b from-black via-gray-950 to-black text-gray-100">
-      {/* ================= HERO ================= */}
-      <motion.header
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="pt-32 pb-24 px-6 text-center"
-      >
-        <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
-          Olá, eu sou{' '}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-            Juan
-          </span>
-        </h1>
-
-        <p className="mt-6 text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
-          Desenvolvedor web e consultor em TI. Transformo ideias em produtos
-          digitais funcionais, rápidos e bem construídos.
-        </p>
-
-        <div className="mt-10 flex flex-wrap gap-4 justify-center">
-          <Link
-            href="/servicos"
-            className="px-6 py-3 rounded-lg bg-white text-black font-semibold
-            hover:bg-gray-200 transition"
-          >
-            Ver serviços →
-          </Link>
-
-          <Link
-            href="/projetos"
-            className="px-6 py-3 rounded-lg bg-gray-800 text-white font-semibold
-            hover:bg-gray-700 transition"
-          >
-            Meus projetos
-          </Link>
-        </div>
-      </motion.header>
-
-      {/* ================= SERVIÇOS ================= */}
-      <section className="max-w-7xl mx-auto px-6 pb-24">
-        <h2 className="text-3xl font-bold text-center mb-14">Serviços</h2>
-
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Desenvolvimento Web */}
-          <ServiceCard
-            titulo="💻 Desenvolvimento Web"
-            descricao="Sites modernos, rápidos e responsivos, focados em SEO e experiência do usuário."
-            tags={['Next.js', 'Tailwind', 'SEO']}
-            href="/servicos/desenvolvimento-web"
-          />
-
-          {/* Consultoria */}
-          <motion.article
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="p-6 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800
-            border border-gray-800 shadow-lg"
-          >
-            <h3 className="text-xl font-semibold mb-3">
-              🖥️ Consultoria & Montagem de PCs
-            </h3>
-
-            <p className="text-sm text-gray-400 leading-relaxed">
-              Escolha, compatibilidade e montagem de computadores personalizados.
-              {expanded.hardware && (
-                <span className="block mt-2 text-xs text-gray-500">
-                  Ideal para gamers, criadores, empresas e upgrades inteligentes
-                  com foco em custo-benefício.
-                </span>
-              )}
-            </p>
-
-            <div className="mt-6 flex gap-3">
-              <button
-                onClick={() => toggle('hardware')}
-                className="px-4 py-2 rounded bg-white text-black font-semibold
-                hover:bg-gray-200 transition"
-              >
-                {expanded.hardware ? 'Ler menos' : 'Ler mais'}
-              </button>
-
-              <Link
-                href="/servicos/consultoria-hardware"
-                className="px-4 py-2 rounded bg-purple-600 text-white font-semibold
-                hover:bg-purple-500 transition"
-              >
-                Ver serviço →
-              </Link>
-            </div>
-          </motion.article>
-
-          {/* Suporte */}
-          <ServiceCard
-            titulo="🔧 Manutenção & Suporte"
-            descricao="Suporte técnico, manutenção preventiva e otimização de sistemas."
-            tags={['Backup', 'SLA', 'Performance']}
-            href="/servicos/montagem-pc"
-          />
-        </div>
-      </section>
-
-      {/* ================= PROJETOS ================= */}
-      <section className="max-w-7xl mx-auto px-6 pb-24">
-        <h2 className="text-3xl font-bold text-center mb-14">Projetos</h2>
-
-        <div className="grid gap-10 md:grid-cols-3">
-          <ProjectCard
-            titulo="Projeto CS2"
-            descricao="Plataforma dedicada ao Counter-Strike 2 com utilidades e táticas."
-            link="https://sitecs2.vercel.app/"
-          />
-
-          <ProjectCard
-            titulo="Calculadora Math em Java"
-            descricao="Projeto demonstrando funções e conceitos de programação em Java."
-            link="https://funcoes-java-pg5ixris4-smxke28s-projects.vercel.app/"
-          />
-
-          <ProjectCard
-            titulo="Dashboard em Tempo Real"
-            descricao="Visualização de dados com consumo contínuo de APIs."
-          />
-        </div>
-      </section>
-
-      {/* ================= CONTATO ================= */}
-      <section className="max-w-4xl mx-auto px-6 pb-24 text-center">
-        <h2 className="text-3xl font-bold mb-6">Contato</h2>
-
-        <p className="text-gray-400 mb-10">
-          Precisa de um orçamento ou quer conversar sobre um projeto?
-        </p>
-
-        <div className="flex flex-wrap gap-4 justify-center">
-          <Link
-            href="/contato"
-            className="px-6 py-3 rounded-lg bg-blue-600 text-white font-semibold
-            hover:bg-blue-500 transition"
-          >
-            Solicitar orçamento
-          </Link>
-
-          <a
-            href="https://github.com/Smxke28"
-            target="_blank"
-            rel="noreferrer"
-            className="px-6 py-3 rounded-lg bg-gray-800 text-white font-semibold
-            hover:bg-gray-700 transition"
-          >
-            GitHub
-          </a>
-        </div>
-      </section>
-
-      {/* ================= FOOTER ================= */}
-      <footer className="py-6 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} Juan • Desenvolvedor Web & Consultor em TI
-      </footer>
-    </main>
-  );
-}
-
-/* ================= COMPONENTES ================= */
-
-function ServiceCard({
-  titulo,
-  descricao,
-  tags,
-  href,
-}: {
-  titulo: string;
-  descricao: string;
-  tags: string[];
-  href: string;
-}) {
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="p-6 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800
-      border border-gray-800 shadow-lg hover:shadow-2xl
-      transition-all hover:-translate-y-2"
+    <div
+      style={{
+        background: 'linear-gradient(180deg, #0A0A0F 0%, #0D0D1A 100%)',
+        minHeight: '100vh',
+      }}
     >
-      <h3 className="text-xl font-semibold mb-3">{titulo}</h3>
-
-      <p className="text-sm text-gray-400 mb-4">{descricao}</p>
-
-      <div className="flex flex-wrap gap-2 mb-6">
-        {tags.map((tag) => (
-          <span
-            key={tag}
-            className="px-3 py-1 text-xs rounded-full bg-white/5
-            text-gray-300 border border-white/10"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      <Link
-        href={href}
-        className="text-sm font-semibold text-white hover:translate-x-1 transition inline-block"
+      {/* ── HERO ── */}
+      <section
+        className="grid-bg"
+        style={{
+          paddingTop: '120px',
+          paddingBottom: '96px',
+          paddingLeft: '24px',
+          paddingRight: '24px',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
       >
-        Ver serviço →
-      </Link>
-    </motion.article>
-  );
-}
+        {/* Glow blobs */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '-80px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '600px',
+            height: '400px',
+            background: 'radial-gradient(ellipse, rgba(0,212,255,0.07) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '0',
+            right: '-100px',
+            width: '400px',
+            height: '400px',
+            background: 'radial-gradient(ellipse, rgba(124,58,237,0.06) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }}
+        />
 
-function ProjectCard({
-  titulo,
-  descricao,
-  link,
-}: {
-  titulo: string;
-  descricao: string;
-  link?: string;
-}) {
-  return (
-    <div className="p-6 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800
-    border border-gray-800 shadow-lg">
-      <h3 className="text-lg font-semibold mb-3">{titulo}</h3>
-      <p className="text-sm text-gray-400 mb-4">{descricao}</p>
+        <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+          <motion.div
+            initial="hidden"
+            animate="show"
+            custom={0}
+            variants={fadeUp}
+            style={{ marginBottom: '24px' }}
+          >
+            <span className="section-label" style={{ justifyContent: 'center' }}>
+              Portfólio · 2025
+            </span>
+          </motion.div>
 
-      {link && (
-        <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-4 py-2 rounded bg-white text-black font-semibold
-          hover:bg-gray-200 transition inline-block"
+          <motion.h1
+            initial="hidden"
+            animate="show"
+            custom={1}
+            variants={fadeUp}
+            style={{
+              fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+              fontWeight: 800,
+              letterSpacing: '-0.03em',
+              lineHeight: 1.1,
+              marginBottom: '20px',
+              color: '#F0F0FF',
+            }}
+          >
+            Olá, sou{' '}
+            <span className="text-gradient-main">Juan</span>
+          </motion.h1>
+
+          <motion.p
+            initial="hidden"
+            animate="show"
+            custom={2}
+            variants={fadeUp}
+            style={{
+              fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+              fontWeight: 300,
+              color: '#8888AA',
+              marginBottom: '16px',
+              minHeight: '2rem',
+            }}
+          >
+            <TypingRole />
+          </motion.p>
+
+          <motion.p
+            initial="hidden"
+            animate="show"
+            custom={3}
+            variants={fadeUp}
+            style={{
+              fontSize: '1rem',
+              color: '#555577',
+              maxWidth: '520px',
+              margin: '0 auto 48px',
+              lineHeight: 1.7,
+            }}
+          >
+            Transformo ideias em produtos digitais funcionais, rápidos e bem construídos.
+            Baseado em Juiz de Fora — MG.
+          </motion.p>
+
+          <motion.div
+            initial="hidden"
+            animate="show"
+            custom={4}
+            variants={fadeUp}
+            style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}
+          >
+            <Link href="/servicos" className="btn-primary">
+              Ver serviços
+              <span style={{ fontSize: '0.9rem' }}>→</span>
+            </Link>
+            <Link href="/projetos" className="btn-secondary">
+              Meus projetos
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Terminal card */}
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.6 }}
+          style={{
+            maxWidth: '480px',
+            margin: '64px auto 0',
+            background: '#0F0F1A',
+            border: '1px solid rgba(255,255,255,0.07)',
+            borderRadius: '14px',
+            overflow: 'hidden',
+            boxShadow: '0 24px 60px rgba(0,0,0,0.4)',
+          }}
         >
-          Acessar projeto →
-        </a>
-      )}
+          <div
+            style={{
+              padding: '10px 16px',
+              background: 'rgba(255,255,255,0.03)',
+              borderBottom: '1px solid rgba(255,255,255,0.05)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            {['#FF5F57', '#FFBD2E', '#28CA42'].map((c, i) => (
+              <div
+                key={i}
+                style={{ width: '10px', height: '10px', borderRadius: '50%', background: c, opacity: 0.8 }}
+              />
+            ))}
+            <span
+              style={{
+                flex: 1,
+                textAlign: 'center',
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: '0.7rem',
+                color: '#555577',
+              }}
+            >
+              juan@portfolio ~ bash
+            </span>
+          </div>
+          <div style={{ padding: '20px 20px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', lineHeight: 1.9 }}>
+            <div>
+              <span style={{ color: '#00D4FF' }}>juan</span>
+              <span style={{ color: '#555577' }}>@dev</span>
+              <span style={{ color: '#F0F0FF' }}> ~ </span>
+              <span style={{ color: '#A855F7' }}>$</span>
+              <span style={{ color: '#F0F0FF' }}> whoami</span>
+            </div>
+            <div style={{ color: '#8888AA', marginBottom: '8px' }}>Juan Lavecchia — Dev Web & Consultor TI</div>
+            <div>
+              <span style={{ color: '#00D4FF' }}>juan</span>
+              <span style={{ color: '#555577' }}>@dev</span>
+              <span style={{ color: '#F0F0FF' }}> ~ </span>
+              <span style={{ color: '#A855F7' }}>$</span>
+              <span style={{ color: '#F0F0FF' }}> stack --list</span>
+            </div>
+            <div style={{ color: '#8888AA', marginBottom: '8px' }}>Next.js · TypeScript · Tailwind · Node.js</div>
+            <div>
+              <span style={{ color: '#00D4FF' }}>juan</span>
+              <span style={{ color: '#555577' }}>@dev</span>
+              <span style={{ color: '#F0F0FF' }}> ~ </span>
+              <span style={{ color: '#A855F7' }}>$</span>
+              <span style={{ color: '#F0F0FF' }}> status</span>
+            </div>
+            <div style={{ color: '#28CA42' }}>✔ Disponível para novos projetos</div>
+            <div style={{ marginTop: '4px' }}>
+              <span style={{ color: '#A855F7' }}>$</span>
+              <span className="cursor-blink" />
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* ── SERVIÇOS ── */}
+      <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '96px 24px' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          style={{ marginBottom: '64px' }}
+        >
+          <div className="section-label" style={{ marginBottom: '16px' }}>
+            O que faço
+          </div>
+          <h2
+            style={{
+              fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              color: '#F0F0FF',
+            }}
+          >
+            Serviços
+          </h2>
+        </motion.div>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '20px',
+          }}
+        >
+          {services.map((svc, i) => (
+            <motion.div
+              key={svc.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+            >
+              <Link
+                href={svc.href}
+                className="card-glass"
+                style={{
+                  display: 'block',
+                  padding: '32px',
+                  textDecoration: 'none',
+                  height: '100%',
+                }}
+              >
+                <div
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '10px',
+                    background: `rgba(${svc.accent === '#00D4FF' ? '0,212,255' : '124,58,237'},0.1)`,
+                    border: `1px solid rgba(${svc.accent === '#00D4FF' ? '0,212,255' : '124,58,237'},0.2)`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.2rem',
+                    marginBottom: '20px',
+                    color: svc.accent,
+                  }}
+                >
+                  {svc.icon}
+                </div>
+                <h3
+                  style={{
+                    fontSize: '1.05rem',
+                    fontWeight: 600,
+                    color: '#F0F0FF',
+                    marginBottom: '12px',
+                    letterSpacing: '-0.01em',
+                  }}
+                >
+                  {svc.title}
+                </h3>
+                <p
+                  style={{
+                    fontSize: '0.875rem',
+                    color: '#8888AA',
+                    lineHeight: 1.7,
+                    marginBottom: '20px',
+                  }}
+                >
+                  {svc.desc}
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '24px' }}>
+                  {svc.tags.map((tag) => (
+                    <span key={tag} className={`tag ${svc.accent === '#7C3AED' ? 'tag-violet' : ''}`}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <span
+                  style={{
+                    fontSize: '0.8rem',
+                    fontWeight: 500,
+                    color: svc.accent,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  Ver serviço →
+                </span>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      <hr className="divider" />
+
+      {/* ── PROJETOS ── */}
+      <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '96px 24px' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          style={{ marginBottom: '48px', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}
+        >
+          <div>
+            <div className="section-label" style={{ marginBottom: '12px' }}>
+              Trabalhos recentes
+            </div>
+            <h2
+              style={{
+                fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
+                fontWeight: 700,
+                letterSpacing: '-0.02em',
+                color: '#F0F0FF',
+              }}
+            >
+              Projetos
+            </h2>
+          </div>
+          <Link href="/projetos" className="btn-secondary">
+            Ver todos →
+          </Link>
+        </motion.div>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '16px',
+          }}
+        >
+          {projects.map((proj, i) => (
+            <motion.div
+              key={proj.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+            >
+              <div
+                className="card-glass"
+                style={{ padding: '28px', height: '100%', display: 'flex', flexDirection: 'column' }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                  <h3
+                    style={{
+                      fontSize: '0.95rem',
+                      fontWeight: 600,
+                      color: '#F0F0FF',
+                      letterSpacing: '-0.01em',
+                    }}
+                  >
+                    {proj.title}
+                  </h3>
+                  <span
+                    style={{
+                      fontSize: '0.65rem',
+                      fontFamily: "'JetBrains Mono', monospace",
+                      padding: '3px 8px',
+                      borderRadius: '20px',
+                      background: proj.status === 'live' ? 'rgba(40,202,66,0.1)' : 'rgba(255,189,46,0.1)',
+                      color: proj.status === 'live' ? '#28CA42' : '#FFBD2E',
+                      border: `1px solid ${proj.status === 'live' ? 'rgba(40,202,66,0.2)' : 'rgba(255,189,46,0.2)'}`,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                    }}
+                  >
+                    {proj.status === 'live' ? '● live' : '◐ wip'}
+                  </span>
+                </div>
+                <p style={{ fontSize: '0.85rem', color: '#8888AA', lineHeight: 1.6, marginBottom: '20px', flex: 1 }}>
+                  {proj.desc}
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
+                  {proj.tags.map((tag) => (
+                    <span key={tag} className="tag">{tag}</span>
+                  ))}
+                </div>
+                {proj.link ? (
+                  <a
+                    href={proj.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-secondary"
+                    style={{ fontSize: '0.8rem', padding: '8px 16px', justifyContent: 'center' }}
+                  >
+                    Acessar projeto →
+                  </a>
+                ) : (
+                  <span
+                    style={{
+                      fontSize: '0.78rem',
+                      color: '#555577',
+                      fontFamily: "'JetBrains Mono', monospace",
+                      textAlign: 'center',
+                    }}
+                  >
+                    Em desenvolvimento...
+                  </span>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      <hr className="divider" />
+
+      {/* ── CTA ── */}
+      <section style={{ maxWidth: '700px', margin: '0 auto', padding: '96px 24px', textAlign: 'center' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="section-label" style={{ justifyContent: 'center', marginBottom: '20px' }}>
+            Vamos trabalhar juntos
+          </div>
+          <h2
+            style={{
+              fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
+              fontWeight: 700,
+              letterSpacing: '-0.025em',
+              color: '#F0F0FF',
+              marginBottom: '16px',
+            }}
+          >
+            Tem um projeto em mente?
+          </h2>
+          <p style={{ fontSize: '1rem', color: '#8888AA', lineHeight: 1.7, marginBottom: '40px' }}>
+            Estou disponível para novos projetos e consultorias. Entre em contato e vamos conversar.
+          </p>
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/contato" className="btn-primary">
+              Solicitar orçamento
+            </Link>
+            <a
+              href="https://github.com/Smxke28"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-secondary"
+            >
+              Ver GitHub
+            </a>
+          </div>
+        </motion.div>
+      </section>
     </div>
   );
 }

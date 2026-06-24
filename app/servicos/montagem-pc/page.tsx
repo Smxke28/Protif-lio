@@ -1,204 +1,71 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
-export default function MontagemPCPage() {
-  const [showConfig, setShowConfig] = useState(false);
+const features = [
+  { title: 'Manutenção preventiva', desc: 'Limpeza, atualização de drivers, verificação de temperaturas e saúde do hardware.' },
+  { title: 'Suporte técnico', desc: 'Diagnóstico e resolução de problemas de software, drivers e configuração do sistema.' },
+  { title: 'Recuperação de dados', desc: 'Tentativa de recuperação de dados em casos de falha de disco ou formatação acidental.' },
+  { title: 'Otimização de performance', desc: 'Remoção de bloatware, ajuste de inicialização e tuning do sistema operacional.' },
+  { title: 'Atendimento remoto', desc: 'Suporte via acesso remoto seguro, sem necessidade de deslocamento na maioria dos casos.' },
+  { title: 'Atendimento presencial', desc: 'Visita técnica para diagnósticos mais complexos ou serviços que exigem presença física.' },
+];
 
+export default function ManutencaoPage() {
   return (
-    <main
-      className="min-h-screen bg-gradient-to-b from-black via-gray-950 to-black
-      text-gray-100 font-sans"
-    >
-      {/* HERO */}
-      <motion.header
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="pt-32 pb-20 px-6 text-center"
-      >
-        <h1
-          className="text-5xl md:text-6xl font-extrabold mb-6
-          bg-gradient-to-r from-white to-gray-400
-          bg-clip-text text-transparent"
+    <div style={{ background: 'linear-gradient(180deg, #0A0A0F 0%, #0D0D1A 100%)', minHeight: '100vh' }}>
+      <section style={{ padding: '80px 24px 64px', maxWidth: '1100px', margin: '0 auto' }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} style={{ marginBottom: '12px' }}>
+          <Link href="/servicos" style={{ fontSize: '0.8rem', color: '#555577', fontFamily: "'JetBrains Mono', monospace", textDecoration: 'none' }}>
+            ← Serviços
+          </Link>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.5 }} style={{ marginBottom: '16px' }}>
+          <span className="section-label">Serviço 03</span>
+        </motion.div>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }}
+          style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 800, letterSpacing: '-0.03em', color: '#F0F0FF', marginBottom: '20px' }}
         >
-          Montagem de PCs
-        </h1>
+          Manutenção & Suporte Técnico
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.5 }}
+          style={{ fontSize: '1rem', color: '#8888AA', maxWidth: '520px', lineHeight: 1.7, marginBottom: '40px' }}
+        >
+          Suporte técnico, manutenção preventiva e otimização de sistemas.
+          Atendimento remoto ou presencial com foco em disponibilidade e performance.
+        </motion.p>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
+          <Link href="/contato" className="btn-primary">Solicitar orçamento →</Link>
+        </motion.div>
+      </section>
 
-        <p className="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
-          Montagem personalizada de computadores focada em desempenho,
-          estabilidade e custo-benefício — do escritório ao setup gamer.
-        </p>
-      </motion.header>
+      <hr className="divider" />
 
-      {/* CARDS */}
-      <section className="pb-24 px-6">
-        <div className="max-w-7xl mx-auto grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {/* PC Profissional */}
-          <Card
-            titulo="PC Profissional"
-            descricao="Máquinas otimizadas para edição de vídeo, design, programação e uso profissional intenso."
-            botaoCor="bg-blue-600 hover:bg-blue-500"
-          />
-
-          {/* PC Gamer */}
-          <motion.article
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="group relative rounded-2xl overflow-hidden
-            bg-gradient-to-br from-gray-900 to-gray-800
-            border border-gray-800
-            shadow-lg hover:shadow-2xl
-            transition-all hover:-translate-y-2"
-          >
-            <div className="relative h-44">
-              <Image
-                src="/central.jpg"
-                alt="PC Gamer"
-                fill
-                className="object-cover opacity-80 group-hover:opacity-100
-                group-hover:scale-105 transition duration-500"
-                priority
-              />
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                <h3 className="text-2xl font-semibold text-white">PC Gamer</h3>
+      <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '64px 24px 96px' }}>
+        <div style={{ marginBottom: '48px' }}>
+          <div className="section-label" style={{ marginBottom: '12px' }}>O que está incluído</div>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 700, letterSpacing: '-0.02em', color: '#F0F0FF' }}>Diferenciais</h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
+          {features.map((f, i) => (
+            <motion.div
+              key={f.title}
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.4 }}
+              className="card-glass" style={{ padding: '24px' }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00D4FF', flexShrink: 0 }} />
+                <h3 style={{ fontSize: '0.95rem', fontWeight: 600, color: '#F0F0FF' }}>{f.title}</h3>
               </div>
-            </div>
-
-            <div className="p-6">
-              <p className="text-sm text-gray-400 leading-relaxed mb-6">
-                Computadores voltados para jogos, com foco em performance gráfica,
-                estabilidade e alto FPS.
-              </p>
-
-              <Link
-                href="/contato"
-                className="inline-flex items-center gap-2 px-5 py-2.5
-                rounded-lg font-semibold bg-purple-600 text-white
-                hover:bg-purple-500 transition"
-              >
-                Solicitar orçamento →
-              </Link>
-            </div>
-          </motion.article>
-
-          {/* PC Escritório */}
-          <Card
-            titulo="PC para Escritório"
-            descricao="Computadores eficientes e econômicos para tarefas administrativas e ambientes corporativos."
-            botaoCor="bg-emerald-600 hover:bg-emerald-500"
-            delay={0.2}
-          />
+              <p style={{ fontSize: '0.85rem', color: '#8888AA', lineHeight: 1.6 }}>{f.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
-
-      {/* CONFIGURAÇÃO */}
-      <section className="pb-24 px-6 max-w-3xl mx-auto text-center">
-        <button
-          onClick={() => setShowConfig(!showConfig)}
-          className="w-full py-4 rounded-xl font-semibold
-          bg-gradient-to-r from-gray-800 to-gray-700
-          hover:from-gray-700 hover:to-gray-600 transition"
-        >
-          Quer saber minha configuração?
-        </button>
-
-        <AnimatePresence>
-          {showConfig && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="mt-8 p-8 rounded-2xl
-              bg-gradient-to-br from-gray-900 to-gray-800
-              border border-gray-800 text-left"
-            >
-              <h3 className="text-2xl font-bold mb-6">
-                Minha Configuração 🖥️
-              </h3>
-
-              <ul className="grid sm:grid-cols-2 gap-3 text-sm text-gray-300">
-                <li>B550M TUF Plus</li>
-                <li>Ryzen 7 5700X</li>
-                <li>RX 7600 8GB</li>
-                <li>32GB RAM 3600MHz</li>
-                <li>Monitor 180Hz Full HD</li>
-                <li>Controle 8BitDo Ultimate</li>
-                <li>Teclado Redragon Magic Wand</li>
-                <li>Mouse Redragon King Cobra</li>
-                <li>Headset Havit HV-H2002D</li>
-                <li>Microfone Fifine A6T</li>
-                <li>Notebook Lenovo Ideapad Slim 3 Ryzen 7 7735HS </li>
-              </ul>
-
-              <div className="mt-6">
-                <Link
-                  href="/servicos"
-                  className="inline-flex items-center gap-2
-                  px-4 py-2 rounded-lg bg-gray-700 text-white
-                  hover:bg-gray-600 transition text-sm"
-                >
-                  ← Voltar para serviços
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="py-6 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} Juan • Montagem de PCs
-      </footer>
-    </main>
-  );
-}
-
-/* ================= CARD BASE ================= */
-
-function Card({
-  titulo,
-  descricao,
-  botaoCor,
-  delay = 0,
-}: {
-  titulo: string;
-  descricao: string;
-  botaoCor: string;
-  delay?: number;
-}) {
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay }}
-      className="p-6 rounded-2xl
-      bg-gradient-to-br from-gray-900 to-gray-800
-      border border-gray-800
-      shadow-lg hover:shadow-2xl
-      transition-all hover:-translate-y-2"
-    >
-      <h3 className="text-2xl font-semibold mb-4 text-white">
-        {titulo}
-      </h3>
-
-      <p className="text-sm text-gray-400 leading-relaxed mb-6">
-        {descricao}
-      </p>
-
-      <Link
-        href="/contato"
-        className={`inline-flex items-center gap-2 px-5 py-2.5
-        rounded-lg font-semibold text-white transition ${botaoCor}`}
-      >
-        Solicitar orçamento →
-      </Link>
-    </motion.article>
+    </div>
   );
 }

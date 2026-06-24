@@ -3,183 +3,244 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: (i = 0) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.5, delay: i * 0.08, ease: [0.25, 0.1, 0.25, 1] },
+  }),
+};
+
+const skills = [
+  { name: 'Next.js', level: 85, group: 'Frontend' },
+  { name: 'React', level: 88, group: 'Frontend' },
+  { name: 'TypeScript', level: 80, group: 'Frontend' },
+  { name: 'Tailwind CSS', level: 90, group: 'Frontend' },
+  { name: 'Node.js', level: 72, group: 'Backend' },
+  { name: 'MySQL / PostgreSQL', level: 68, group: 'Backend' },
+  { name: 'Git & GitHub', level: 85, group: 'Ferramentas' },
+  { name: 'Linux', level: 70, group: 'Ferramentas' },
+  { name: 'Montagem de PCs', level: 92, group: 'Hardware' },
+  { name: 'Diagnóstico & Suporte', level: 88, group: 'Hardware' },
+];
+
+const groups = ['Frontend', 'Backend', 'Ferramentas', 'Hardware'];
+
 export default function SobrePage() {
   return (
-    <main
-      className="min-h-screen pt-32 pb-24 px-6
-      bg-gradient-to-b from-black via-gray-950 to-black
-      text-gray-100"
-    >
-      {/* HEADER */}
-      <motion.header
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="max-w-4xl mx-auto text-center mb-20"
-      >
-        <h1
-          className="text-5xl md:text-6xl font-extrabold mb-6
-          bg-gradient-to-r from-white to-gray-400
-          bg-clip-text text-transparent"
+    <div style={{ background: 'linear-gradient(180deg, #0A0A0F 0%, #0D0D1A 100%)', minHeight: '100vh' }}>
+      {/* Header */}
+      <section style={{ padding: '80px 24px 64px', maxWidth: '1100px', margin: '0 auto' }}>
+        <motion.div initial="hidden" animate="show" custom={0} variants={fadeUp} style={{ marginBottom: '16px' }}>
+          <span className="section-label">Sobre</span>
+        </motion.div>
+        <motion.h1
+          initial="hidden" animate="show" custom={1} variants={fadeUp}
+          style={{
+            fontSize: 'clamp(2.2rem, 5vw, 3.5rem)',
+            fontWeight: 800,
+            letterSpacing: '-0.03em',
+            lineHeight: 1.1,
+            color: '#F0F0FF',
+            marginBottom: '20px',
+          }}
         >
-          Sobre mim
-        </h1>
-
-        <p className="text-lg text-gray-400 leading-relaxed">
-          Portfólio pessoal, aprendizado contínuo e desenvolvimento de soluções modernas
-          focadas em performance e experiência do usuário.
-        </p>
-      </motion.header>
-
-      {/* CONTEÚDO */}
-      <div className="max-w-5xl mx-auto space-y-12">
-        {/* APRESENTAÇÃO */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="p-8 rounded-2xl
-          bg-gradient-to-br from-gray-900 to-gray-800
-          border border-gray-800"
+          Quem sou eu
+        </motion.h1>
+        <motion.p
+          initial="hidden" animate="show" custom={2} variants={fadeUp}
+          style={{ fontSize: '1.05rem', color: '#8888AA', maxWidth: '520px', lineHeight: 1.7 }}
         >
-          <p className="text-lg text-gray-300 leading-relaxed">
-            Olá — sou <strong className="text-white">Juan Lavecchia Coelho da Silva</strong>.
-            Este site foi criado como meu <strong className="text-white">portfólio pessoal</strong> e também
-            como um espaço de <strong className="text-white">desenvolvimento e aprendizado</strong> na área
-            de programação.
-            <br />
-            <br />
-            Aqui reúno projetos, experimentos e estudos que refletem minha evolução em
-            tecnologias web e boas práticas de desenvolvimento moderno.
-          </p>
-        </motion.section>
+          Desenvolvedor web, consultor em TI e estudante de Ciências da Computação
+          com paixão por construir produtos digitais que funcionam de verdade.
+        </motion.p>
+      </section>
 
-        {/* FORMAÇÃO */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="p-8 rounded-2xl
-          bg-gradient-to-br from-gray-900 to-gray-800
-          border border-gray-800"
+      <hr className="divider" />
+
+      {/* Bio + Info */}
+      <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '64px 24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+          {/* Bio */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.5 }}
+            className="card-glass" style={{ padding: '36px' }}
+          >
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#F0F0FF', marginBottom: '20px' }}>
+              Apresentação
+            </h2>
+            <p style={{ fontSize: '0.9rem', color: '#8888AA', lineHeight: 1.8, marginBottom: '16px' }}>
+              Olá — sou <strong style={{ color: '#F0F0FF' }}>Juan Lavecchia Coelho da Silva</strong>.
+              Este portfólio foi criado como um espaço de desenvolvimento e aprendizado na área de programação.
+            </p>
+            <p style={{ fontSize: '0.9rem', color: '#8888AA', lineHeight: 1.8 }}>
+              Aqui reúno projetos, experimentos e estudos que refletem minha evolução em tecnologias web
+              modernas e boas práticas de desenvolvimento.
+            </p>
+          </motion.div>
+
+          {/* Formação */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}
+            className="card-glass" style={{ padding: '36px' }}
+          >
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#F0F0FF', marginBottom: '20px' }}>
+              Formação
+            </h2>
+            <div
+              style={{
+                padding: '20px',
+                background: 'rgba(0,212,255,0.04)',
+                border: '1px solid rgba(0,212,255,0.1)',
+                borderRadius: '12px',
+                marginBottom: '16px',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <span
+                  style={{
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.65rem',
+                    color: '#00D4FF',
+                    background: 'rgba(0,212,255,0.1)',
+                    padding: '2px 8px',
+                    borderRadius: '4px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.08em',
+                  }}
+                >
+                  Cursando
+                </span>
+              </div>
+              <p style={{ fontSize: '0.95rem', fontWeight: 600, color: '#F0F0FF', marginBottom: '4px' }}>
+                Bacharelado em Ciências da Computação
+              </p>
+              <p style={{ fontSize: '0.8rem', color: '#8888AA' }}>
+                Universidade Estácio de Sá — Juiz de Fora, MG
+              </p>
+              <p style={{ fontSize: '0.75rem', color: '#555577', marginTop: '4px', fontFamily: "'JetBrains Mono', monospace" }}>
+                8º período
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              {[
+                { label: 'Localização', value: 'Juiz de Fora, MG' },
+                { label: 'Status', value: '🟢 Disponível' },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  style={{
+                    padding: '10px 14px',
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                    borderRadius: '8px',
+                    flex: 1,
+                    minWidth: '120px',
+                  }}
+                >
+                  <div style={{ fontSize: '0.65rem', color: '#555577', fontFamily: "'JetBrains Mono', monospace", marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                    {item.label}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', color: '#F0F0FF', fontWeight: 500 }}>{item.value}</div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <hr className="divider" />
+
+      {/* Skills */}
+      <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '64px 24px' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.5 }}
+          style={{ marginBottom: '48px' }}
         >
-          <h2 className="text-2xl font-semibold mb-4 text-white">
-            Formação
+          <div className="section-label" style={{ marginBottom: '12px' }}>Competências</div>
+          <h2 style={{ fontSize: '1.8rem', fontWeight: 700, letterSpacing: '-0.02em', color: '#F0F0FF' }}>
+            Habilidades
           </h2>
+        </motion.div>
 
-          <p className="text-gray-300">
-            Bacharelado em Ciências da Computação — Universidade Estácio de Sá
-            <br />
-            <span className="text-sm text-gray-400">
-              Juiz de Fora, MG • 8º período
-            </span>
-          </p>
-        </motion.section>
-
-        {/* HABILIDADES */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="p-8 rounded-2xl
-          bg-gradient-to-br from-gray-900 to-gray-800
-          border border-gray-800"
-        >
-          <h2 className="text-2xl font-semibold mb-6 text-white">
-            Habilidades principais
-          </h2>
-
-          <div className="flex flex-wrap gap-3">
-            {[
-              'Next.js',
-              'React',
-              'TypeScript',
-              'Tailwind CSS',
-              'HTML',
-              'CSS',
-              'JavaScript',
-              'Node.js',
-              'MySQL',
-              'PostgreSQL',
-              'Git',
-              'GitHub',
-              'Vercel',
-              'Linux',
-              'Windows',
-            ].map((skill) => (
-              <span
-                key={skill}
-                className="px-4 py-2 text-sm rounded-full
-                bg-white/5 text-gray-300
-                border border-white/10"
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+          {groups.map((group, gi) => (
+            <motion.div
+              key={group}
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ delay: gi * 0.1, duration: 0.5 }}
+              className="card-glass" style={{ padding: '28px' }}
+            >
+              <h3
+                style={{
+                  fontSize: '0.75rem',
+                  fontFamily: "'JetBrains Mono', monospace",
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  color: '#00D4FF',
+                  marginBottom: '20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}
               >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </motion.section>
+                <span style={{ width: '16px', height: '1px', background: '#00D4FF', display: 'inline-block' }} />
+                {group}
+              </h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {skills.filter((s) => s.group === group).map((skill) => (
+                  <div key={skill.name}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                      <span style={{ fontSize: '0.85rem', color: '#F0F0FF', fontWeight: 500 }}>{skill.name}</span>
+                      <span style={{ fontSize: '0.7rem', fontFamily: "'JetBrains Mono', monospace", color: '#555577' }}>
+                        {skill.level}%
+                      </span>
+                    </div>
+                    <div className="skill-bar-track">
+                      <motion.div
+                        className="skill-bar-fill"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.level}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, ease: 'easeOut', delay: gi * 0.05 }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
-        {/* PROJETOS */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="p-8 rounded-2xl
-          bg-gradient-to-br from-gray-900 to-gray-800
-          border border-gray-800"
+      <hr className="divider" />
+
+      {/* CTA */}
+      <section style={{ maxWidth: '600px', margin: '0 auto', padding: '80px 24px', textAlign: 'center' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.5 }}
         >
-          <h2 className="text-2xl font-semibold mb-4 text-white">
-            Projetos selecionados
-          </h2>
-
-          <ul className="space-y-3 text-gray-300">
-            <li>
-              • <strong className="text-white">Site pessoal / portfólio</strong> — Next.js,
-              TypeScript, Tailwind e deploy na Vercel.
-            </li>
-            <li>
-              • <strong className="text-white">Projetos pessoais</strong> — aplicações focadas
-              em backend, APIs, bancos de dados e automação.
-            </li>
-          </ul>
-        </motion.section>
-
-        {/* CTA */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center pt-6"
-        >
-          <p className="text-gray-400 mb-6">
-            Para contato, parcerias ou mais informações:
+          <p style={{ fontSize: '0.9rem', color: '#8888AA', marginBottom: '32px', lineHeight: 1.7 }}>
+            Quer conversar sobre um projeto, parceria ou oportunidade?
           </p>
-
-          <div className="flex justify-center gap-4 flex-wrap">
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a
               href="https://www.linkedin.com/in/juan-lavecchia-8b3b5131a/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2
-              px-6 py-3 rounded-lg font-semibold
-              bg-blue-600 text-white
-              hover:bg-blue-500 transition"
+              target="_blank" rel="noopener noreferrer"
+              className="btn-primary"
             >
               LinkedIn
             </a>
-
-            <Link
-              href="/contato"
-              className="inline-flex items-center gap-2
-              px-6 py-3 rounded-lg font-semibold
-              bg-white text-black
-              hover:bg-gray-200 transition"
-            >
+            <Link href="/contato" className="btn-secondary">
               Página de contato
             </Link>
           </div>
-        </motion.section>
-      </div>
-    </main>
+        </motion.div>
+      </section>
+    </div>
   );
 }

@@ -1,86 +1,118 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import SlideMenu from "../components/SlideMenu";
 import Navbar from "../components/Navbar";
 import Providers from "../components/Providers";
-import VoltarHome from "../components/VoltarHome";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "Portfólio Juan Lavecchia",
-  description: "Site pessoal e profissional",
+  title: "Juan Lavecchia — Desenvolvedor Web & Consultor TI",
+  description:
+    "Portfólio de Juan Lavecchia Coelho da Silva. Desenvolvimento web moderno com Next.js, TypeScript e Tailwind. Consultoria em TI e montagem de PCs em Juiz de Fora.",
+  keywords: ["desenvolvedor web", "Next.js", "TypeScript", "Tailwind", "consultoria TI", "Juiz de Fora"],
+  authors: [{ name: "Juan Lavecchia" }],
+  openGraph: {
+    title: "Juan Lavecchia — Desenvolvedor Web & Consultor TI",
+    description: "Transformo ideias em produtos digitais funcionais, rápidos e bem construídos.",
+    type: "website",
+  },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <body className="min-h-screen bg-black text-gray-100">
+    <html lang="pt-BR">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>
         <Providers>
-          {/* Skip link */}
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50
-              focus:bg-white/10 focus:px-3 focus:py-2 rounded"
+            className="sr-only"
           >
             Ir para o conteúdo
           </a>
 
-          {/* Slide menu (overlay, não empurra layout) */}
-          <SlideMenu />
-
-          {/* Navbar fixa */}
-          <div className="fixed top-0 left-0 right-0 z-40">
+          <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50 }}>
             <Navbar />
           </div>
 
-          {/* MAIN */}
-          <main
-            id="main-content"
-            className="pt-16 min-h-screen flex justify-center"
-          >
-            <div className="w-full max-w-6xl px-4">
-              <div className="mb-6 mt-8">
-                <VoltarHome className="bg-gray-800/95 hover:bg-gray-700 dark:bg-gray-200 dark:text-black dark:hover:bg-gray-300" />
-              </div>
-
-              {children}
-            </div>
+          <main id="main-content" style={{ paddingTop: "64px", minHeight: "100vh", position: "relative", zIndex: 10 }}>
+            {children}
           </main>
 
-          {/* FOOTER */}
-          <footer className="border-t border-gray-800 bg-black/40">
-            <div className="max-w-6xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-400">
-              <div>
-                © {new Date().getFullYear()} Juan • Desenvolvedor Web & Consultor em TI
+          <footer
+            style={{
+              borderTop: "1px solid rgba(255,255,255,0.05)",
+              background: "rgba(10,10,15,0.98)",
+              position: "relative",
+              zIndex: 10,
+            }}
+          >
+            <div
+              style={{
+                maxWidth: "1200px",
+                margin: "0 auto",
+                padding: "32px 24px",
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "16px",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div
+                  style={{
+                    width: "28px",
+                    height: "28px",
+                    borderRadius: "6px",
+                    background: "linear-gradient(135deg, #00D4FF, #7C3AED)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontWeight: 700,
+                    fontSize: "0.65rem",
+                    color: "#0A0A0F",
+                    flexShrink: 0,
+                  }}
+                >
+                  JL
+                </div>
+                <span style={{ fontSize: "0.8rem", color: "#555577" }}>
+                  © {new Date().getFullYear()} Juan Lavecchia — Desenvolvedor Web & Consultor TI
+                </span>
               </div>
 
-              <div className="flex items-center gap-3">
-                <a
-                  href="mailto:juanlavecchia23@gmail.com"
-                  className="px-3 py-2 rounded hover:bg-white/6 transition"
-                >
-                  Email
-                </a>
-                <a
-                  href="https://github.com/Smxke28"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-3 py-2 rounded hover:bg-white/6 transition"
-                >
-                  GitHub
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/juan-lavecchia-8b3b5131a/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-3 py-2 rounded hover:bg-white/6 transition"
-                >
-                  LinkedIn
-                </a>
+              <div style={{ display: "flex", gap: "4px" }}>
+                {[
+                  { label: "Email", href: "mailto:juanlavecchia23@gmail.com" },
+                  { label: "GitHub", href: "https://github.com/Smxke28" },
+                  { label: "LinkedIn", href: "https://www.linkedin.com/in/juan-lavecchia-8b3b5131a/" },
+                ].map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target={link.href.startsWith("mailto") ? undefined : "_blank"}
+                    rel="noreferrer"
+                    style={{
+                      fontSize: "0.8rem",
+                      color: "#555577",
+                      padding: "6px 12px",
+                      borderRadius: "8px",
+                      border: "1px solid transparent",
+                      transition: "all 0.2s",
+                      textDecoration: "none",
+                    }}
+                  >
+                    {link.label}
+                  </a>
+                ))}
               </div>
             </div>
           </footer>
