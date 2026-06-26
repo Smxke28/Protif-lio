@@ -2,13 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { createClient } from "@supabase/supabase-js"; // 🟢 Importado para controlar a sessão
-
-// Inicializa o cliente do Supabase para o Front-end
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { useSession, signIn } from "next-auth/react"; // 🟢 Trocado para o NextAuth
 
 interface Feedback {
     id: string;
@@ -107,26 +101,12 @@ export default function FeedbackSection({
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [errorMsg, setErrorMsg] = useState("");
 
-    // 🟢 Estados para controle de Autenticação do Usuário
-    const [user, setUser] = useState<any>(null);
-    const [loadingAuth, setLoadingAuth] = useState(true);
+    // 🟢 Puxando a sessão ativa do NextAuth
+    const { data: session, status: authStatus } = useSession();
+    const loadingAuth = authStatus === "loading";
+    const user = session?.user;
 
-    // Monitora o status de login do usuário em tempo real
-    useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setUser(session?.user ?? null);
-            setLoadingAuth(false);
-        });
-
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            setUser(session?.user ?? null);
-            setLoadingAuth(false);
-        });
-
-        return () => subscription.unsubscribe();
-    }, []);
-
-    // Busca os feedbacks existentes da API
+    // Busca os feedbacks existentes da API ao carregar a página
     useEffect(() => {
         fetch("/api/feedback")
             .then((res) => res.json())
@@ -134,60 +114,51 @@ export default function FeedbackSection({
             .catch((err) => console.error("Erro ao buscar feedbacks:", err));
     }, []);
 
-    // Função para iniciar login com o Google caso esteja deslogado
-    const handleGoogleLogin = async () => {
-        await supabase.auth.signInWithOAuth({
-            provider: "google",
-            options: { redirectTo: window.location.origin }
-        });
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (rating === 0) {
             setErrorMsg("Por favor, selecione uma avaliação.");
             return;
         }
+        if (!user) {
+            setErrorMsg("Você precisa estar logado para comentar.");
+            return;
+        }
+        
         setStatus("loading");
         setErrorMsg("");
 
         try {
-            // 🟢 Pega o token JWT da sessão ativa do Supabase
-            const { data: { session } } = await supabase.auth.getSession();
-            
-            if (!session) {
-                setErrorMsg("Você precisa estar logado para comentar.");
-                setStatus("error");
-                return;
-            }
-
+            // Com NextAuth, os cookies de sessão vão sozinhos no fetch
             const res = await fetch("/api/feedback", {
                 method: "POST",
-                headers: { 
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${session.access_token}` // 🟢 Enviando o token para o Back-end
-                },
-                body: JSON.stringify({ service, rating, comment }), // O nome o back-end já puxa do token
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    name: user.name, // Passa o nome limpo do NextAuth
+                    service, 
+                    rating, 
+                    comment 
+                }),
             });
 
             if (!res.ok) throw new Error("Erro ao enviar.");
 
             const resData = await res.json();
             
-            // 🟢 CORREÇÃO DA ATUALIZAÇÃO DA TELA: Extrai o dado de dentro de resData.data
+            // Pega o dado retornado pela API ou monta o fallback local
             const dadosDoFeedback = Array.isArray(resData.data) ? resData.data[0] : resData.data;
 
-            // Cria um objeto reserva caso o banco demore a responder a linha criada
             const novoFeedback: Feedback = dadosDoFeedback || {
                 id: Math.random().toString(),
-                name: user?.user_metadata?.full_name || user?.email?.split("@")[0] || "Usuário",
+                name: user.name || "Usuário",
                 service,
                 rating,
                 comment,
                 created_at: new Date().toISOString()
             };
 
-            setFeedbacks((prev) => [novoFeedback, ...prev]); // Adiciona na tela na mesma hora
+            // Atualiza a tela imediatamente
+            setFeedbacks((prev) => [novoFeedback, ...prev]);
             setStatus("success");
             setService("");
             setRating(0);
@@ -236,7 +207,7 @@ export default function FeedbackSection({
                 </motion.div>
 
                 <div className="grid lg:grid-cols-2 gap-12 items-start">
-                    {/* Coluna do Formulário / Bloqueio de Auth */}
+                    {/* Formulário */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -252,7 +223,7 @@ export default function FeedbackSection({
                             {loadingAuth ? (
                                 <p className="text-center text-sm text-[#8888AA] font-mono py-12">Verificando sessão...</p>
                             ) : !user ? (
-                                // 🟢 TELA DE BLOQUEIO: Exibida se o usuário não estiver logado
+                                // 🟢 Se NÃO estiver logado no NextAuth, mostra o bloqueio
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
@@ -265,7 +236,7 @@ export default function FeedbackSection({
                                     </p>
                                     <button
                                         type="button"
-                                        onClick={handleGoogleLogin}
+                                        onClick={() => signIn("google")} // Usa o método do NextAuth
                                         className="mt-2 px-6 py-2.5 bg-white text-black font-semibold rounded-xl text-sm hover:bg-white/90 transition flex items-center gap-2 shadow-lg"
                                     >
                                         Entrar com o Google
@@ -308,7 +279,7 @@ export default function FeedbackSection({
                                         <StarRating value={rating} onChange={setRating} />
                                     </div>
 
-                                    {/* Nome (Automatico do Google e Desativado) */}
+                                    {/* Nome preenchido automaticamente pelo NextAuth */}
                                     <div>
                                         <label className="block text-xs font-medium text-[#AAAACC] uppercase font-mono tracking-wider mb-2">
                                             Conectado como
@@ -316,7 +287,7 @@ export default function FeedbackSection({
                                         <input
                                             type="text"
                                             disabled
-                                            value={user?.user_metadata?.full_name || user?.email}
+                                            value={user.name || user.email || ""}
                                             className="w-full rounded-xl border border-white/[0.04] bg-[#12121A]/50 px-4 py-2.5 text-sm text-[#8888AA] cursor-not-allowed focus:outline-none"
                                         />
                                     </div>
