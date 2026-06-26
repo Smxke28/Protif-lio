@@ -32,7 +32,7 @@ const groups = ['Frontend', 'Backend', 'Ferramentas', 'Hardware'];
 
 export default function SobrePage() {
   return (
-    <div style={{ background: 'linear-gradient(180deg, #0A0A0F 0%, #0D0D1A 100%)', minHeight: '100vh' }}>
+    <div style={{ background: 'linear-gradient(180deg, rgb(10, 10, 15) 0%, #0D0D1A 100%)', minHeight: '100vh' }}>
       {/* Header */}
       <section style={{ padding: '80px 24px 64px', maxWidth: '1100px', margin: '0 auto' }}>
         <motion.div initial="hidden" animate="show" custom={0} variants={fadeUp} style={{ marginBottom: '16px' }}>

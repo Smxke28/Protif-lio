@@ -2,18 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion, Variants } from 'framer-motion';
+import GitHubStats from '../components/GitHubStats';
+import { motion } from 'framer-motion';
 
-const fadeUp: Variants = {
+const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  show: (i: number = 0) => ({
+  show: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { 
-      duration: 0.5, 
-      delay: i * 0.1, 
-      ease: [0.25, 0.1, 0.25, 1] as const
-    },
+    transition: { duration: 0.5, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] },
   }),
 };
 
@@ -538,6 +535,11 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <hr className="divider" />
+
+      {/* ── GITHUB ── */}
+      <GitHubStats username="Smxke28" />
 
       <hr className="divider" />
 
