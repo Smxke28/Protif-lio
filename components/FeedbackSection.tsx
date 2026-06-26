@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSession, signIn } from "next-auth/react"; // 🟢 Trocado para o NextAuth
+import { useSession, signIn } from "next-auth/react";
 
 interface Feedback {
     id: string;
@@ -101,16 +101,24 @@ export default function FeedbackSection({
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [errorMsg, setErrorMsg] = useState("");
 
-    // 🟢 Puxando a sessão ativa do NextAuth
+    // Puxando a sessão ativa do NextAuth
     const { data: session, status: authStatus } = useSession();
     const loadingAuth = authStatus === "loading";
     const user = session?.user;
 
-    // Busca os feedbacks existentes da API ao carregar a página
+    // 🟢 CORREÇÃO DO LAYOUT: Garante que 'feedbacks' seja sempre tratado como Array para não quebrar o React
+    const feedbackList = Array.isArray(feedbacks) ? feedbacks : [];
+
+    // 🟢 CORREÇÃO DO GET: Desembrulha o formato { data: [...] } ou { success: true, data: [...] }
     useEffect(() => {
         fetch("/api/feedback")
             .then((res) => res.json())
-            .then((data) => setFeedbacks(data))
+            .then((data) => {
+                const listaTratada = data?.data || data?.feedbacks || data;
+                if (Array.isArray(listaTratada)) {
+                    setFeedbacks(listaTratada);
+                }
+            })
             .catch((err) => console.error("Erro ao buscar feedbacks:", err));
     }, []);
 
@@ -129,24 +137,27 @@ export default function FeedbackSection({
         setErrorMsg("");
 
         try {
-            // Com NextAuth, os cookies de sessão vão sozinhos no fetch
             const res = await fetch("/api/feedback", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ 
-                    name: user.name, // Passa o nome limpo do NextAuth
+                    name: user.name, 
                     service, 
                     rating, 
                     comment 
                 }),
             });
 
-            if (!res.ok) throw new Error("Erro ao enviar.");
+            // 🟢 TRATAMENTO DE ERROS DO BACK-END: Se a API der erro, tenta ler o motivo retornado pelo servidor
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.message || errData.error || "Erro ao processar requisição no servidor.");
+            }
 
             const resData = await res.json();
             
-            // Pega o dado retornado pela API ou monta o fallback local
-            const dadosDoFeedback = Array.isArray(resData.data) ? resData.data[0] : resData.data;
+            // Pega o dado inserido retornado pela API
+            const dadosDoFeedback = resData?.data ? (Array.isArray(resData.data) ? resData.data[0] : resData.data) : null;
 
             const novoFeedback: Feedback = dadosDoFeedback || {
                 id: Math.random().toString(),
@@ -157,21 +168,21 @@ export default function FeedbackSection({
                 created_at: new Date().toISOString()
             };
 
-            // Atualiza a tela imediatamente
-            setFeedbacks((prev) => [novoFeedback, ...prev]);
+            // Insere na lista local instantaneamente
+            setFeedbacks((prev) => [novoFeedback, ...(Array.isArray(prev) ? prev : [])]);
             setStatus("success");
             setService("");
             setRating(0);
             setComment("");
-        } catch {
+        } catch (err: any) {
             setStatus("error");
-            setErrorMsg("Não foi possível enviar. Tente novamente.");
+            setErrorMsg(err.message || "Não foi possível enviar. Tente novamente.");
         }
     };
 
     const avgRating =
-        feedbacks.length > 0
-            ? feedbacks.reduce((s, f) => s + f.rating, 0) / feedbacks.length
+        feedbackList.length > 0
+            ? feedbackList.reduce((s, f) => s + (Number(f.rating) || 0), 0) / feedbackList.length
             : 0;
 
     return (
@@ -194,14 +205,14 @@ export default function FeedbackSection({
                     <h2 className="mt-2 text-4xl font-bold tracking-tight text-[#F0F0FF]">
                         Compartilhe a sua experiência:
                     </h2>
-                    {feedbacks.length > 0 && (
+                    {feedbackList.length > 0 && (
                         <p className="mt-3 text-[#8888AA] text-sm">
                             Média de{" "}
                             <span className="font-semibold text-[#00D4FF] drop-shadow-[0_0_8px_rgba(0,212,255,0.3)]">
                                 {avgRating.toFixed(1)} ★
                             </span>{" "}
-                            com base em {feedbacks.length} avaliação
-                            {feedbacks.length > 1 ? "ões" : ""}
+                            com base em {feedbackList.length} avaliação
+                            {feedbackList.length > 1 ? "ões" : ""}
                         </p>
                     )}
                 </motion.div>
@@ -223,7 +234,6 @@ export default function FeedbackSection({
                             {loadingAuth ? (
                                 <p className="text-center text-sm text-[#8888AA] font-mono py-12">Verificando sessão...</p>
                             ) : !user ? (
-                                // 🟢 Se NÃO estiver logado no NextAuth, mostra o bloqueio
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
@@ -236,7 +246,7 @@ export default function FeedbackSection({
                                     </p>
                                     <button
                                         type="button"
-                                        onClick={() => signIn("google")} // Usa o método do NextAuth
+                                        onClick={() => signIn("google")}
                                         className="mt-2 px-6 py-2.5 bg-white text-black font-semibold rounded-xl text-sm hover:bg-white/90 transition flex items-center gap-2 shadow-lg"
                                     >
                                         Entrar com o Google
@@ -279,7 +289,7 @@ export default function FeedbackSection({
                                         <StarRating value={rating} onChange={setRating} />
                                     </div>
 
-                                    {/* Nome preenchido automaticamente pelo NextAuth */}
+                                    {/* Nome Conectado */}
                                     <div>
                                         <label className="block text-xs font-medium text-[#AAAACC] uppercase font-mono tracking-wider mb-2">
                                             Conectado como
@@ -338,7 +348,9 @@ export default function FeedbackSection({
                                     </div>
 
                                     {errorMsg && (
-                                        <p className="text-sm text-red-400 font-mono">{errorMsg}</p>
+                                        <p className="text-sm text-red-400 font-mono bg-red-500/10 border border-red-500/20 px-3 py-2 rounded-xl">
+                                            {errorMsg}
+                                        </p>
                                     )}
 
                                     <button
@@ -361,7 +373,7 @@ export default function FeedbackSection({
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="flex flex-col gap-4 max-h-[640px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-white/10"
                     >
-                        {feedbacks.length === 0 ? (
+                        {feedbackList.length === 0 ? (
                             <div className="flex flex-col items-center justify-center h-48 text-center text-[#555577] border border-dashed border-white/[0.05] rounded-2xl">
                                 <span className="text-4xl mb-3 opacity-40">💬</span>
                                 <p className="text-sm font-mono">
@@ -369,7 +381,7 @@ export default function FeedbackSection({
                                 </p>
                             </div>
                         ) : (
-                            feedbacks.map((fb) => <TestimonialCard key={fb.id} fb={fb} />)
+                            feedbackList.map((fb) => <TestimonialCard key={fb.id} fb={fb} />)
                         )}
                     </motion.div>
                 </div>
