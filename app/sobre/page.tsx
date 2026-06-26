@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion, Variants } from 'framer-motion';
+
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   show: (i: number = 0) => ({
@@ -10,7 +11,7 @@ const fadeUp: Variants = {
     transition: { 
       duration: 0.5, 
       delay: i * 0.1, 
-      ease: [0.25, 0.1, 0.25, 1] as const // <── O segredo está aqui!
+      ease: [0.25, 0.1, 0.25, 1] as const
     },
   }),
 };
@@ -21,7 +22,8 @@ const skills = [
   { name: 'TypeScript', level: 80, group: 'Frontend' },
   { name: 'Tailwind CSS', level: 90, group: 'Frontend' },
   { name: 'Node.js', level: 72, group: 'Backend' },
-  { name: 'MySQL / PostgreSQL', level: 68, group: 'Backend' },
+  { name: 'Supabase / BaaS', level: 75, group: 'Backend' }, // 🟢 Adicionado aqui!
+  { name: 'MySQL / PostgreSQL', level: 70, group: 'Backend' }, // Atualizado para combinar com o ecossistema Supabase
   { name: 'Git & GitHub', level: 85, group: 'Ferramentas' },
   { name: 'Linux', level: 70, group: 'Ferramentas' },
   { name: 'Montagem de PCs', level: 92, group: 'Hardware' },
@@ -80,7 +82,7 @@ export default function SobrePage() {
             </p>
             <p style={{ fontSize: '0.9rem', color: '#8888AA', lineHeight: 1.8 }}>
               Aqui reúno projetos, experimentos e estudos que refletem minha evolução em tecnologias web
-              modernas e boas práticas de desenvolvimento.
+              modernes e boas práticas de desenvolvimento.
             </p>
           </motion.div>
 

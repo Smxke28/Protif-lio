@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import GitHubStats from '../components/GitHubStats';
+import FeedbackSection from '../components/FeedbackSection';
 import { motion, Variants } from 'framer-motion';
 
 const fadeUp: Variants = {
@@ -544,6 +545,11 @@ export default function Home() {
 
       {/* ── GITHUB ── */}
       <GitHubStats username="Smxke28" />
+
+      <hr className="divider" />
+      
+      {/* ── FEEDBACK ── */}
+      <FeedbackSection initialFeedbacks={[]}/>
 
       <hr className="divider" />
 

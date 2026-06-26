@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import FeedbackSection from '../components/FeedbackSection';
 
 interface Repo {
   name: string;
