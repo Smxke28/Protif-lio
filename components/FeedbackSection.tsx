@@ -2,6 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { createClient } from "@supabase/supabase-js"; // 🟢 Importado para controlar a sessão
+
+// Inicializa o cliente do Supabase para o Front-end
+const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 interface Feedback {
     id: string;
@@ -95,17 +102,45 @@ export default function FeedbackSection({
 }: FeedbackSectionProps) {
     const [feedbacks, setFeedbacks] = useState<Feedback[]>(initialFeedbacks);
     const [rating, setRating] = useState(0);
-    const [name, setName] = useState("");
     const [service, setService] = useState("");
     const [comment, setComment] = useState("");
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [errorMsg, setErrorMsg] = useState("");
 
+    // 🟢 Estados para controle de Autenticação do Usuário
+    const [user, setUser] = useState<any>(null);
+    const [loadingAuth, setLoadingAuth] = useState(true);
+
+    // Monitora o status de login do usuário em tempo real
+    useEffect(() => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setUser(session?.user ?? null);
+            setLoadingAuth(false);
+        });
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user ?? null);
+            setLoadingAuth(false);
+        });
+
+        return () => subscription.unsubscribe();
+    }, []);
+
+    // Busca os feedbacks existentes da API
     useEffect(() => {
         fetch("/api/feedback")
             .then((res) => res.json())
-            .then((data) => setFeedbacks(data));
+            .then((data) => setFeedbacks(data))
+            .catch((err) => console.error("Erro ao buscar feedbacks:", err));
     }, []);
+
+    // Função para iniciar login com o Google caso esteja deslogado
+    const handleGoogleLogin = async () => {
+        await supabase.auth.signInWithOAuth({
+            provider: "google",
+            options: { redirectTo: window.location.origin }
+        });
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -117,18 +152,43 @@ export default function FeedbackSection({
         setErrorMsg("");
 
         try {
+            // 🟢 Pega o token JWT da sessão ativa do Supabase
+            const { data: { session } } = await supabase.auth.getSession();
+            
+            if (!session) {
+                setErrorMsg("Você precisa estar logado para comentar.");
+                setStatus("error");
+                return;
+            }
+
             const res = await fetch("/api/feedback", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, service, rating, comment }),
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${session.access_token}` // 🟢 Enviando o token para o Back-end
+                },
+                body: JSON.stringify({ service, rating, comment }), // O nome o back-end já puxa do token
             });
 
             if (!res.ok) throw new Error("Erro ao enviar.");
 
-            const novo: Feedback = await res.json();
-            setFeedbacks((prev) => [novo, ...prev]);
+            const resData = await res.json();
+            
+            // 🟢 CORREÇÃO DA ATUALIZAÇÃO DA TELA: Extrai o dado de dentro de resData.data
+            const dadosDoFeedback = Array.isArray(resData.data) ? resData.data[0] : resData.data;
+
+            // Cria um objeto reserva caso o banco demore a responder a linha criada
+            const novoFeedback: Feedback = dadosDoFeedback || {
+                id: Math.random().toString(),
+                name: user?.user_metadata?.full_name || user?.email?.split("@")[0] || "Usuário",
+                service,
+                rating,
+                comment,
+                created_at: new Date().toISOString()
+            };
+
+            setFeedbacks((prev) => [novoFeedback, ...prev]); // Adiciona na tela na mesma hora
             setStatus("success");
-            setName("");
             setService("");
             setRating(0);
             setComment("");
@@ -176,7 +236,7 @@ export default function FeedbackSection({
                 </motion.div>
 
                 <div className="grid lg:grid-cols-2 gap-12 items-start">
-                    {/* Formulário */}
+                    {/* Coluna do Formulário / Bloqueio de Auth */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -188,11 +248,34 @@ export default function FeedbackSection({
                             Deixe sua avaliação
                         </h3>
 
-                        <AnimatePresence>
-                            {status === "success" ? (
+                        <AnimatePresence mode="wait">
+                            {loadingAuth ? (
+                                <p className="text-center text-sm text-[#8888AA] font-mono py-12">Verificando sessão...</p>
+                            ) : !user ? (
+                                // 🟢 TELA DE BLOQUEIO: Exibida se o usuário não estiver logado
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="flex flex-col items-center text-center py-10 gap-4"
+                                >
+                                    <span className="text-4xl">🔒</span>
+                                    <p className="text-sm text-[#AAAACC]">
+                                        Você precisa estar autenticado para enviar um comentário na plataforma.
+                                    </p>
+                                    <button
+                                        type="button"
+                                        onClick={handleGoogleLogin}
+                                        className="mt-2 px-6 py-2.5 bg-white text-black font-semibold rounded-xl text-sm hover:bg-white/90 transition flex items-center gap-2 shadow-lg"
+                                    >
+                                        Entrar com o Google
+                                    </button>
+                                </motion.div>
+                            ) : status === "success" ? (
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0 }}
                                     className="flex flex-col items-center gap-3 py-10 text-center"
                                 >
                                     <span className="text-5xl drop-shadow-[0_0_10px_rgba(0,212,255,0.2)]">🙌</span>
@@ -211,7 +294,8 @@ export default function FeedbackSection({
                                 </motion.div>
                             ) : (
                                 <motion.form
-                                    initial={{ opacity: 1 }}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     onSubmit={handleSubmit}
                                     className="flex flex-col gap-5"
@@ -224,22 +308,16 @@ export default function FeedbackSection({
                                         <StarRating value={rating} onChange={setRating} />
                                     </div>
 
-                                    {/* Nome */}
+                                    {/* Nome (Automatico do Google e Desativado) */}
                                     <div>
-                                        <label
-                                            htmlFor="fb-name"
-                                            className="block text-xs font-medium text-[#AAAACC] uppercase font-mono tracking-wider mb-2"
-                                        >
-                                            Nome *
+                                        <label className="block text-xs font-medium text-[#AAAACC] uppercase font-mono tracking-wider mb-2">
+                                            Conectado como
                                         </label>
                                         <input
-                                            id="fb-name"
                                             type="text"
-                                            required
-                                            value={name}
-                                            onChange={(e) => setName(e.target.value)}
-                                            placeholder="Como você se chama?"
-                                            className="w-full rounded-xl border border-white/[0.08] bg-[#12121A] px-4 py-2.5 text-sm text-[#F0F0FF] placeholder-[#555577] focus:outline-none focus:ring-1 focus:ring-[#00D4FF] focus:border-[#00D4FF] transition"
+                                            disabled
+                                            value={user?.user_metadata?.full_name || user?.email}
+                                            className="w-full rounded-xl border border-white/[0.04] bg-[#12121A]/50 px-4 py-2.5 text-sm text-[#8888AA] cursor-not-allowed focus:outline-none"
                                         />
                                     </div>
 
