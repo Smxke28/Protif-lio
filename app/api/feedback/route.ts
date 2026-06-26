@@ -1,63 +1,71 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]/route"; // 🟢 Ajuste o caminho se o seu arquivo de auth estiver em outro lugar
+import { authOptions } from "../auth/[...nextauth]/route"; // ⚠️ Garanta que este caminho aponta para o seu NextAuth
 
 export const dynamic = 'force-dynamic';
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// 🟢 GET: Alinhado com o seu useEffect (retorna { success: true, data })
+export async function GET() {
+  try {
+    const { data, error } = await supabase
+      .from('feedbacks')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    return NextResponse.json({ success: true, data });
+  } catch (err: any) {
+    return NextResponse.json(
+      { error: err?.message || 'Erro ao carregar feedbacks.' },
+      { status: 500 }
+    );
+  }
+}
+
+// 🟢 POST: Alinhado com o seu handleSubmit
 export async function POST(request: NextRequest) {
-  // 1. Valida a sessão usando o NextAuth direto pelos cookies do navegador
   const session = await getServerSession(authOptions);
 
+  // Validação de sessão via NextAuth
   if (!session || !session.user) {
     return NextResponse.json(
-      { error: 'Você precisa estar logado para enviar um feedback.' },
+      { error: 'Sessão expirada ou não encontrada. Faça login novamente.' },
       { status: 401 }
     );
   }
 
-  // 2. Configura o Supabase (Usado estritamente como Banco de Dados aqui)
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    return NextResponse.json(
-      { error: 'Erro interno: Chaves de configuração ausentes.' },
-      { status: 500 }
-    );
-  }
-
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
   try {
     const { service, rating, comment } = await request.json();
-
-    // Puxa o nome verificado do Google vindo da sessão segura do NextAuth
+    
+    // Puxa o nome do usuário direto da sessão segura do NextAuth
     const finalName = session.user.name || session.user.email?.split('@')[0] || 'Usuário';
 
-    // 3. Insere os dados na tabela do Supabase
     const { data, error } = await supabase
       .from('feedbacks')
       .insert([
         {
           name: finalName,
           service,
-          rating,
+          rating: Number(rating),
           comment,
         },
       ])
-      .select(); // 🟢 Importante: retorna o dado criado para o front-end atualizar a tela na hora
+      .select(); // Retorna o dado inserido para alimentar o seu 'dadosDoFeedback' no front
 
     if (error) throw error;
 
     return NextResponse.json({ success: true, data });
   } catch (err: any) {
-    // 🟢 Printa o erro real com detalhes no terminal do seu VS Code para você ler
-    console.error("❌ Erro completo detectado na API de feedback:", err);
-
-    // Captura a mensagem se for erro do Supabase, se for erro padrão ou stringifica
-    const errorMessage = err?.message || (err instanceof Error ? err.message : String(err)) || 'Erro desconhecido';
-
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    console.error("❌ Erro interno na rota de feedback:", err);
+    return NextResponse.json(
+      { error: err?.message || 'Erro interno ao salvar no banco.' },
+      { status: 500 }
+    );
   }
 }
