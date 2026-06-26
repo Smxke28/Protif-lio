@@ -51,9 +51,13 @@ export async function POST(request: NextRequest) {
     if (error) throw error;
 
     return NextResponse.json({ success: true, data });
-  } catch (err: unknown) {
-    const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido';
-    
+  } catch (err: any) {
+    // 🟢 Printa o erro real com detalhes no terminal do seu VS Code para você ler
+    console.error("❌ Erro completo detectado na API de feedback:", err);
+
+    // Captura a mensagem se for erro do Supabase, se for erro padrão ou stringifica
+    const errorMessage = err?.message || (err instanceof Error ? err.message : String(err)) || 'Erro desconhecido';
+
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
