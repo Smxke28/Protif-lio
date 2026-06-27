@@ -90,30 +90,6 @@ const services = [
   },
 ];
 
-const projects = [
-  {
-    title: 'Projeto CS2',
-    desc: 'Plataforma para a comunidade Counter-Strike 2 com ferramentas, utilidades e conteúdo tático.',
-    tags: ['Next.js', 'Vercel', 'UI'],
-    link: 'https://sitecs2.vercel.app/',
-    status: 'live',
-  },
-  {
-    title: 'Calculadora Math — Java',
-    desc: 'Demonstração de funções matemáticas e conceitos de programação orientada a objetos em Java.',
-    tags: ['Java', 'Vercel', 'Educacional'],
-    link: 'https://funcoes-java-pg5ixris4-smxke28s-projects.vercel.app/',
-    status: 'live',
-  },
-  {
-    title: 'Dashboard em Tempo Real',
-    desc: 'Visualização de dados com consumo contínuo de APIs. Gráficos interativos e atualizações ao vivo.',
-    tags: ['React', 'API', 'Charts'],
-    link: undefined,
-    status: 'wip',
-  },
-];
-
 export default function Home() {
   return (
     <div
@@ -430,7 +406,7 @@ export default function Home() {
 
       <hr className="divider" />
 
-      {/* ── PROJETOS ── */}
+      {/* ── PROJETOS & GITHUB ── */}
       <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '96px 24px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -441,7 +417,7 @@ export default function Home() {
         >
           <div>
             <div className="section-label" style={{ marginBottom: '12px' }}>
-              Trabalhos recentes
+              Repositórios e Contribuições
             </div>
             <h2
               style={{
@@ -451,100 +427,16 @@ export default function Home() {
                 color: '#F0F0FF',
               }}
             >
-              Projetos
+              Projetos & GitHub
             </h2>
           </div>
           <Link href="/projetos" className="btn-secondary">
-            Ver todos →
+            Ver portfólio completo →
           </Link>
         </motion.div>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '16px',
-          }}
-        >
-          {projects.map((proj, i) => (
-            <motion.div
-              key={proj.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-            >
-              <div
-                className="card-glass"
-                style={{ padding: '28px', height: '100%', display: 'flex', flexDirection: 'column' }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                  <h3
-                    style={{
-                      fontSize: '0.95rem',
-                      fontWeight: 600,
-                      color: '#F0F0FF',
-                      letterSpacing: '-0.01em',
-                    }}
-                  >
-                    {proj.title}
-                  </h3>
-                  <span
-                    style={{
-                      fontSize: '0.65rem',
-                      fontFamily: "'JetBrains Mono', monospace",
-                      padding: '3px 8px',
-                      borderRadius: '20px',
-                      background: proj.status === 'live' ? 'rgba(40,202,66,0.1)' : 'rgba(255,189,46,0.1)',
-                      color: proj.status === 'live' ? '#28CA42' : '#FFBD2E',
-                      border: `1px solid ${proj.status === 'live' ? 'rgba(40,202,66,0.2)' : 'rgba(255,189,46,0.2)'}`,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                    }}
-                  >
-                    {proj.status === 'live' ? '● live' : '◐ wip'}
-                  </span>
-                </div>
-                <p style={{ fontSize: '0.85rem', color: '#8888AA', lineHeight: 1.6, marginBottom: '20px', flex: 1 }}>
-                  {proj.desc}
-                </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
-                  {proj.tags.map((tag) => (
-                    <span key={tag} className="tag">{tag}</span>
-                  ))}
-                </div>
-                {proj.link ? (
-                  <a
-                    href={proj.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-secondary"
-                    style={{ fontSize: '0.8rem', padding: '8px 16px', justifyContent: 'center' }}
-                  >
-                    Acessar projeto →
-                  </a>
-                ) : (
-                  <span
-                    style={{
-                      fontSize: '0.78rem',
-                      color: '#555577',
-                      fontFamily: "'JetBrains Mono', monospace",
-                      textAlign: 'center',
-                    }}
-                  >
-                    Em desenvolvimento...
-                  </span>
-                )}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <GitHubStats username="Smxke28" />
       </section>
-
-      <hr className="divider" />
-
-      {/* ── GITHUB ── */}
-      <GitHubStats username="Smxke28" />
 
       <hr className="divider" />
       
