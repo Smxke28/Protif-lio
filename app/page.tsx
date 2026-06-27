@@ -20,7 +20,7 @@ const fadeUp: Variants = {
 };
 
 const ROLES = [
-  'Bem vindos, Meu nome é Juan',
+  'Bem Vindos, Meu nome é Juan',
   'Desenvolvedor Web',
   'Consultor em TI',
   'Estudante de Ciência da Computação',
