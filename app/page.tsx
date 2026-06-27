@@ -20,10 +20,10 @@ const fadeUp: Variants = {
 };
 
 const ROLES = [
+  'Bem vindos, Meu nome é Juan',
   'Desenvolvedor Web',
   'Consultor em TI',
-  'Estudante de CC',
-  'Entusiasta de Hardware',
+  'Estudante de Ciência da Computação',
 ];
 
 function TypingRole() {
@@ -186,8 +186,8 @@ export default function Home() {
               color: '#F0F0FF',
             }}
           >
-            Olá, sou{' '}
-            <span className="text-gradient-main">Juan</span>
+            Desenvolvedor {' '}
+            <span className="text-gradient-main">Full-Stack</span>
           </motion.h1>
 
           <motion.p
@@ -220,7 +220,7 @@ export default function Home() {
             }}
           >
             Transformo ideias em produtos digitais funcionais, rápidos e bem construídos.
-            Baseado em Juiz de Fora — MG.
+            Localizado em Juiz de Fora — MG.
           </motion.p>
 
           <motion.div
