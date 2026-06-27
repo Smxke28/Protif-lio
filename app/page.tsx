@@ -408,33 +408,6 @@ export default function Home() {
 
       {/* ── PROJETOS & GITHUB ── */}
       <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '96px 24px' }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          style={{ marginBottom: '48px', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}
-        >
-          <div>
-            <div className="section-label" style={{ marginBottom: '12px' }}>
-              Repositórios e Contribuições
-            </div>
-            <h2
-              style={{
-                fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
-                fontWeight: 700,
-                letterSpacing: '-0.02em',
-                color: '#F0F0FF',
-              }}
-            >
-              Projetos & GitHub
-            </h2>
-          </div>
-          <Link href="/projetos" className="btn-secondary">
-            Ver portfólio completo →
-          </Link>
-        </motion.div>
-
         <GitHubStats username="Smxke28" />
       </section>
 

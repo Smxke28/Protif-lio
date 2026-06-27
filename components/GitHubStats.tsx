@@ -114,10 +114,10 @@ export default function GitHubStats({ username = 'Smxke28' }: { username?: strin
       <div style={{ marginBottom: '48px', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
         <div>
           <div className="section-label" style={{ marginBottom: '12px' }}>
-            Atividade recente
+            Repositórios e Atividade Recente
           </div>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', fontWeight: 700, letterSpacing: '-0.02em', color: '#F0F0FF' }}>
-            GitHub
+            Projetos &GitHub
           </h2>
         </div>
         <a
