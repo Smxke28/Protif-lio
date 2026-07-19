@@ -31,6 +31,15 @@ const projects = [
     category: 'Portfólio',
   },
   {
+  title: 'Personal OS',
+  desc: 'App web 100% client-side para gerenciamento da vida pessoal: controle financeiro, agenda/foco e gerenciador de treinos. PWA offline-first com dados salvos localmente e bloqueio por PIN.',
+  tags: ['React', 'TypeScript', 'Vite', 'Tailwind', 'PWA'],
+  link: 'https://personal-life-flow-iota.vercel.app/',
+  status: 'live',
+  year: '2026',
+  category: 'PWA',
+},
+  {
     title: 'Dashboard em Tempo Real',
     desc: 'Visualização de dados com consumo contínuo de APIs, gráficos interativos e atualizações ao vivo.',
     tags: ['React', 'API', 'Charts', 'WebSocket'],
