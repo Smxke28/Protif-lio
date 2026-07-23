@@ -23,7 +23,7 @@ const ROLES = [
   'Bem Vindos, Meu nome é Juan',
   'Desenvolvedor Web',
   'Consultor em TI',
-  'Estudante de Ciência da Computação',
+  'Formado em Ciência da Computação',
 ];
 
 function TypingRole() {
