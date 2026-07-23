@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import Script from "next/script";
 import Navbar from "../components/Navbar";
 import Providers from "../components/Providers";
 import React from "react";
@@ -27,13 +28,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
           rel="stylesheet"
         />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-299F5SYYYJ"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-299F5SYYYJ');`}
+        </Script>
       </head>
       <body>
         <Providers>
-          <a
-            href="#main-content"
-            className="sr-only"
-          >
+          <a href="#main-content" className="sr-only">
             Ir para o conteúdo
           </a>
 
@@ -41,7 +49,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Navbar />
           </div>
 
-          <main id="main-content" style={{ paddingTop: "64px", minHeight: "100vh", position: "relative", zIndex: 10 }}>
+          <main
+            id="main-content"
+            style={{ paddingTop: "64px", minHeight: "100vh", position: "relative", zIndex: 10 }}
+          >
             {children}
           </main>
 
@@ -109,7 +120,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       transition: "all 0.2s",
                       textDecoration: "none",
                     }}
-                  >
+                    >
                     {link.label}
                   </a>
                 ))}
