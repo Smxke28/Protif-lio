@@ -57,7 +57,7 @@ export default function SobrePage() {
           initial="hidden" animate="show" custom={2} variants={fadeUp}
           style={{ fontSize: '1.05rem', color: '#8888AA', maxWidth: '520px', lineHeight: 1.7 }}
         >
-          Desenvolvedor web, consultor em TI e estudante de Ciências da Computação
+          Desenvolvedor web, consultor em TI e Formado em Ciência da Computação
           com paixão por construir produtos digitais que funcionam de verdade.
         </motion.p>
       </section>

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import PCBriefingWizard from '@/components/PCBriefingWizard';
 
 const features = [
   { title: 'Compatibilidade garantida', desc: 'Análise completa de compatibilidade entre CPU, GPU, RAM, placa-mãe e fonte.' },
@@ -38,7 +39,7 @@ export default function ConsultoriaHardwarePage() {
           com foco em compatibilidade, desempenho e melhor custo-benefício.
         </motion.p>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
-          <Link href="/contato" className="btn-primary" style={{ background: '#7C3AED' }}>Solicitar orçamento →</Link>
+          <Link href="#briefing" className="btn-primary" style={{ background: '#7C3AED' }}>Montar meu PC →</Link>
         </motion.div>
       </section>
 
@@ -65,6 +66,24 @@ export default function ConsultoriaHardwarePage() {
             </motion.div>
           ))}
         </div>
+      </section>
+
+      <hr className="divider" />
+
+      <section id="briefing" style={{ maxWidth: '760px', margin: '0 auto', padding: '64px 24px 96px', scrollMarginTop: '32px' }}>
+        <div style={{ marginBottom: '36px' }}>
+          <div className="section-label" style={{ marginBottom: '12px' }}>Antes de começar</div>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 700, letterSpacing: '-0.02em', color: '#F0F0FF', marginBottom: '12px' }}>
+            Me conta o que você precisa
+          </h2>
+          <p style={{ fontSize: '0.9rem', color: '#8888AA', lineHeight: 1.6, maxWidth: '520px' }}>
+            Responda algumas perguntas rápidas sobre o uso do PC. Assim eu já
+            chego no atendimento com uma noção clara do que faz sentido pra você.
+          </p>
+        </div>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+          <PCBriefingWizard />
+        </motion.div>
       </section>
     </div>
   );
