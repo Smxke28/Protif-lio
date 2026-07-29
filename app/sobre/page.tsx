@@ -117,7 +117,7 @@ export default function SobrePage() {
                     letterSpacing: '0.08em',
                   }}
                 >
-                  Cursando
+                  Formado
                 </span>
               </div>
               <p style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '4px' }}>
