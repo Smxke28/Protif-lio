@@ -3,7 +3,7 @@
 import { MessageCircle } from 'lucide-react';
 
 // TODO: troque pelo número real, com DDI+DDD, só dígitos (ex: 5532999999999)
-const WHATSAPP_NUMBER = '5532000000000';
+const WHATSAPP_NUMBER = '5532988766060';
 const DEFAULT_MESSAGE = 'Olá! Vi seu portfólio e queria conversar sobre um projeto.';
 
 export default function WhatsAppFloatButton() {
