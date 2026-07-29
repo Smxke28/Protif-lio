@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import Navbar from "../components/Navbar";
 import Providers from "../components/Providers";
+import WhatsAppFloatButton from "../components/WhatsAppFloatButton";
 import React from "react";
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -38,6 +39,25 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-299F5SYYYJ');`}
         </Script>
+        <script
+          // Roda antes da hidratação pra evitar "flash" do tema errado.
+          // Prioridade: escolha salva > preferência do sistema > escuro (padrão do site).
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                try {
+                  var saved = localStorage.getItem('theme');
+                  var theme = saved === 'light' || saved === 'dark'
+                    ? saved
+                    : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+                  document.documentElement.setAttribute('data-theme', theme);
+                } catch (e) {
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                }
+              })();
+            `,
+          }}
+        />
       </head>
       <body>
         <Providers>
@@ -56,10 +76,12 @@ gtag('config', 'G-299F5SYYYJ');`}
             {children}
           </main>
 
+          <WhatsAppFloatButton />
+
           <footer
             style={{
-              borderTop: "1px solid rgba(255,255,255,0.05)",
-              background: "rgba(10,10,15,0.98)",
+              borderTop: "1px solid var(--border-subtle)",
+              background: "var(--nav-bg-solid)",
               position: "relative",
               zIndex: 10,
             }}
@@ -82,20 +104,20 @@ gtag('config', 'G-299F5SYYYJ');`}
                     width: "28px",
                     height: "28px",
                     borderRadius: "6px",
-                    background: "linear-gradient(135deg, #00D4FF, #7C3AED)",
+                    background: "linear-gradient(135deg, var(--accent-cyan), var(--accent-violet))",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     fontFamily: "'JetBrains Mono', monospace",
                     fontWeight: 700,
                     fontSize: "0.65rem",
-                    color: "#0A0A0F",
+                    color: "var(--on-accent)",
                     flexShrink: 0,
                   }}
                 >
                   JL
                 </div>
-                <span style={{ fontSize: "0.8rem", color: "#555577" }}>
+                <span style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
                   © {new Date().getFullYear()} Juan Lavecchia — Desenvolvedor Web & Consultor TI
                 </span>
               </div>
@@ -113,7 +135,7 @@ gtag('config', 'G-299F5SYYYJ');`}
                     rel="noreferrer"
                     style={{
                       fontSize: "0.8rem",
-                      color: "#555577",
+                      color: "var(--text-muted)",
                       padding: "6px 12px",
                       borderRadius: "8px",
                       border: "1px solid transparent",

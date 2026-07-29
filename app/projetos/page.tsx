@@ -52,7 +52,7 @@ const projects = [
 
 export default function ProjetosPage() {
   return (
-    <div style={{ background: 'linear-gradient(180deg, #0A0A0F 0%, #0D0D1A 100%)', minHeight: '100vh' }}>
+    <div style={{ background: 'var(--page-bg)', minHeight: '100vh' }}>
       {/* Header */}
       <section style={{ padding: '80px 24px 64px', maxWidth: '1100px', margin: '0 auto' }}>
         <motion.div
@@ -70,7 +70,7 @@ export default function ProjetosPage() {
             fontWeight: 800,
             letterSpacing: '-0.03em',
             lineHeight: 1.1,
-            color: '#F0F0FF',
+            color: 'var(--text-primary)',
             marginBottom: '20px',
           }}
         >
@@ -79,7 +79,7 @@ export default function ProjetosPage() {
         <motion.p
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          style={{ fontSize: '1rem', color: '#8888AA', maxWidth: '480px', lineHeight: 1.7 }}
+          style={{ fontSize: '1rem', color: 'var(--text-secondary)', maxWidth: '480px', lineHeight: 1.7 }}
         >
           Alguns projetos em que trabalhei — do pessoal ao profissional,
           todos construídos com atenção à qualidade.
@@ -120,7 +120,7 @@ export default function ProjetosPage() {
                     style={{
                       fontSize: '0.65rem',
                       fontFamily: "'JetBrains Mono', monospace",
-                      color: '#555577',
+                      color: 'var(--text-muted)',
                       textTransform: 'uppercase',
                       letterSpacing: '0.08em',
                     }}
@@ -148,7 +148,7 @@ export default function ProjetosPage() {
                   style={{
                     fontSize: '1.05rem',
                     fontWeight: 600,
-                    color: '#F0F0FF',
+                    color: 'var(--text-primary)',
                     marginBottom: '12px',
                     letterSpacing: '-0.01em',
                   }}
@@ -158,7 +158,7 @@ export default function ProjetosPage() {
                 <p
                   style={{
                     fontSize: '0.85rem',
-                    color: '#8888AA',
+                    color: 'var(--text-secondary)',
                     lineHeight: 1.7,
                     marginBottom: '20px',
                     flex: 1,
@@ -210,7 +210,7 @@ export default function ProjetosPage() {
           viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }}
           style={{ marginTop: '48px', textAlign: 'center' }}
         >
-          <p style={{ fontSize: '0.85rem', color: '#555577', marginBottom: '16px', fontFamily: "'JetBrains Mono', monospace" }}>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '16px', fontFamily: "'JetBrains Mono', monospace" }}>
             // mais projetos em breve
           </p>
           <a

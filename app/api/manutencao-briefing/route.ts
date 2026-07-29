@@ -99,7 +99,7 @@ export async function POST(req: NextRequest) {
     try {
       const pdfBytes = await generateBriefingPdf('Solicitação de Manutenção', summary);
 
-      await resend.emails.send({
+      const emailResult = await resend.emails.send({
         from: 'onboarding@resend.dev',
         to: process.env.CONTACT_EMAIL_USER!,
         subject: `Nova solicitação de manutenção — ${nome}`,
@@ -114,6 +114,10 @@ export async function POST(req: NextRequest) {
           },
         ],
       });
+
+      if (emailResult.error) {
+        console.error('⚠️ Solicitação salva, mas Resend recusou o e-mail:', emailResult.error);
+      }
     } catch (emailError) {
       console.error('⚠️ Solicitação salva, mas falhou ao notificar por e-mail:', emailError);
     }

@@ -56,7 +56,7 @@ function TypingRole() {
   }, [displayed, phase, roleIndex]);
 
   return (
-    <span style={{ color: '#00D4FF', position: 'relative' }}>
+    <span style={{ color: 'var(--accent-cyan)', position: 'relative' }}>
       {displayed}
       <span className="cursor-blink" />
     </span>
@@ -70,7 +70,7 @@ const services = [
     desc: 'Sites modernos, rápidos e responsivos com foco em SEO e experiência do usuário. De landing pages a dashboards completos.',
     tags: ['Next.js', 'TypeScript', 'Tailwind', 'SEO'],
     href: '/servicos/desenvolvimento-web',
-    accent: '#00D4FF',
+    accent: 'var(--accent-cyan)',
   },
   {
     icon: '⬡',
@@ -78,7 +78,7 @@ const services = [
     desc: 'Orientação especializada na escolha de componentes com foco em compatibilidade, performance e custo-benefício.',
     tags: ['Montagem', 'Upgrades', 'Gamers', 'Workstations'],
     href: '/servicos/consultoria-hardware',
-    accent: '#7C3AED',
+    accent: 'var(--accent-violet)',
   },
   {
     icon: '⬡',
@@ -86,7 +86,7 @@ const services = [
     desc: 'Suporte técnico, manutenção preventiva e otimização de sistemas. Atendimento remoto ou presencial.',
     tags: ['Backup', 'Performance', 'Recovery', 'SLA'],
     href: '/servicos/montagem-pc',
-    accent: '#00D4FF',
+    accent: 'var(--accent-cyan)',
   },
 ];
 
@@ -94,7 +94,7 @@ export default function Home() {
   return (
     <div
       style={{
-        background: 'linear-gradient(180deg, #0A0A0F 0%, #0D0D1A 100%)',
+        background: 'var(--page-bg)',
         minHeight: '100vh',
       }}
     >
@@ -144,7 +144,7 @@ export default function Home() {
             style={{ marginBottom: '24px' }}
           >
             <span className="section-label" style={{ justifyContent: 'center' }}>
-              Portfólio · 2025
+              Portfólio · 2026
             </span>
           </motion.div>
 
@@ -159,7 +159,7 @@ export default function Home() {
               letterSpacing: '-0.03em',
               lineHeight: 1.1,
               marginBottom: '20px',
-              color: '#F0F0FF',
+              color: 'var(--text-primary)',
             }}
           >
             Desenvolvedor {' '}
@@ -174,7 +174,7 @@ export default function Home() {
             style={{
               fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
               fontWeight: 300,
-              color: '#8888AA',
+              color: 'var(--text-secondary)',
               marginBottom: '16px',
               minHeight: '2rem',
             }}
@@ -189,7 +189,7 @@ export default function Home() {
             variants={fadeUp}
             style={{
               fontSize: '1rem',
-              color: '#555577',
+              color: 'var(--text-muted)',
               maxWidth: '520px',
               margin: '0 auto 48px',
               lineHeight: 1.7,
@@ -225,7 +225,7 @@ export default function Home() {
             maxWidth: '480px',
             margin: '64px auto 0',
             background: '#0F0F1A',
-            border: '1px solid rgba(255,255,255,0.07)',
+            border: '1px solid var(--border-subtle)',
             borderRadius: '14px',
             overflow: 'hidden',
             boxShadow: '0 24px 60px rgba(0,0,0,0.4)',
@@ -234,8 +234,8 @@ export default function Home() {
           <div
             style={{
               padding: '10px 16px',
-              background: 'rgba(255,255,255,0.03)',
-              borderBottom: '1px solid rgba(255,255,255,0.05)',
+              background: 'var(--surface-faint)',
+              borderBottom: '1px solid var(--border-subtle)',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
@@ -253,7 +253,7 @@ export default function Home() {
                 textAlign: 'center',
                 fontFamily: "'JetBrains Mono', monospace",
                 fontSize: '0.7rem',
-                color: '#555577',
+                color: 'var(--text-muted)',
               }}
             >
               juan@portfolio ~ bash
@@ -261,27 +261,27 @@ export default function Home() {
           </div>
           <div style={{ padding: '20px 20px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', lineHeight: 1.9 }}>
             <div>
-              <span style={{ color: '#00D4FF' }}>juan</span>
-              <span style={{ color: '#555577' }}>@dev</span>
-              <span style={{ color: '#F0F0FF' }}> ~ </span>
+              <span style={{ color: 'var(--accent-cyan)' }}>juan</span>
+              <span style={{ color: 'var(--text-muted)' }}>@dev</span>
+              <span style={{ color: 'var(--text-primary)' }}> ~ </span>
               <span style={{ color: '#A855F7' }}>$</span>
-              <span style={{ color: '#F0F0FF' }}> whoami</span>
+              <span style={{ color: 'var(--text-primary)' }}> whoami</span>
             </div>
-            <div style={{ color: '#8888AA', marginBottom: '8px' }}>Juan Lavecchia — Dev Web & Consultor TI</div>
+            <div style={{ color: 'var(--text-secondary)', marginBottom: '8px' }}>Juan Lavecchia — Dev Web & Consultor TI</div>
             <div>
-              <span style={{ color: '#00D4FF' }}>juan</span>
-              <span style={{ color: '#555577' }}>@dev</span>
-              <span style={{ color: '#F0F0FF' }}> ~ </span>
+              <span style={{ color: 'var(--accent-cyan)' }}>juan</span>
+              <span style={{ color: 'var(--text-muted)' }}>@dev</span>
+              <span style={{ color: 'var(--text-primary)' }}> ~ </span>
               <span style={{ color: '#A855F7' }}>$</span>
-              <span style={{ color: '#F0F0FF' }}> stack --list</span>
+              <span style={{ color: 'var(--text-primary)' }}> stack --list</span>
             </div>
-            <div style={{ color: '#8888AA', marginBottom: '8px' }}>Next.js · TypeScript · Tailwind · Node.js</div>
+            <div style={{ color: 'var(--text-secondary)', marginBottom: '8px' }}>Next.js · TypeScript · Tailwind · Node.js</div>
             <div>
-              <span style={{ color: '#00D4FF' }}>juan</span>
-              <span style={{ color: '#555577' }}>@dev</span>
-              <span style={{ color: '#F0F0FF' }}> ~ </span>
+              <span style={{ color: 'var(--accent-cyan)' }}>juan</span>
+              <span style={{ color: 'var(--text-muted)' }}>@dev</span>
+              <span style={{ color: 'var(--text-primary)' }}> ~ </span>
               <span style={{ color: '#A855F7' }}>$</span>
-              <span style={{ color: '#F0F0FF' }}> status</span>
+              <span style={{ color: 'var(--text-primary)' }}> status</span>
             </div>
             <div style={{ color: '#28CA42' }}>✔ Disponível para novos projetos</div>
             <div style={{ marginTop: '4px' }}>
@@ -309,7 +309,7 @@ export default function Home() {
               fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
               fontWeight: 700,
               letterSpacing: '-0.02em',
-              color: '#F0F0FF',
+              color: 'var(--text-primary)',
             }}
           >
             Serviços
@@ -346,8 +346,8 @@ export default function Home() {
                     width: '40px',
                     height: '40px',
                     borderRadius: '10px',
-                    background: `rgba(${svc.accent === '#00D4FF' ? '0,212,255' : '124,58,237'},0.1)`,
-                    border: `1px solid rgba(${svc.accent === '#00D4FF' ? '0,212,255' : '124,58,237'},0.2)`,
+                    background: `rgba(${svc.accent === 'var(--accent-cyan)' ? '0,212,255' : '124,58,237'},0.1)`,
+                    border: `1px solid rgba(${svc.accent === 'var(--accent-cyan)' ? '0,212,255' : '124,58,237'},0.2)`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -362,7 +362,7 @@ export default function Home() {
                   style={{
                     fontSize: '1.05rem',
                     fontWeight: 600,
-                    color: '#F0F0FF',
+                    color: 'var(--text-primary)',
                     marginBottom: '12px',
                     letterSpacing: '-0.01em',
                   }}
@@ -372,7 +372,7 @@ export default function Home() {
                 <p
                   style={{
                     fontSize: '0.875rem',
-                    color: '#8888AA',
+                    color: 'var(--text-secondary)',
                     lineHeight: 1.7,
                     marginBottom: '20px',
                   }}
@@ -381,7 +381,7 @@ export default function Home() {
                 </p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '24px' }}>
                   {svc.tags.map((tag) => (
-                    <span key={tag} className={`tag ${svc.accent === '#7C3AED' ? 'tag-violet' : ''}`}>
+                    <span key={tag} className={`tag ${svc.accent === 'var(--accent-violet)' ? 'tag-violet' : ''}`}>
                       {tag}
                     </span>
                   ))}
@@ -434,18 +434,18 @@ export default function Home() {
               fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
               fontWeight: 700,
               letterSpacing: '-0.025em',
-              color: '#F0F0FF',
+              color: 'var(--text-primary)',
               marginBottom: '16px',
             }}
           >
             Tem um projeto em mente?
           </h2>
-          <p style={{ fontSize: '1rem', color: '#8888AA', lineHeight: 1.7, marginBottom: '40px' }}>
+          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '40px' }}>
             Estou disponível para novos projetos e consultorias. Entre em contato e vamos conversar.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/contato" className="btn-primary">
-              Solicitar orçamento
+              Falar comigo agora
             </Link>
             <a
               href="https://github.com/Smxke28"

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { href: "/", label: "Início" },
@@ -44,10 +45,10 @@ export default function Navbar() {
       {/* ── NAVBAR BAR ── */}
       <header
         style={{
-          background: scrolled ? "rgba(10,10,15,0.95)" : "rgba(10,10,15,0.75)",
+          background: scrolled ? "var(--nav-bg-scrolled)" : "var(--nav-bg)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
-          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
+          borderBottom: scrolled ? "1px solid var(--border-subtle)" : "1px solid transparent",
           transition: "all 0.3s ease",
           position: "relative",
           zIndex: 50,
@@ -85,20 +86,20 @@ export default function Navbar() {
           >
             <span style={{
               display: "block", width: "22px", height: "2px",
-              background: mobileOpen ? "#00D4FF" : "#8888AA",
+              background: mobileOpen ? "var(--accent-cyan)" : "var(--text-secondary)",
               borderRadius: "2px", transition: "all 0.3s",
               transform: mobileOpen ? "translateY(7px) rotate(45deg)" : "none",
             }} />
             <span style={{
               display: "block", width: "22px", height: "2px",
-              background: mobileOpen ? "#00D4FF" : "#8888AA",
+              background: mobileOpen ? "var(--accent-cyan)" : "var(--text-secondary)",
               borderRadius: "2px", transition: "all 0.3s",
               opacity: mobileOpen ? 0 : 1,
               transform: mobileOpen ? "scaleX(0)" : "none",
             }} />
             <span style={{
               display: "block", width: "22px", height: "2px",
-              background: mobileOpen ? "#00D4FF" : "#8888AA",
+              background: mobileOpen ? "var(--accent-cyan)" : "var(--text-secondary)",
               borderRadius: "2px", transition: "all 0.3s",
               transform: mobileOpen ? "translateY(-7px) rotate(-45deg)" : "none",
             }} />
@@ -111,18 +112,18 @@ export default function Navbar() {
           >
             <div style={{
               width: "34px", height: "34px", borderRadius: "8px",
-              background: "linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%)",
+              background: "linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-violet) 100%)",
               display: "flex", alignItems: "center", justifyContent: "center",
               fontFamily: "'JetBrains Mono', monospace", fontWeight: 700,
-              fontSize: "0.85rem", color: "#0A0A0F", flexShrink: 0,
+              fontSize: "0.85rem", color: "var(--on-accent)", flexShrink: 0,
             }}>
               JL
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
-              <span style={{ fontWeight: 700, fontSize: "0.9rem", color: "#F0F0FF", lineHeight: 1, letterSpacing: "-0.01em" }}>
+              <span style={{ fontWeight: 700, fontSize: "0.9rem", color: "var(--text-primary)", lineHeight: 1, letterSpacing: "-0.01em" }}>
                 Juan Lavecchia
               </span>
-              <span className="hidden md:block" style={{ fontSize: "0.65rem", color: "#555577", fontFamily: "'JetBrains Mono', monospace" }}>
+              <span className="hidden md:block" style={{ fontSize: "0.65rem", color: "var(--text-muted)", fontFamily: "'JetBrains Mono', monospace" }}>
                 dev & consultor TI
               </span>
             </div>
@@ -142,7 +143,7 @@ export default function Navbar() {
                   style={{
                     fontSize: "0.85rem",
                     fontWeight: active ? 600 : 400,
-                    color: active ? "#00D4FF" : "#8888AA",
+                    color: active ? "var(--accent-cyan)" : "var(--text-secondary)",
                     padding: "6px 12px",
                     borderRadius: "8px",
                     textDecoration: "none",
@@ -152,13 +153,13 @@ export default function Navbar() {
                   }}
                   onMouseEnter={(e) => {
                     if (!active) {
-                      (e.currentTarget as HTMLElement).style.color = "#F0F0FF";
-                      (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)";
+                      (e.currentTarget as HTMLElement).style.color = "var(--text-primary)";
+                      (e.currentTarget as HTMLElement).style.background = "var(--surface-faint)";
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!active) {
-                      (e.currentTarget as HTMLElement).style.color = "#8888AA";
+                      (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)";
                       (e.currentTarget as HTMLElement).style.background = "transparent";
                     }
                   }}
@@ -169,8 +170,9 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Auth — desktop */}
-          <div className="hidden md:flex" style={{ alignItems: "center", marginLeft: "8px" }}>
+          {/* Tema + Auth — desktop */}
+          <div className="hidden md:flex" style={{ alignItems: "center", gap: "10px", marginLeft: "8px" }}>
+            <ThemeToggle />
             {session ? (
               <button
                 onClick={() => signOut()}
@@ -191,8 +193,8 @@ export default function Navbar() {
                 style={{
                   display: "flex", alignItems: "center", gap: "8px",
                   padding: "6px 14px", borderRadius: "8px",
-                  background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
-                  color: "#F0F0FF", fontSize: "0.8rem", fontWeight: 500, cursor: "pointer",
+                  background: "var(--border-subtle)", border: "1px solid var(--surface-hover)",
+                  color: "var(--text-primary)", fontSize: "0.8rem", fontWeight: 500, cursor: "pointer",
                 }}
               >
                 Entrar
@@ -230,10 +232,10 @@ export default function Navbar() {
           left: 0,
           bottom: 0,
           width: "280px",
-          background: "rgba(13,13,20,0.98)",
+          background: "var(--nav-bg-solid)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
-          borderRight: "1px solid rgba(255,255,255,0.07)",
+          borderRight: "1px solid var(--border-subtle)",
           zIndex: 60,
           display: "flex",
           flexDirection: "column",
@@ -249,18 +251,18 @@ export default function Navbar() {
           display: "flex",
           alignItems: "center",
           padding: "0 24px",
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
+          borderBottom: "1px solid var(--border-subtle)",
           flexShrink: 0,
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <div style={{
               width: "30px", height: "30px", borderRadius: "7px",
-              background: "linear-gradient(135deg, #00D4FF, #7C3AED)",
+              background: "linear-gradient(135deg, var(--accent-cyan), var(--accent-violet))",
               display: "flex", alignItems: "center", justifyContent: "center",
               fontFamily: "'JetBrains Mono', monospace", fontWeight: 700,
-              fontSize: "0.75rem", color: "#0A0A0F",
+              fontSize: "0.75rem", color: "var(--on-accent)",
             }}>JL</div>
-            <span style={{ fontWeight: 600, fontSize: "0.9rem", color: "#F0F0FF" }}>Juan Lavecchia</span>
+            <span style={{ fontWeight: 600, fontSize: "0.9rem", color: "var(--text-primary)" }}>Juan Lavecchia</span>
           </div>
         </div>
 
@@ -269,7 +271,7 @@ export default function Navbar() {
           <p style={{
             fontSize: "0.65rem", fontFamily: "'JetBrains Mono', monospace",
             textTransform: "uppercase", letterSpacing: "0.12em",
-            color: "#555577", padding: "0 8px", marginBottom: "8px",
+            color: "var(--text-muted)", padding: "0 8px", marginBottom: "8px",
           }}>
             Navegação
           </p>
@@ -289,7 +291,7 @@ export default function Navbar() {
                   textDecoration: "none",
                   fontWeight: active ? 600 : 400,
                   fontSize: "0.95rem",
-                  color: active ? "#00D4FF" : "#AAAACC",
+                  color: active ? "var(--accent-cyan)" : "var(--text-secondary)",
                   background: active ? "rgba(0,212,255,0.08)" : "transparent",
                   border: "1px solid",
                   borderColor: active ? "rgba(0,212,255,0.15)" : "transparent",
@@ -298,7 +300,7 @@ export default function Navbar() {
               >
                 <span>{link.label}</span>
                 {active && (
-                  <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#00D4FF", flexShrink: 0 }} />
+                  <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--accent-cyan)", flexShrink: 0 }} />
                 )}
               </Link>
             );
@@ -308,18 +310,25 @@ export default function Navbar() {
         {/* Sidebar footer */}
         <div style={{
           padding: "16px",
-          borderTop: "1px solid rgba(255,255,255,0.05)",
+          borderTop: "1px solid var(--border-subtle)",
           flexShrink: 0,
+          display: "flex",
+          flexDirection: "column",
+          gap: "12px",
         }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <span style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>Aparência</span>
+            <ThemeToggle />
+          </div>
           {session ? (
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 12px",
-                background: "rgba(255,255,255,0.03)", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
+                background: "var(--surface-faint)", borderRadius: "8px", border: "1px solid var(--border-subtle)" }}>
                 <img src={session.user?.image ?? ""} alt="avatar"
                   style={{ width: "28px", height: "28px", borderRadius: "50%", border: "2px solid rgba(0,212,255,0.3)" }} />
                 <div>
-                  <div style={{ fontSize: "0.8rem", fontWeight: 500, color: "#F0F0FF" }}>{session.user?.name}</div>
-                  <div style={{ fontSize: "0.68rem", color: "#555577", fontFamily: "'JetBrains Mono', monospace" }}>{session.user?.email}</div>
+                  <div style={{ fontSize: "0.8rem", fontWeight: 500, color: "var(--text-primary)" }}>{session.user?.name}</div>
+                  <div style={{ fontSize: "0.68rem", color: "var(--text-muted)", fontFamily: "'JetBrains Mono', monospace" }}>{session.user?.email}</div>
                 </div>
               </div>
               <button
@@ -339,7 +348,7 @@ export default function Navbar() {
               style={{
                 width: "100%", padding: "11px", borderRadius: "8px",
                 background: "rgba(0,212,255,0.08)", border: "1px solid rgba(0,212,255,0.2)",
-                color: "#00D4FF", fontSize: "0.9rem", fontWeight: 600, cursor: "pointer",
+                color: "var(--accent-cyan)", fontSize: "0.9rem", fontWeight: 600, cursor: "pointer",
               }}
             >
               Entrar com Google

@@ -12,7 +12,7 @@ const services = [
       'Criação de sites e aplicações web com foco em performance, SEO e experiência do usuário. De landing pages a sistemas completos.',
     tags: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'SEO'],
     href: '/servicos/desenvolvimento-web',
-    accent: '#00D4FF',
+    accent: 'var(--accent-cyan)',
   },
   {
     number: '02',
@@ -22,7 +22,7 @@ const services = [
       'Orientação especializada para escolha de componentes com foco em compatibilidade, desempenho e custo-benefício. PCs para gamers, criadores e empresas.',
     tags: ['Componentes', 'Compatibilidade', 'Upgrades', 'Workstations'],
     href: '/servicos/consultoria-hardware',
-    accent: '#7C3AED',
+    accent: 'var(--accent-violet)',
   },
   {
     number: '03',
@@ -32,13 +32,13 @@ const services = [
       'Manutenção preventiva e corretiva, suporte técnico e otimização de sistemas. Atendimento remoto ou presencial com foco em SLA.',
     tags: ['Backup', 'Recovery', 'Performance', 'SLA', 'Remoto'],
     href: '/servicos/montagem-pc',
-    accent: '#00D4FF',
+    accent: 'var(--accent-cyan)',
   },
 ];
 
 export default function ServicosPage() {
   return (
-    <div style={{ background: 'linear-gradient(180deg, #0A0A0F 0%, #0D0D1A 100%)', minHeight: '100vh' }}>
+    <div style={{ background: 'var(--page-bg)', minHeight: '100vh' }}>
       {/* Header */}
       <section style={{ padding: '80px 24px 64px', maxWidth: '1100px', margin: '0 auto' }}>
         <motion.div
@@ -56,7 +56,7 @@ export default function ServicosPage() {
             fontWeight: 800,
             letterSpacing: '-0.03em',
             lineHeight: 1.1,
-            color: '#F0F0FF',
+            color: 'var(--text-primary)',
             marginBottom: '20px',
           }}
         >
@@ -65,7 +65,7 @@ export default function ServicosPage() {
         <motion.p
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          style={{ fontSize: '1rem', color: '#8888AA', maxWidth: '500px', lineHeight: 1.7 }}
+          style={{ fontSize: '1rem', color: 'var(--text-secondary)', maxWidth: '500px', lineHeight: 1.7 }}
         >
           Soluções pensadas para entregar performance, confiabilidade e
           experiência — do código ao hardware.
@@ -102,7 +102,7 @@ export default function ServicosPage() {
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
                     fontSize: '0.7rem',
-                    color: '#555577',
+                    color: 'var(--text-muted)',
                     minWidth: '28px',
                     letterSpacing: '0.05em',
                   }}
@@ -116,7 +116,7 @@ export default function ServicosPage() {
                     style={{
                       fontSize: 'clamp(1rem, 2vw, 1.25rem)',
                       fontWeight: 600,
-                      color: '#F0F0FF',
+                      color: 'var(--text-primary)',
                       marginBottom: '8px',
                       letterSpacing: '-0.01em',
                     }}
@@ -126,7 +126,7 @@ export default function ServicosPage() {
                   <p
                     style={{
                       fontSize: '0.875rem',
-                      color: '#8888AA',
+                      color: 'var(--text-secondary)',
                       lineHeight: 1.6,
                       marginBottom: '16px',
                       maxWidth: '520px',
@@ -138,7 +138,7 @@ export default function ServicosPage() {
                     {svc.tags.map((tag) => (
                       <span
                         key={tag}
-                        className={`tag ${svc.accent === '#7C3AED' ? 'tag-violet' : ''}`}
+                        className={`tag ${svc.accent === 'var(--accent-violet)' ? 'tag-violet' : ''}`}
                       >
                         {tag}
                       </span>
@@ -180,18 +180,18 @@ export default function ServicosPage() {
               fontSize: '1.8rem',
               fontWeight: 700,
               letterSpacing: '-0.025em',
-              color: '#F0F0FF',
+              color: 'var(--text-primary)',
               marginBottom: '16px',
             }}
           >
             Vamos conversar sobre seu projeto
           </h2>
-          <p style={{ fontSize: '0.9rem', color: '#8888AA', lineHeight: 1.7, marginBottom: '36px' }}>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '36px' }}>
             Entre em contato para um orçamento sem compromisso.
             Respondo dentro de 24h.
           </p>
           <Link href="/contato" className="btn-primary">
-            Solicitar orçamento
+            Falar comigo agora
           </Link>
         </motion.div>
       </section>

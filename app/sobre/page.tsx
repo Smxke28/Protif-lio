@@ -34,7 +34,7 @@ const groups = ['Frontend', 'Backend', 'Ferramentas', 'Hardware'];
 
 export default function SobrePage() {
   return (
-    <div style={{ background: 'linear-gradient(180deg, rgb(10, 10, 15) 0%, #0D0D1A 100%)', minHeight: '100vh' }}>
+    <div style={{ background: 'var(--page-bg)', minHeight: '100vh' }}>
       {/* Header */}
       <section style={{ padding: '80px 24px 64px', maxWidth: '1100px', margin: '0 auto' }}>
         <motion.div initial="hidden" animate="show" custom={0} variants={fadeUp} style={{ marginBottom: '16px' }}>
@@ -47,7 +47,7 @@ export default function SobrePage() {
             fontWeight: 800,
             letterSpacing: '-0.03em',
             lineHeight: 1.1,
-            color: '#F0F0FF',
+            color: 'var(--text-primary)',
             marginBottom: '20px',
           }}
         >
@@ -55,9 +55,9 @@ export default function SobrePage() {
         </motion.h1>
         <motion.p
           initial="hidden" animate="show" custom={2} variants={fadeUp}
-          style={{ fontSize: '1.05rem', color: '#8888AA', maxWidth: '520px', lineHeight: 1.7 }}
+          style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', maxWidth: '520px', lineHeight: 1.7 }}
         >
-          Desenvolvedor web, consultor em TI e Formado em Ciência da Computação
+          Desenvolvedor web, consultor em TI e estudante de Ciências da Computação
           com paixão por construir produtos digitais que funcionam de verdade.
         </motion.p>
       </section>
@@ -73,14 +73,14 @@ export default function SobrePage() {
             viewport={{ once: true }} transition={{ duration: 0.5 }}
             className="card-glass" style={{ padding: '36px' }}
           >
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#F0F0FF', marginBottom: '20px' }}>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '20px' }}>
               Apresentação
             </h2>
-            <p style={{ fontSize: '0.9rem', color: '#8888AA', lineHeight: 1.8, marginBottom: '16px' }}>
-              Olá — sou <strong style={{ color: '#F0F0FF' }}>Juan Lavecchia Coelho da Silva</strong>.
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: '16px' }}>
+              Olá — sou <strong style={{ color: 'var(--text-primary)' }}>Juan Lavecchia Coelho da Silva</strong>.
               Este portfólio foi criado como um espaço de desenvolvimento e aprendizado na área de programação.
             </p>
-            <p style={{ fontSize: '0.9rem', color: '#8888AA', lineHeight: 1.8 }}>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
               Aqui reúno projetos, experimentos e estudos que refletem minha evolução em tecnologias web
               modernes e boas práticas de desenvolvimento.
             </p>
@@ -92,7 +92,7 @@ export default function SobrePage() {
             viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}
             className="card-glass" style={{ padding: '36px' }}
           >
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#F0F0FF', marginBottom: '20px' }}>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '20px' }}>
               Formação
             </h2>
             <div
@@ -109,7 +109,7 @@ export default function SobrePage() {
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
                     fontSize: '0.65rem',
-                    color: '#00D4FF',
+                    color: 'var(--accent-cyan)',
                     background: 'rgba(0,212,255,0.1)',
                     padding: '2px 8px',
                     borderRadius: '4px',
@@ -120,13 +120,13 @@ export default function SobrePage() {
                   Cursando
                 </span>
               </div>
-              <p style={{ fontSize: '0.95rem', fontWeight: 600, color: '#F0F0FF', marginBottom: '4px' }}>
+              <p style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '4px' }}>
                 Bacharelado em Ciências da Computação
               </p>
-              <p style={{ fontSize: '0.8rem', color: '#8888AA' }}>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
                 Universidade Estácio de Sá — Juiz de Fora, MG
               </p>
-              <p style={{ fontSize: '0.75rem', color: '#555577', marginTop: '4px', fontFamily: "'JetBrains Mono', monospace" }}>
+              <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px', fontFamily: "'JetBrains Mono', monospace" }}>
                 8º período
               </p>
             </div>
@@ -139,17 +139,17 @@ export default function SobrePage() {
                   key={item.label}
                   style={{
                     padding: '10px 14px',
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.06)',
+                    background: 'var(--surface-faint)',
+                    border: '1px solid var(--border-subtle)',
                     borderRadius: '8px',
                     flex: 1,
                     minWidth: '120px',
                   }}
                 >
-                  <div style={{ fontSize: '0.65rem', color: '#555577', fontFamily: "'JetBrains Mono', monospace", marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace", marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                     {item.label}
                   </div>
-                  <div style={{ fontSize: '0.85rem', color: '#F0F0FF', fontWeight: 500 }}>{item.value}</div>
+                  <div style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: 500 }}>{item.value}</div>
                 </div>
               ))}
             </div>
@@ -167,7 +167,7 @@ export default function SobrePage() {
           style={{ marginBottom: '48px' }}
         >
           <div className="section-label" style={{ marginBottom: '12px' }}>Competências</div>
-          <h2 style={{ fontSize: '1.8rem', fontWeight: 700, letterSpacing: '-0.02em', color: '#F0F0FF' }}>
+          <h2 style={{ fontSize: '1.8rem', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
             Habilidades
           </h2>
         </motion.div>
@@ -186,22 +186,22 @@ export default function SobrePage() {
                   fontFamily: "'JetBrains Mono', monospace",
                   textTransform: 'uppercase',
                   letterSpacing: '0.1em',
-                  color: '#00D4FF',
+                  color: 'var(--accent-cyan)',
                   marginBottom: '20px',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
                 }}
               >
-                <span style={{ width: '16px', height: '1px', background: '#00D4FF', display: 'inline-block' }} />
+                <span style={{ width: '16px', height: '1px', background: 'var(--accent-cyan)', display: 'inline-block' }} />
                 {group}
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {skills.filter((s) => s.group === group).map((skill) => (
                   <div key={skill.name}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                      <span style={{ fontSize: '0.85rem', color: '#F0F0FF', fontWeight: 500 }}>{skill.name}</span>
-                      <span style={{ fontSize: '0.7rem', fontFamily: "'JetBrains Mono', monospace", color: '#555577' }}>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: 500 }}>{skill.name}</span>
+                      <span style={{ fontSize: '0.7rem', fontFamily: "'JetBrains Mono', monospace", color: 'var(--text-muted)' }}>
                         {skill.level}%
                       </span>
                     </div>
@@ -230,7 +230,7 @@ export default function SobrePage() {
           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.5 }}
         >
-          <p style={{ fontSize: '0.9rem', color: '#8888AA', marginBottom: '32px', lineHeight: 1.7 }}>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '32px', lineHeight: 1.7 }}>
             Quer conversar sobre um projeto, parceria ou oportunidade?
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>

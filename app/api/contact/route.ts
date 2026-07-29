@@ -4,7 +4,15 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request): Promise<Response> {
   try {
-    const { name, email, message } = await req.json();
+    const { name, email, message, website } = await req.json();
+
+    // Honeypot: bots preenchem esse campo invisível. Finge sucesso e descarta.
+    if (typeof website === 'string' && website.trim().length > 0) {
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
     // 🔎 Loga os dados recebidos do front
     console.log("📩 Dados recebidos:", { name, email, message });

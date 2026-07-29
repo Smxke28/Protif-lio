@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
     try {
       const pdfBytes = await generateBriefingPdf('Briefing de Montagem de PC', summary);
 
-      await resend.emails.send({
+      const emailResult = await resend.emails.send({
         from: 'onboarding@resend.dev',
         to: process.env.CONTACT_EMAIL_USER!,
         subject: `Novo briefing de PC — ${nome}`,
@@ -129,6 +129,13 @@ export async function POST(req: NextRequest) {
           },
         ],
       });
+
+      // A lib do Resend NÃO lança exceção pra erros de restrição/validação —
+      // ela devolve { data: null, error: {...} }. Sem checar isso, uma recusa
+      // (ex: destinatário fora do sandbox) passava batido, sem log nenhum.
+      if (emailResult.error) {
+        console.error('⚠️ Briefing salvo, mas Resend recusou o e-mail:', emailResult.error);
+      }
     } catch (emailError) {
       console.error('⚠️ Briefing salvo, mas falhou ao notificar por e-mail:', emailError);
     }
