@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import MaintenanceBriefingForm from '@/components/MaintenanceBriefingForm';
 
 const features = [
   { title: 'Manutenção preventiva', desc: 'Limpeza, atualização de drivers, verificação de temperaturas e saúde do hardware.' },
@@ -38,7 +39,7 @@ export default function ManutencaoPage() {
           Atendimento remoto ou presencial com foco em disponibilidade e performance.
         </motion.p>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
-          <Link href="/contato" className="btn-primary">Solicitar orçamento →</Link>
+          <Link href="#briefing" className="btn-primary">Solicitar atendimento →</Link>
         </motion.div>
       </section>
 
@@ -65,6 +66,22 @@ export default function ManutencaoPage() {
             </motion.div>
           ))}
         </div>
+      </section>
+
+      <hr className="divider" />
+
+      <section id="briefing" style={{ maxWidth: '760px', margin: '0 auto', padding: '64px 24px 96px', scrollMarginTop: '32px' }}>
+        <div style={{ marginBottom: '36px' }}>
+          <div className="section-label" style={{ marginBottom: '12px' }}>Antes de começar</div>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 700, letterSpacing: '-0.02em', color: '#F0F0FF', marginBottom: '12px' }}>
+            O que você precisa?
+          </h2>
+          <p style={{ fontSize: '0.9rem', color: '#8888AA', lineHeight: 1.6, maxWidth: '520px' }}>
+            Marque os itens e me manda — assim eu já chego no atendimento
+            sabendo exatamente o que fazer.
+          </p>
+        </div>
+        <MaintenanceBriefingForm />
       </section>
     </div>
   );

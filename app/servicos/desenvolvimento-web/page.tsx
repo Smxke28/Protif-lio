@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import WebThemesGallery from '@/components/WebThemesGallery';
 
 const features = [
   { title: 'Performance', desc: 'Lighthouse 95+, otimização de imagens, lazy loading e cache inteligente.' },
@@ -67,6 +68,21 @@ export default function DesenvolvimentoWebPage() {
             </motion.div>
           ))}
         </div>
+      </section>
+
+      <hr className="divider" />
+
+      <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '64px 24px 96px' }}>
+        <div style={{ marginBottom: '48px' }}>
+          <div className="section-label" style={{ marginBottom: '12px' }}>Exemplos</div>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 700, letterSpacing: '-0.02em', color: '#F0F0FF', marginBottom: '12px' }}>
+            Temas de sites
+          </h2>
+          <p style={{ fontSize: '0.9rem', color: '#8888AA', maxWidth: '520px', lineHeight: 1.6 }}>
+            Passe o mouse em cada categoria pra ver um exemplo visual.
+          </p>
+        </div>
+        <WebThemesGallery />
       </section>
     </div>
   );

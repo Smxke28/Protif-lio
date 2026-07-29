@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { generateBriefingPdf } from '@/app/lib/generateBriefingPdf';
+import { notifyWhatsApp } from '@/app/lib/notifyWhatsApp';
 
 export const dynamic = 'force-dynamic';
 
@@ -86,30 +88,46 @@ export async function POST(req: NextRequest) {
 
     if (error) throw error;
 
-    // Notificação por e-mail (best-effort - não bloqueia a resposta de sucesso ao cliente)
+    // Resumo em campos rótulo/valor — reaproveitado no PDF, no e-mail e no WhatsApp
+    const summary = [
+      { label: 'Nome', value: nome },
+      { label: 'Contato', value: contato },
+      { label: 'Tipo', value: tipoAtendimento === 'upgrade' ? 'Upgrade de PC existente' : 'PC novo' },
+      { label: 'Specs atuais', value: record.specs_atuais },
+      { label: 'Objetivos', value: objetivos.join(', ') },
+      { label: 'Outros (detalhe)', value: record.objetivo_outros },
+      { label: 'Jogos casuais', value: record.jogos_casuais },
+      { label: 'Jogos competitivos', value: record.jogos_competitivos },
+      { label: 'Preferência GPU', value: preferenciaGPU },
+      { label: 'Preferência CPU', value: preferenciaCPU },
+      { label: 'Display', value: display },
+      { label: 'Periféricos', value: perifericos },
+      { label: 'Orçamento', value: record.orcamento_faixa },
+      { label: 'Prazo', value: record.prazo_compra },
+    ];
+
+    // Notificação por WhatsApp (best-effort — não bloqueia nada se falhar ou não estiver configurado)
+    const whatsappText = `🖥️ Novo briefing de PC — ${nome}\nContato: ${contato}\nTipo: ${summary[2].value}\nObjetivos: ${objetivos.join(', ')}`;
+    await notifyWhatsApp(whatsappText);
+
+    // Notificação por e-mail com PDF anexado (best-effort - não bloqueia a resposta de sucesso ao cliente)
     try {
+      const pdfBytes = await generateBriefingPdf('Briefing de Montagem de PC', summary);
+
       await resend.emails.send({
         from: 'onboarding@resend.dev',
         to: process.env.CONTACT_EMAIL_USER!,
         subject: `Novo briefing de PC — ${nome}`,
-        text: [
-          `Nome: ${nome}`,
-          `Contato: ${contato}`,
-          `Tipo: ${tipoAtendimento === 'upgrade' ? 'Upgrade de PC existente' : 'PC novo'}`,
-          record.specs_atuais ? `Specs atuais: ${record.specs_atuais}` : null,
-          `Objetivos: ${objetivos.join(', ')}`,
-          record.objetivo_outros ? `Outros (detalhe): ${record.objetivo_outros}` : null,
-          record.jogos_casuais ? `Jogos casuais: ${record.jogos_casuais}` : null,
-          record.jogos_competitivos ? `Jogos competitivos: ${record.jogos_competitivos}` : null,
-          `Preferência GPU: ${preferenciaGPU}`,
-          `Preferência CPU: ${preferenciaCPU}`,
-          `Display: ${display}`,
-          `Periféricos: ${perifericos}`,
-          record.orcamento_faixa ? `Orçamento: ${record.orcamento_faixa}` : null,
-          record.prazo_compra ? `Prazo: ${record.prazo_compra}` : null,
-        ]
-          .filter(Boolean)
+        text: summary
+          .filter((f) => f.value)
+          .map((f) => `${f.label}: ${f.value}`)
           .join('\n'),
+        attachments: [
+          {
+            filename: `briefing-pc-${nome.replace(/\s+/g, '-').toLowerCase()}.pdf`,
+            content: Buffer.from(pdfBytes),
+          },
+        ],
       });
     } catch (emailError) {
       console.error('⚠️ Briefing salvo, mas falhou ao notificar por e-mail:', emailError);
