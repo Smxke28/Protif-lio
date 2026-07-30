@@ -162,8 +162,8 @@ export default function Home() {
               color: 'var(--text-primary)',
             }}
           >
-            Desenvolvedor {' '}
-            <span className="text-gradient-main">Full-Stack</span>
+            Desenvolvedor Web {' '}
+            <span className="text-gradient-main">Consultoria em TI</span>
           </motion.h1>
 
           <motion.p
