@@ -6,10 +6,6 @@ import { notifyWhatsApp } from '@/app/lib/notifyWhatsApp';
 
 export const dynamic = 'force-dynamic';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const ITENS = [
@@ -47,8 +43,25 @@ function clip(value: unknown): string {
 
 export async function POST(req: NextRequest) {
   try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+    // 🔍 LOG DE VERIFICAÇÃO DAS VARIÁVEIS NO TERMINAL
+    console.log('--- TESTE DE CONFIGURAÇÃO DO SUPABASE ---');
+    console.log('Service Role existe?:', !!supabaseServiceKey);
+    console.log(
+      'Usando Anon por engano?:',
+      supabaseServiceKey === process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    );
+
+    // Instancia o cliente admin dentro do manipulador para garantir a leitura atualizada da chave
+    const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+      auth: { persistSession: false },
+    });
+
     const body = await req.json();
 
+    // Honeypot anti-spam
     if (typeof body.website === 'string' && body.website.trim().length > 0) {
       return NextResponse.json({ success: true });
     }
@@ -80,6 +93,7 @@ export async function POST(req: NextRequest) {
 
     console.log('🛠️ Nova solicitação de manutenção:', record);
 
+    // Inserção com privilégios de Admin (Service Role)
     const { data, error } = await supabase.from('manutencao_briefings').insert([record]).select();
 
     if (error) throw error;

@@ -6,10 +6,6 @@ import { notifyWhatsApp } from '@/app/lib/notifyWhatsApp';
 
 export const dynamic = 'force-dynamic';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const TIPO_ATENDIMENTO = ['pc_novo', 'upgrade'] as const;
@@ -35,6 +31,14 @@ function clip(value: unknown): string {
 
 export async function POST(req: NextRequest) {
   try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+    // Instancia o cliente admin dentro da requisição com a chave Service Role
+    const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+      auth: { persistSession: false },
+    });
+
     const body = await req.json();
 
     // Honeypot: bots preenchem esse campo invisível. Descarta silenciosamente.
@@ -84,6 +88,7 @@ export async function POST(req: NextRequest) {
 
     console.log('🖥️ Novo briefing de montagem de PC:', record);
 
+    // Inserção no banco via cliente Admin (Service Role)
     const { data, error } = await supabase.from('pc_briefings').insert([record]).select();
 
     if (error) throw error;
@@ -106,11 +111,11 @@ export async function POST(req: NextRequest) {
       { label: 'Prazo', value: record.prazo_compra },
     ];
 
-    // Notificação por WhatsApp (best-effort — não bloqueia nada se falhar ou não estiver configurado)
+    // Notificação por WhatsApp
     const whatsappText = `🖥️ Novo briefing de PC — ${nome}\nContato: ${contato}\nTipo: ${summary[2].value}\nObjetivos: ${objetivos.join(', ')}`;
     await notifyWhatsApp(whatsappText);
 
-    // Notificação por e-mail com PDF anexado (best-effort - não bloqueia a resposta de sucesso ao cliente)
+    // Notificação por e-mail com PDF anexado
     try {
       const pdfBytes = await generateBriefingPdf('Briefing de Montagem de PC', summary);
 
@@ -130,9 +135,6 @@ export async function POST(req: NextRequest) {
         ],
       });
 
-      // A lib do Resend NÃO lança exceção pra erros de restrição/validação —
-      // ela devolve { data: null, error: {...} }. Sem checar isso, uma recusa
-      // (ex: destinatário fora do sandbox) passava batido, sem log nenhum.
       if (emailResult.error) {
         console.error('⚠️ Briefing salvo, mas Resend recusou o e-mail:', emailResult.error);
       }

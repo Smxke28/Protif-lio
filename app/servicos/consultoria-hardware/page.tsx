@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import PCBriefingWizard from '@/components/PCBriefingWizard';
+import PCBuildsCarousel from '@/components/PCBuildsCarousel';
 
 const features = [
   { title: 'Compatibilidade garantida', desc: 'Análise completa de compatibilidade entre CPU, GPU, RAM, placa-mãe e fonte.' },
@@ -69,6 +70,8 @@ export default function ConsultoriaHardwarePage() {
       </section>
 
       <hr className="divider" />
+
+      <PCBuildsCarousel />
 
       <section id="briefing" style={{ maxWidth: '760px', margin: '0 auto', padding: '64px 24px 96px', scrollMarginTop: '32px' }}>
         <div style={{ marginBottom: '36px' }}>

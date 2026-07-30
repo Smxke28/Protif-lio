@@ -1,0 +1,7 @@
+Coloque aqui as fotos dos PCs que você montou.
+
+Nome do arquivo = o "slug" que você usa em components/PCBuildsCarousel.tsx
+Exemplo: se o slug for "build-01", o arquivo deve se chamar build-01.jpg
+
+Depois de colocar a foto aqui, adicione uma entrada correspondente no array
+BUILDS em components/PCBuildsCarousel.tsx, com o slug e uma legenda opcional.
