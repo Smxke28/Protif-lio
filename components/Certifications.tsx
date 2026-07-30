@@ -23,7 +23,7 @@ const CERTIFICATIONS: Certification[] = [
   { slug: 'google-ai', title: 'Google AI — Professional Certificate', issuer: 'Google (via Coursera)', date: 'Julho 2026' },
   { slug: 'solucoes-ia-github', title: 'Soluções de IA no GitHub', issuer: 'Fundação Bradesco (Escola Virtual) + Microsoft', date: 'Junho 2026' },
   { slug: 'python-cloud-iot-bigdata', title: 'Desenvolvimento Rápido de Aplicações em Python para Cloud, IoT e BigData', issuer: 'Universidade Estácio de Sá', date: 'Dezembro 2025' },
-  { title: 'Linguagem de Programação Python', issuer: 'Fundação Bradesco' }, // PDF ainda não adicionado
+{ slug: 'python-fundacao-bradesco', title: 'Linguagem de Programação Python', issuer: 'Fundação Bradesco' },
   { slug: 'analise-problemas-complexos', title: 'Análise e Solução de Problemas Complexos', issuer: 'Universidade Estácio de Sá', date: 'Dezembro 2024' },
   { slug: 'algoritmos-eficientes', title: 'Concepção de Algoritmos Eficientes, Estáveis e Escaláveis', issuer: 'Universidade Estácio de Sá', date: 'Dezembro 2024' },
   { slug: 'programacao-sistemas-informacao', title: 'Programação de Sistemas de Informação', issuer: 'Universidade Estácio de Sá', date: 'Junho 2024' },

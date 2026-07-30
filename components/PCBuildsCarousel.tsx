@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, Monitor } from 'lucide-react';
 
 /*
  * Como adicionar uma foto de montagem:
- * 1. Salve a foto em /public/montagens/<slug>.jpg
+ * 1. Salve a foto em /public/montagens/<slug>.jpeg
  * 2. Adicione uma entrada no array BUILDS abaixo:
  *    { slug: 'nome-do-arquivo', caption: 'Uma legenda curta (opcional)' }
  * A seção só aparece no site quando tiver pelo menos 1 item aqui.
@@ -17,8 +17,23 @@ interface Build {
 }
 
 const BUILDS: Build[] = [
-  // Exemplo — apague e preencha com as suas fotos reais:
-  // { slug: 'build-01', caption: 'Setup para jogos competitivos' },
+  { slug: 'build-01', caption: '' }, // <- escreva a legenda aqui, entre as aspas
+  { slug: 'build-02', caption: '' },
+  { slug: 'build-03', caption: '' },
+  { slug: 'build-04', caption: '' },
+  { slug: 'build-05', caption: '' },
+  { slug: 'build-06', caption: '' },
+  { slug: 'build-07', caption: '' },
+  { slug: 'build-08', caption: '' },
+  { slug: 'build-09', caption: '' },
+  { slug: 'build-10', caption: '' },
+  { slug: 'build-11', caption: '' },
+  { slug: 'build-12', caption: '' },
+  { slug: 'build-13', caption: '' },
+  { slug: 'build-14', caption: '' },
+  { slug: 'build-15', caption: '' },
+  { slug: 'build-16', caption: '' },
+  { slug: 'build-17', caption: '' },
 ];
 
 function BuildImage({ slug }: { slug: string }) {
@@ -44,7 +59,7 @@ function BuildImage({ slug }: { slug: string }) {
   // eslint-disable-next-line @next/next/no-img-element
   return (
     <img
-      src={`/montagens/${slug}.jpg`}
+      src={`/montagens/${slug}.jpeg`}
       alt="PC montado por Juan Lavecchia"
       onError={() => setFailed(true)}
       style={{ width: '100%', aspectRatio: '4 / 3', objectFit: 'cover', borderRadius: 'var(--radius)', display: 'block' }}

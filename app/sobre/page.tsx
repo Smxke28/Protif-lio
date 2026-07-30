@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion, Variants } from 'framer-motion';
+import Certifications from '@/components/Certifications';
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -127,7 +128,7 @@ export default function SobrePage() {
                 Universidade Estácio de Sá — Juiz de Fora, MG
               </p>
               <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px', fontFamily: "'JetBrains Mono', monospace" }}>
-                8º período
+                Finalizado jul/2026
               </p>
             </div>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
@@ -158,6 +159,8 @@ export default function SobrePage() {
       </section>
 
       <hr className="divider" />
+
+      <Certifications />
 
       {/* Skills */}
       <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '64px 24px' }}>
