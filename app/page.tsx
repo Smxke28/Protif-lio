@@ -4,7 +4,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import GitHubStats from '../components/GitHubStats';
 import FeedbackSection from '../components/FeedbackSection';
+import HelpCards from '../components/HelpCards';
+import HowItWorks from '../components/HowItWorks';
+import WhyChooseUs from '../components/WhyChooseUs';
+import Specialties from '../components/Specialties';
 import { motion, Variants } from 'framer-motion';
+import { CheckCircle2 } from 'lucide-react';
+import { getWhatsAppLink } from './lib/whatsapp';
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -206,13 +212,43 @@ export default function Home() {
             variants={fadeUp}
             style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}
           >
-            <Link href="/servicos" className="btn-primary">
-              Ver serviços
+            <Link href="/contato" className="btn-primary">
+              Solicitar orçamento
               <span style={{ fontSize: '0.9rem' }}>→</span>
             </Link>
             <Link href="/projetos" className="btn-secondary">
               Meus projetos
             </Link>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            animate="show"
+            custom={5}
+            variants={fadeUp}
+            style={{
+              display: 'flex',
+              gap: '20px',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              marginTop: '32px',
+            }}
+          >
+            {['Atendimento remoto', 'Juiz de Fora - MG', 'Resposta rápida', 'Orçamento sem compromisso'].map((badge) => (
+              <span
+                key={badge}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '0.78rem',
+                  color: 'var(--text-muted)',
+                }}
+              >
+                <CheckCircle2 size={14} color="var(--accent-cyan)" />
+                {badge}
+              </span>
+            ))}
           </motion.div>
         </div>
 
@@ -291,6 +327,8 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
+
+      <HelpCards />
 
       {/* ── SERVIÇOS ── */}
       <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '96px 24px' }}>
@@ -406,6 +444,18 @@ export default function Home() {
 
       <hr className="divider" />
 
+      <HowItWorks />
+
+      <hr className="divider" />
+
+      <WhyChooseUs />
+
+      <hr className="divider" />
+
+      <Specialties />
+
+      <hr className="divider" />
+
       {/* ── PROJETOS & GITHUB ── */}
       <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '96px 24px' }}>
         <GitHubStats username="Smxke28" />
@@ -418,13 +468,41 @@ export default function Home() {
 
       <hr className="divider" />
 
-      {/* ── CTA ── */}
-      <section style={{ maxWidth: '700px', margin: '0 auto', padding: '96px 24px', textAlign: 'center' }}>
+      {/* ── CTA FINAL ── */}
+      <section
+        className="grid-bg"
+        style={{ position: 'relative', overflow: 'hidden', padding: '96px 24px' }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: '-80px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '600px',
+            height: '400px',
+            background: 'radial-gradient(ellipse, rgba(0,212,255,0.08) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '0',
+            right: '-100px',
+            width: '400px',
+            height: '400px',
+            background: 'radial-gradient(ellipse, rgba(124,58,237,0.07) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
+          style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}
         >
           <div className="section-label" style={{ justifyContent: 'center', marginBottom: '20px' }}>
             Vamos trabalhar juntos
@@ -438,23 +516,26 @@ export default function Home() {
               marginBottom: '16px',
             }}
           >
-            Tem um projeto em mente?
+            Vamos transformar sua ideia em realidade?
           </h2>
           <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '40px' }}>
-            Estou disponível para novos projetos e consultorias. Entre em contato e vamos conversar.
+            Desenvolvimento Web, Consultoria em TI, Suporte Técnico e soluções sob medida para o seu projeto.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/contato" className="btn-primary">
-              Falar comigo agora
+              Solicitar orçamento
             </Link>
             <a
-              href="https://github.com/Smxke28"
+              href={getWhatsAppLink('Olá! Vi seu portfólio e queria conversar sobre um projeto.')}
               target="_blank"
               rel="noreferrer"
               className="btn-secondary"
             >
-              Ver GitHub
+              WhatsApp
             </a>
+            <Link href="/projetos" className="btn-secondary">
+              Ver projetos
+            </Link>
           </div>
         </motion.div>
       </section>

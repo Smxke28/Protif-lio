@@ -4,6 +4,7 @@ import Script from "next/script";
 import Navbar from "../components/Navbar";
 import Providers from "../components/Providers";
 import WhatsAppFloatButton from "../components/WhatsAppFloatButton";
+import StickyCTABar from "../components/StickyCTABar";
 import React from "react";
 
 export const metadata: Metadata = {
@@ -77,6 +78,7 @@ gtag('config', 'G-299F5SYYYJ');`}
           </main>
 
           <WhatsAppFloatButton />
+          <StickyCTABar />
 
           <footer
             style={{
