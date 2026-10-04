@@ -8,6 +8,7 @@ import HelpCards from '../components/HelpCards';
 import HowItWorks from '../components/HowItWorks';
 import WhyChooseUs from '../components/WhyChooseUs';
 import Specialties from '../components/Specialties';
+import LiveDemosCarousel from '../components/LiveDemosCarousel';
 import { motion, Variants } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
 import { getWhatsAppLink } from './lib/whatsapp';
@@ -328,6 +329,9 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* ── DEMOS AO VIVO ── */}
+      <LiveDemosCarousel />
+
       <HelpCards />
 
       {/* ── SERVIÇOS ── */}
@@ -526,7 +530,7 @@ export default function Home() {
               Solicitar orçamento
             </Link>
             <a
-              href={getWhatsAppLink('Olá! Vi seu portfólio e queria conversar sobre um projeto.')}
+              href={getWhatsAppLink('Olá! Vi os seus serviços e queria conversar sobre.')}
               target="_blank"
               rel="noreferrer"
               className="btn-secondary"
