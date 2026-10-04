@@ -1,5 +1,18 @@
 import type { NextConfig } from "next";
 
+// Sites demo exibidos no carrossel da home (iframes)
+const DEMO_HOSTS = [
+  "https://site-salao-drab.vercel.app",
+  "https://site-barbearia-gilt.vercel.app",
+  "https://site-academia-six-red.vercel.app",
+  "https://site-contabilidade-three.vercel.app",
+  "https://site-advocacia-henna-beta.vercel.app",
+  "https://site-clinica-estetica-e-odontologia.vercel.app",
+  "https://clinica-medica-two-sigma.vercel.app",
+  "https://site-mecanica-eight.vercel.app",
+  "https://site-pet-nine.vercel.app",
+].join(" ");
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
@@ -36,7 +49,8 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline'; " +
               "img-src 'self' data: https:; " +
               "font-src 'self' data:; " +
-              "connect-src 'self';"
+              "connect-src 'self'; " +
+              "frame-src 'self' " + DEMO_HOSTS + ";"
           }
         ]
       }
